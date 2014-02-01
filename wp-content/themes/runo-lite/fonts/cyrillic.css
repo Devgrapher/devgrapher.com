@@ -1,0 +1,55 @@
+/*
+	Cyrillic font for Runo
+*/
+
+header#main-header h1 {
+    font-size: 2.7em;
+}
+
+header#main-header h2 {
+    font-size: 1.25em;
+}
+
+#main-nav {
+       margin-bottom: -0.2em;
+}
+
+h1,h2,h3,h4,h5,h6, nav, blockquote, legend, dt, caption, #secondary .sep, blockquote:before, article .entry-date {
+	font-family: 'EB Garamond', 'Times New Roman', serif;
+}
+
+h1,h2,h3,h4,h5,h6, nav, blockquote, legend, dt, caption  {
+	 color: #000;
+}
+
+blockquote {
+    font-size: 1.1em;
+}
+
+
+blockquote:before {
+	font-size: 100px;
+	left: -15px;
+	top: -35px;
+}
+
+
+article .entry-date {
+    font-size: 1.3em;
+	float: right;
+    margin: 0 0 0 1em;
+}
+
+a.button:link, a.button:visited, input[type="submit"], input#searchsubmit {
+	font: 1em/1em  'EB Garamond', 'Times New Roman', serif;
+	letter-spacing: 0.1em;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #333;
+    padding: 0.5em 0.7em 0.4em 0.7em;
+    height: 2.5em;
+    border: none;
+  -webkit-box-shadow: 2px 2px 2px 0px #ccc; /* Saf3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+          box-shadow: 2px 2px 2px 0px #ccc; /* Opera 10.5, IE9, FF4+, Chrome 6+, iOS 5 */
+}

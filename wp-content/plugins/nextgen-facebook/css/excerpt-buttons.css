@@ -1,0 +1,12 @@
+/* Save an empty style text box to reload the default example styles.
+ * These styles are provided as examples only - modifications may be 
+ * necessary to customize the layout for your website. Social sharing
+ * buttons can be aligned vertically, horizontally, floated, etc.
+ */
+
+.ngfb-excerpt-buttons { 
+	/* Center the buttons with a 10px margin top/bottom. */
+	display:block;
+	margin:10px auto 10px auto;
+	text-align:center;
+}
