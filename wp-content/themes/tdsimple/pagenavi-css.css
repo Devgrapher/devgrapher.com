@@ -6,6 +6,7 @@ http://wordpress.org/extend/plugins/wp-pagenavi/
 
 .wp-pagenavi {
 	clear: both;
+	color: #acacac;
 }
 
 .wp-pagenavi a, .wp-pagenavi span {
@@ -15,10 +16,16 @@ http://wordpress.org/extend/plugins/wp-pagenavi/
 	margin: 2px;
 }
 
-.wp-pagenavi a:hover, .wp-pagenavi span.current {
+.wp-pagenavi a:hover, .wp-pagenavi a.current, .wp-pagenavi a.extend {
 	border-color: #000;
+	color: #acacac;
 }
 
-.wp-pagenavi span.current {
+.wp-pagenavi a.current {
 	font-weight: bold;
+	text-decoration: none;
+}
+
+.wp-pagenavi a.extend {
+	text-decoration: none;
 }

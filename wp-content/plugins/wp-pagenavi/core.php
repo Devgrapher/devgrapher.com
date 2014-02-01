@@ -92,7 +92,7 @@ function wp_pagenavi( $args = array() ) {
 
 			if ( $start_page >= 2 && $pages_to_show < $total_pages ) {
 				if ( !empty( $options['dotleft_text'] ) )
-					$out .= "<span class='extend'>{$options['dotleft_text']}</span>";
+					$out .= "<a class='extend'>{$options['dotleft_text']}</a>";
 			}
 
 			// Smaller pages
@@ -112,14 +112,14 @@ function wp_pagenavi( $args = array() ) {
 			}
 
 			if ( $larger_page_start )
-				$out .= "<span class='extend'>{$options['dotleft_text']}</span>";
+				$out .= "<a class='extend'>{$options['dotleft_text']}</a>";
 
 			// Page numbers
 			$timeline = 'smaller';
 			foreach ( range( $start_page, $end_page ) as $i ) {
 				if ( $i == $paged && !empty( $options['current_text'] ) ) {
 					$current_page_text = str_replace( '%PAGE_NUMBER%', number_format_i18n( $i ), $options['current_text'] );
-					$out .= "<span class='current'>$current_page_text</span>";
+					$out .= "<a class='current'>$current_page_text</a>";
 					$timeline = 'larger';
 				} else {
 					$out .= $instance->get_single( $i, $options['page_text'], array(
@@ -141,13 +141,13 @@ function wp_pagenavi( $args = array() ) {
 			}
 
 			if ( $larger_page_out ) {
-				$out .= "<span class='extend'>{$options['dotright_text']}</span>";
+				$out .= "<a class='extend'>{$options['dotright_text']}</a>";
 			}
 			$out .= $larger_page_out;
 
 			if ( $end_page < $total_pages ) {
 				if ( !empty( $options['dotright_text'] ) )
-					$out .= "<span class='extend'>{$options['dotright_text']}</span>";
+					$out .= "<a class='extend'>{$options['dotright_text']}</a>";
 			}
 
 			// Next
