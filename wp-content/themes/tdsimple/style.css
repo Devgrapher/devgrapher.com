@@ -36,7 +36,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight: 600;
+	font-weight: 500;
 	font-size: 1.8em;
 }
 
@@ -772,11 +772,12 @@ object {
 #secondary .widget {
 	display: none;
 	color: #afb5b4;
-	padding-right: 60px;
-	padding-left: 60px;
+	padding-right: 30px;
+	padding-left: 30px;
 	padding-bottom: 30px;
 	border-bottom: 1px solid #434343;
 	position: relative;
+	font-size: 0.7em;
 }
 
 #secondary .widget:before {
