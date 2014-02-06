@@ -252,6 +252,7 @@ input[type="submit"]:hover {
 	border: none; 
 	float: none;
 	display: inline-block;
+	*display: inline; zoom:1;
 }
 
 .main-navigation .nav-bar li a:hover {
