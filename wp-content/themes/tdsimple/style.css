@@ -77,7 +77,11 @@ a {
 
 a:hover {
 	color: #333333;
-}	
+}
+	
+abbr {
+	color: #FFFFFF;
+}
 
 table {
 	width: 100%;
