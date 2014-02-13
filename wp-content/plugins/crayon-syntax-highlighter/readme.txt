@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99E
 License: GPLv2 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
 Requires at least: 3.0
-Tested up to: 3.8.0
+Tested up to: 3.9.0
 Stable tag: trunk
 
 Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, local file or post text.
@@ -16,8 +16,8 @@ It can highlight from a URL, a local file or Wordpress post text. Crayon makes i
 custom language elements with regular expressions.
 It also supports some neat features like:
 
-* Integrated <a href="http://aramk.com/crayon/crayon-theme-editor/" target="_blank">Theme Editor!</a>
-* <a href="http://aramk.com/projects/crayon-tag-editor/" target="_blank">Tag Editor</a> in both Visual & HTML editors
+* Integrated <a href="http://aramk.com/blog/2012/12/27/crayon-theme-editor/‎" target="_blank">Theme Editor!</a>
+* <a href="http://aramk.com/blog/2012/03/25/crayon-tag-editor/‎" target="_blank">Tag Editor</a> in both Visual & HTML editors
 * Toggled plain code
 * Toggled line numbers
 * Copy/paste code
@@ -26,16 +26,16 @@ It also supports some neat features like:
 * Code expanding
 * Minimizing
 * bbPress 2 support
-* <a href="http://bit.ly/ReRr0i" target="_blank">Converting legacy code in blog posts/comments to &lt;pre&gt;</a>
+* <a href="http://aramk.com/blog/2012/09/26/converting-legacy-tags-to-pre/" target="_blank">Converting legacy code in blog posts/comments to &lt;pre&gt;</a>
 * Remote request caching
-* <a href="http://aramk.com/projects/mixed-language-highlighting-in-crayon/" target="_blank">Mixed Language Highlighting</a> in a single Crayon
-* <a href="http://aramk.com/projects/mini-tags-in-crayon/" target="_blank">Mini Tags</a> like [php][/php]
-* <a href="http://aramk.com/crayon/inline-crayons/" target="_blank">Inline Tags</a> floating in sentences
+* <a href="http://aramk.com/blog/2011/12/25/mixed-language-highlighting-in-crayon‎" target="_blank">Mixed Language Highlighting</a> in a single Crayon
+* <a href="http://aramk.com/blog/2011/12/27/mini-tags-in-crayon/" target="_blank">Mini Tags</a> like [php][/php]
+* <a href="http://aramk.com/blog/2012/03/07/inline-crayons‎" target="_blank">Inline Tags</a> floating in sentences
 * Crayons in comments
 * &#96;Backquotes&#96; become &lt;code&gt;
 * &lt;pre&gt; tag support, option to use <code>setting-value</code> in the class attribute
 * Valid HTML 5 markup
-* <a href="http://aramk.com/projects/crayon-tag-editor/" target="_blank">Visual & HTML editor compatible</a>
+* <a href="http://aramk.com/blog/2012/03/25/crayon-tag-editor/‎" target="_blank">Visual & HTML editor compatible</a>
 * Mobile/touchscreen device detection
 * Mouse event interaction (showing plain code on double click, toolbar on mouseover)
 * Tab sizes
@@ -44,7 +44,7 @@ It also supports some neat features like:
 * Retina buttons
 * Striped lines
 * Line marking (for important lines)
-* <a href="http://aramk.com/crayon/line-ranges-in-crayon/" target="_blank">Line ranges (showing only parts of the code)</a>
+* <a href="http://aramk.com/blog/2012/09/02/line-ranges-in-crayon‎" target="_blank">Line ranges (showing only parts of the code)</a>
 * Starting line number (default is 1)
 * Local directory to search for local files
 * File extension detection
@@ -55,23 +55,22 @@ It also supports some neat features like:
 **Links**
 
 * <a href="https://github.com/aramkocharyan/crayon-syntax-highlighter" target="_blank">Beta Releases</a>
-* <a href="http://aramk.com/crayon/crayon-themes/" target="_blank">Themes Demo</a>
-* <a href="http://aksandbox.webege.com/?p=1" target="_blank">Live Demo</a>
-* <a href="https://github.com/aramkocharyan/crayon-syntax-highlighter" target="_blank">Short How-To</a>
+* <a href="http://aramk.com/blog/2012/12/27/crayon-theme-editor/" target="_blank">Themes Demo</a>
+* <a href="https://github.com/aramkocharyan/crayon-syntax-highlighter" target="_blank">GitHub Project</a>
 
 **Contributions**
 
 There are many ways you can help!
 
 * Make a Theme and share
-* Add support for your favourite <a href="http://aramk.com/projects/crayon-language-file-specification/" target="_blank">Language</a>
+* Add support for your favourite <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specification/" target="_blank">Language</a>
 * Write a post about your pastel experiences and share
 * <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99EMEPQ4CFE&lc=AU&item_name=Crayon%20Syntax%20Highlighter%20Donation&item_number=crayon%2ddonate&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a> to the project
 
 **Supported Languages**
 
 Languages are defined in language files using Regular Expressions to capture elements.
-See the <a href="http://aramk.com/projects/crayon-language-file-specification/" target="_blank">Crayon Language File Specification</a> to learn how to make your own.
+See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specification/" target="_blank">Crayon Language File Specification</a> to learn how to make your own.
 
 * Default Language (one size fits all, highlights generic code)
 * ABAP
@@ -88,11 +87,13 @@ See the <a href="http://aramk.com/projects/crayon-language-file-specification/" 
 * CoffeeScript (thanks to <a href="http://firn.jp/crayon-coffeescript" target="_blank">Dai Akatsuka</a>)
 * CSS
 * Delphi/Pascal (thanks to <a href="http://squashbrain.com/" target="_blank">Chris McClenny</a>)
+* Delphi Web Script (thanks to <a href="http://www.smartmobilestudio.com" target="_blank">smartmobilestudio</a>)
 * Diff (thanks to <a href="http://omniavin.co/post/262" target="_blank">omniavin</a>)
 * Erlang (thanks to <a href="http://netroid.de/" target="_blank">Daniel</a>)
 * Go
 * Haskell
 * HTML (XML/XHTML)
+* INI
 * Lisp
 * Lua
 * Microsoft Registry (thanks to <a href="http://techexplored.com/2012/03/21/crayon-syntax-highlighter-reg-support/" target="_blank">techexplored.com</a>)
@@ -118,8 +119,9 @@ See the <a href="http://aramk.com/projects/crayon-language-file-specification/" 
 * TeX
 * Vim
 * Visual Basic
-* Visual Basic .NET (thanks to <a href="https://github.com/OomJan/crayon-lang-vbnet">Kevin Gardthausen</a>)
+* Visual Basic .NET (thanks to <a href="https://github.com/OomJan/crayon-lang-vbnet" target="_blank">Kevin Gardthausen</a>)
 * YAML
+* ZSH (thanks to <a href="https://github.com/Stibbons" target="_blank">Stibbons</a>)
 * Others will be added when requested
 
 **International Languages**
@@ -145,15 +147,15 @@ See the <a href="http://aramk.com/projects/crayon-language-file-specification/" 
 
 These are helpful for discovering new features.
 
-* <a href="http://aramk.com/crayon/internal-post-management-crayon/" target="_blank">Internal Post Management in Crayon</a>
-* <a href="http://aramk.com/crayon/converting-legacy-tags-to-pre/" target="_blank">Converting Legacy Tags to &lt;pre&gt;</a>
-* <a href="http://aramk.com/crayon/crayon-with-bbpress/" target="_blank">Crayon with bbPress</a>
-* <a href="http://aramk.com/crayon/line-ranges-in-crayon/" target="_blank">Line Ranges in Crayon</a>
-* <a href="http://aramk.com/projects/crayon-tag-editor/" target="_blank">Crayon Tag Editor</a>
-* <a href="http://aramk.com/projects/mixed-language-highlighting-in-crayon/" target="_blank">Mixed Language Highlighting in Crayon</a>
-* <a href="http://aramk.com/projects/mini-tags-in-crayon/" target="_blank">Mini Tags And Plain Tags In Crayon</a>
-* <a href="http://aramk.com/crayon/inline-crayons/" target="_blank">Inline Tags</a>
-* <a href="http://aramk.com/projects/enqueuing-themes-and-fonts-in-crayon/" target="_blank">Enqueuing Themes and Fonts in Crayon</a>
+* <a href="http://aramk.com/blog/2012/09/26/internal-post-management-crayon/‎" target="_blank">Internal Post Management in Crayon</a>
+* <a href="http://aramk.com/blog/2012/09/26/converting-legacy-tags-to-pre/" target="_blank">Converting Legacy Tags to &lt;pre&gt;</a>
+* <a href="http://aramk.com/blog/2012/09/08/crayon-with-bbpress/" target="_blank">Crayon with bbPress</a>
+* <a href="http://aramk.com/blog/2012/09/02/line-ranges-in-crayon‎" target="_blank">Line Ranges in Crayon</a>
+* <a href="http://aramk.com/blog/2012/03/25/crayon-tag-editor/‎" target="_blank">Crayon Tag Editor</a>
+* <a href="http://aramk.com/blog/2011/12/25/mixed-language-highlighting-in-crayon‎" target="_blank">Mixed Language Highlighting in Crayon</a>
+* <a href="http://aramk.com/blog/2011/12/27/mini-tags-in-crayon/" target="_blank">Mini Tags And Plain Tags In Crayon</a>
+* <a href="http://aramk.com/blog/2012/03/07/inline-crayons‎" target="_blank">Inline Tags</a>
+* <a href="http://aramk.com/blog/2012/01/07/enqueuing-themes-and-fonts-in-crayon" target="_blank">Enqueuing Themes and Fonts in Crayon</a>
 
 **The Press**
 
@@ -193,6 +195,9 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+
+* Stephen Sant, (http://thesantfamily.net/), UK
+* David Rodriguez, (http://davidarodriguez.com/), USA
 * Sohail Ahmed, (http://sohail.io.com/), USA
 * Vanessa Garcia Espin, Spain
 * Samad Malik, (http://samadmalik.com/), USA
@@ -262,10 +267,24 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 == Changelog ==
 
+= 2.5.0 =
+* ADDED:
+    * Delphi Web Script language (thanks to <a href="http://www.smartmobilestudio.com" target="_blank">smartmobilestudio</a>)
+    * ZSH language
+    * INI language
+* FIXED:
+    * Fixed a bug causing posts with only backquotes and no Crayon tags to be ignored.
+    * wrap="off" is now set to wrap="soft" to adhere to W3C standards.
+    * The copy button tooltip.
+    * Retina button order in the sprite sheet.
+    * Wrapping of code lines in some wordpress themes.
+    * Wrapped line height was being overridden by CSS.
+    * Settings page docs links.
+
 = 2.4.3 =
 * ADDED:
-	* Slovenian language
-	* Coda Special Board theme
+    * Slovenian language
+    * Coda Special Board theme
     * Rust language
     * Utilities for converting files containing lines into arrays or regex
 * FIXED:
@@ -279,8 +298,8 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
     * Iris Vfx theme
     * bncplusplus theme
 * FIXED:
-	* Spans are no longer display:inline-block, which can cause spaces to disappear.
-	* ObjC improvements thanks to https://github.com/springsup
+    * Spans are no longer display:inline-block, which can cause spaces to disappear.
+    * ObjC improvements thanks to https://github.com/springsup
 
 = 2.4.1 =
 * ADDED:
@@ -303,7 +322,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
     * New setting to remove &lt;code&gt; blocks surrounding the code, often not intended to be in the code itself
     * Scala language thanks to https://github.com/vkostyukov
 * FIXED:
-	* Most important documentation paths now point to github docs.
+    * Most important documentation paths now point to github docs.
 
 = 2.3.0 =
 * ADDED:
@@ -358,7 +377,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 = 2.1.3 =
 * ADDED:
     * Line height can now be customised along with font size
-    * AJAX method for highlighting Crayon using ajaxurl. See http://aramk.com/crayon/adding-crayon-to-posts-in-wordpress-programmatically/.
+    * AJAX method for highlighting Crayon using ajaxurl. See http://aramk.com/blog/2012/05/30/adding-crayon-to-posts-in-wordpress-programmatically/.
     * Ability to capture code tags as inline Crayons
     * Terminal theme
 * FIXED:
@@ -430,86 +449,86 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * FIXED:
     * Converting tags failed to work since 2.0.0 - also fixed minor bugs leading to false positives for legacy tags.
     * Copy function was calling invalid function, preventing duplication from taking place.
-	* Slashes are removed from server side input which was appearing from the change code dialog
+    * Slashes are removed from server side input which was appearing from the change code dialog
 
 = 2.0.1 =
 * ADDED:
     * Ability to change sample code in settings
 * FIXED:
-	* Changes in ID definitions caused C++ and C# to fail loading.
-	* Fixed issues with minified CSS not loading in popup window
+    * Changes in ID definitions caused C++ and C# to fail loading.
+    * Fixed issues with minified CSS not loading in popup window
     * Using wp_mkdir_p instead of mkdir for creating directories and such.
     * Admin resource dependencies
 
 = 2.0.0 =
 * ADDED:
     * Theme Editor allowing users to create and modify Crayon Themes!
-	* Polish translation (thanks to <a href="https://github.com/toszcze" target="_blank">Bartosz Romanowski</a>)
-	* Vim language
-	* Solarized themes (thanks to <a href="https://github.com/Greduan" target="_blank">Greduan</a>)
-	* Converting legacy tags now has an "encode" option. If selected, any legacy tag where the "decode" attribute is missing (neither true or false) has its code encoded and decode="true" specified.
+    * Polish translation (thanks to <a href="https://github.com/toszcze" target="_blank">Bartosz Romanowski</a>)
+    * Vim language
+    * Solarized themes (thanks to <a href="https://github.com/Greduan" target="_blank">Greduan</a>)
+    * Converting legacy tags now has an "encode" option. If selected, any legacy tag where the "decode" attribute is missing (neither true or false) has its code encoded and decode="true" specified.
 * FIXED:
-	* Removed fancybox_init.js and integrated into util.js, other minor improvements in loading Tag Editor
-	* Improved expanding with shirt
-	* Issues with expanding a single line, other minor issues.
-	* Merged JS and PHP debugging toggle
-	* Moved everything towards camelCase from underscores
-	* Minor improvements to Objective-C
-	* Numerous bug fixes and improvements!
+    * Removed fancybox_init.js and integrated into util.js, other minor improvements in loading Tag Editor
+    * Improved expanding with shirt
+    * Issues with expanding a single line, other minor issues.
+    * Merged JS and PHP debugging toggle
+    * Moved everything towards camelCase from underscores
+    * Minor improvements to Objective-C
+    * Numerous bug fixes and improvements!
 
 = 1.17 =
 * ADDED:
-	* Selected text in the TinyMCE editor is now added into the code box of the Tag Editor
-	* Retina buttons for the toolbar
-	* Support for Wordpress 3.5
+    * Selected text in the TinyMCE editor is now added into the code box of the Tag Editor
+    * Retina buttons for the toolbar
+    * Support for Wordpress 3.5
 * FIXED:
-	* Removed fancybox_init.js and integrated into util.js, other minor improvements in loading Tag Editor
-	* Disabling popup now removes the JS resource
-	* Refactored Tag Editor functions
-	* Display Tag Editor settings on the frontend wasn't working
-	* Removed contextual help and added more useful links, including online help
-	* Checkboxes have labels instead of spans thanks to https://github.com/toszcze
-	* Undefined php variable fix thanks to https://github.com/toszcze
-	* Dimension fixes in js on hover
-	* On iOS the fonts appeared larger for code than for line numbers.
-	* Expanding code shrunk instead if the toolbar was visible
-	* Updated Turkish
+    * Removed fancybox_init.js and integrated into util.js, other minor improvements in loading Tag Editor
+    * Disabling popup now removes the JS resource
+    * Refactored Tag Editor functions
+    * Display Tag Editor settings on the frontend wasn't working
+    * Removed contextual help and added more useful links, including online help
+    * Checkboxes have labels instead of spans thanks to https://github.com/toszcze
+    * Undefined php variable fix thanks to https://github.com/toszcze
+    * Dimension fixes in js on hover
+    * On iOS the fonts appeared larger for code than for line numbers.
+    * Expanding code shrunk instead if the toolbar was visible
+    * Updated Turkish
 
 = 1.16 =
 * ADDED:
-	* Expanding code beyond the page border on mouseover - enable the setting under Settings > Crayon > Code.
-	* Expanding the code is delayed in the same way using the toolbar delay setting.
-	* French translation
-	* Portuguese translation
+    * Expanding code beyond the page border on mouseover - enable the setting under Settings > Crayon > Code.
+    * Expanding the code is delayed in the same way using the toolbar delay setting.
+    * French translation
+    * Portuguese translation
 * FIXED:
-	* Carriage returns and new line characters were being treated differently and not being detected correctly. I'm using a new regex which detects both and also captures the line content: (?:^|(?<=\r\n|\n))[^\r\n]*
-	* JS variable bugs when minifying with W3 Total Cache
-	* CSS did not load in newly opened code window if minified
-	* Saved comments did not capture Crayons until they were updated or the post list was refreshed in settings
-	* Posts in settings are sorted now descending based on modified date
-	* bbPress posts showed Crayons on the bottom of posts irrespective of their position in the post content.
-	* Toggle plain code button appeared when plain code was disabled
-	* Updated Turkish translation
+    * Carriage returns and new line characters were being treated differently and not being detected correctly. I'm using a new regex which detects both and also captures the line content: (?:^|(?<=\r\n|\n))[^\r\n]*
+    * JS variable bugs when minifying with W3 Total Cache
+    * CSS did not load in newly opened code window if minified
+    * Saved comments did not capture Crayons until they were updated or the post list was refreshed in settings
+    * Posts in settings are sorted now descending based on modified date
+    * bbPress posts showed Crayons on the bottom of posts irrespective of their position in the post content.
+    * Toggle plain code button appeared when plain code was disabled
+    * Updated Turkish translation
 
 = 1.15 =
 * ADDED:
-	* The settings page no longer searches through all posts looking for legacy tags until you hit a new "refresh" button. Refreshing will look through all posts for crayon tags, and also mark any that are legacy tags. The same process occurs on an individual basis when saving a post.
-	* The settings page shows which posts contains legacy tags, and the buttons do not hide when showing the table.
-	* Added theme information to the settings page
-	* Improved version updating
-	* Code in a new window loses size constraints
-	* MS-DOS batch language (thanks to <a href="http://www.amigalog.com/?p=334" target="_blank">http://www.amigalog.com/?p=334</a>)
-	* Minor improvements
+    * The settings page no longer searches through all posts looking for legacy tags until you hit a new "refresh" button. Refreshing will look through all posts for crayon tags, and also mark any that are legacy tags. The same process occurs on an individual basis when saving a post.
+    * The settings page shows which posts contains legacy tags, and the buttons do not hide when showing the table.
+    * Added theme information to the settings page
+    * Improved version updating
+    * Code in a new window loses size constraints
+    * MS-DOS batch language (thanks to <a href="http://www.amigalog.com/?p=334" target="_blank">http://www.amigalog.com/?p=334</a>)
+    * Minor improvements
 * FIXED:
-	* Fancybox issues have been fixed: http://aramk.com/crayon/initialising-fancybox-with-custom-objects/
-	* max/min-height/width didn't work on Tag Editor
-	* Width discrepancy before and after mouseover from 1px border
-	* Before and after whitespace didn't display correctly
-	* Code opened in a new window didn't display if the current wp theme css was included
-	* IE 8 compatibility issues
-	* Dropdown of languages in settings and Tag Editor are now sorted by name, not id
-	* By default "Display the Tag Editor in any TinyMCE instances on the frontend" is disabled to reduce resources
-	* Chinese translation updated
+    * Fancybox issues have been fixed: http://aramk.com/blog/2012/11/28/initialising-fancybox-with-custom-objects/
+    * max/min-height/width didn't work on Tag Editor
+    * Width discrepancy before and after mouseover from 1px border
+    * Before and after whitespace didn't display correctly
+    * Code opened in a new window didn't display if the current wp theme css was included
+    * IE 8 compatibility issues
+    * Dropdown of languages in settings and Tag Editor are now sorted by name, not id
+    * By default "Display the Tag Editor in any TinyMCE instances on the frontend" is disabled to reduce resources
+    * Chinese translation updated
 
 = 1.14 =
 * All AJAX functions are now using the wp_ajax action and admin-ajax.php method defined here: http://codex.wordpress.org/AJAX_in_Plugins. This means Crayon no longer passes around the wp_load path and doesn't use it as a $_GET variable to load AJAX requests. The security vulnerability in 1.13 is no longer present and that code has been removed.
@@ -560,7 +579,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Integrated Tag Editor with Fancybox, switched from the discontinued ThickBox, a fair amount of changes took place.
 * Crayon should now appear pretty much anywhere TinyMCE does, and this can be tweaked to add more options later.
 * Added setting to disable Tag Editor on front end, and/or disable its settings.
-* Added the ability to specify <a href="http://aramk.com/crayon/line-ranges-in-crayon/" target="_blank">line ranges</a>
+* Added the ability to specify <a href="http://aramk.com/blog/2012/09/02/line-ranges-in-crayon‎" target="_blank">line ranges</a>
 * Added Microsoft Registry language thanks to <a href="http://techexplored.com/2012/03/21/crayon-syntax-highlighter-reg-support/" target="_blank">techexplored.com</a>
 * Added MIVA Script language
 * Added Transact-SQL language
@@ -773,7 +792,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * "Always display scrollbars" now a checkbox
 
 = 1.7.19 =
-* Fixed issue with Crayons failing to load on pages with templates containing The Loop. http://aramk.com/crayon/failing-to-load-crayons-on-pages/
+* Fixed issue with Crayons failing to load on pages with templates containing The Loop. http://aramk.com/blog/2012/01/23/failing-to-load-crayons-on-pages/
 * Objective-C operators improved
 
 = 1.7.18 =
@@ -841,7 +860,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Added namespacing to crayon.js to prevent conflicts
 
 = 1.7.3 =
-* Added Mini Tags and Plain Tags into Crayon. http://aramk.com/projects/mini-tags-in-crayon/
+* Added Mini Tags and Plain Tags into Crayon. http://aramk.com/blog/2011/12/27/mini-tags-in-crayon/
 * Fixed a bug causing RSS feeds to contain malformed HTML of Crayons, now it shows plain code with correct indentations. Thanks to Артём.
 * Updated help in Settings and https://github.com/aramkocharyan/crayon-syntax-highlighter
 
@@ -852,7 +871,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 * Renamed Japanese GNU language code from ja_JP to ja.
 
 = 1.7.0 =
-* Added the ability to highlight multiple languages in a single Crayon! http://aramk.com/projects/mixed-language-highlighting-in-crayon/
+* Added the ability to highlight multiple languages in a single Crayon! http://aramk.com/blog/2011/12/25/mixed-language-highlighting-in-crayon‎
 * A bunch of language improvements, a few CSS improvements, etc.
 
 = 1.6.6 =
@@ -875,7 +894,7 @@ The same applies to &lt;pre&gt; tags (not &lt; pre &gt;). The reason is to impro
 
 = 1.6.3 =
 * For those still having issues with CSS and JavaScript not laoding, I have added a new setting in Misc. that will allow you to either attempt to load these resources when needed if you have no issues with your theme or to force them to load on each page.
-* Please see: http://aramk.com/php/loading-css-and-javascript-only-when-required-in-a-wordpress-plugin/
+* Please see: http://aramk.com/blog/2011/12/12/loading-css-and-javascript-only-when-required-in-a-wordpress-plugin/
 
 = 1.6.2 =
 * Added ability to use and define language aliases. eg. XML -> XHTML, cpp -> c++, py -> python
@@ -937,7 +956,7 @@ it's actually quite easy to edit - just contact me via email :)
 * Added some keywords to c++, changed sample code
 
 = 1.4.0 =
-* Added all other global settings for easy overriding: http://aramk.com/projects/crayon-settings/
+* Added all other global settings for easy overriding: http://aramk.com/blog/2011/10/29/crayon-settings/
 * Fixed issues with variables and entites in language regex
 * Added Epicgeeks theme made by Joe Newing of epicgeeks.net
 * Help updated
