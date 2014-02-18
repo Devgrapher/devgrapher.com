@@ -17,7 +17,7 @@ Tags: light, gray, white, featured-images, post-formats, custom-menu, fluid-layo
 ----------------------------------------------- */
 body {
 	background-color: #f7f9f9;
-	font-size: 19px;
+	font-size: 16px;
 	line-height: 1.6;
 	color: #464242;
 	font-family: '나눔고딕', NanumGothic, '맑은 고딕', 'Malgun Gothic', '돋움', Dotum;
@@ -59,12 +59,20 @@ a.button,
 
 a {
 	font-weight: bold;
-	color: #464242;
+	color: #333333;
 }
 
 a:hover {
-	color: #adb4b8;
+	color: #0099cc;
 	text-decoration: none;
+}
+
+a span {
+	color: #333333;	
+}
+
+a:hover span {
+	color: #0099cc;
 }
 
 p, ul, ol {
@@ -134,16 +142,6 @@ input[type="color"],
 .author-section .author-name a,
 .continue-reading-link {
 	display: inline-block;
-}
-
-.entry-content a,
-.entry-meta.bottom a,
-#comments a,
-#colophon .site-info a,
-.author-section .author-name a,
-.continue-reading-link {
-	border-bottom: 1px dotted;
-	line-height: 1.4;
 }
 
 textarea,
@@ -456,7 +454,7 @@ a.button:hover,
 #masthead .site-title {
 	line-height: 1.2;
 	margin-bottom: 0;
-	font-size: 50px;
+	font-size: 22px;
 }
 
 #masthead .site-title a {
@@ -464,6 +462,10 @@ a.button:hover,
 	text-transform: uppercase;
 	letter-spacing: -0.03em;
 	color: #2d2f30;
+}
+
+#masthead .site-title a:hover {
+	color: #0099cc;
 }
 
 #masthead .site-description {
@@ -804,9 +806,9 @@ a.button:hover,
 }
 
 .entry-title {
-	font-weight: 900;
+	font-weight: 700;
 	letter-spacing: -0.04em;
-	font-size: 41px;
+	font-size: 28px;
 	word-wrap:break-word;
 }
 
@@ -828,7 +830,7 @@ a.button:hover,
 }
 
 .entry-title a:hover {
-	color: #bdc3c7;
+	color: #0099cc;
 }
 
 .entry-meta {
@@ -871,7 +873,7 @@ a.button:hover,
 }
 
 .entry-intro {
-	font-size: 24px;
+	font-size: 16px;
 	line-height: 1.45;
 	font-weight: bold;
 	color: #222222;
@@ -978,9 +980,10 @@ a.more-link {
 
 .entry-content blockquote,
 .entry-content blockquote p {
-	font-size: 24px;
+	font-style: italic;
 	line-height: 1.4;
-	font-weight: bold;
+	font-size: 16px;
+	background: #fcfcfc;
 }
 
 .entry-content blockquote {
@@ -1029,7 +1032,6 @@ a.more-link {
 .entry-content h2,
 .entry-content h3,
 .entry-content h4 {
-	text-align: center;
 }
 
 .page-links {
@@ -1901,18 +1903,18 @@ ul.bxslider li img {
 	text-decoration:none;
 	width:auto;
 	color:#fff;
-	background: #464242;
+	background: #bdc3c7;
 	font-weight: normal;
 }
 
 .numeric-pagination a:hover {
 	color:#fff;
-	background: #FFDA07;
+	background: #0099cc;
 }
 
 .numeric-pagination .current {
 	padding:6px 14px;
-	background: #FFDA07;
+	background: #2d2f30;
 	color:#fff;
 }
 
@@ -2495,7 +2497,7 @@ object {
 	padding-bottom: 31px;
 	font-weight: normal;
 	letter-spacing: -0.04em;
-	font-size: 50px;
+	font-size: 24px;
 	text-transform: uppercase;
 }
 
@@ -2534,7 +2536,7 @@ object {
 }
 
 .error404 .page-title {
-	font-size: 31px;
+	font-size: 20px;
 }
 
 .page-template-template-page-archive-php .hentry-container {
@@ -3175,53 +3177,53 @@ object {
 }
 
 .share-buttons-inner .share-buttons-title {
-	background: #0D0D0D;
+	background: #bdc3c7;
 	color: #ffffff;
 }
 
 .share-buttons-inner .share-btns .facebook {
-	background: #314d91;
+	background: #bdc3c7;
 	color: #ffffff;
 }
 
 .share-buttons-inner .share-btns .facebook:hover {
-	background: #4d72d1;
+	background: #314d91;
 }
 
 .share-buttons-inner .share-btns .twitter {
-	background: #07beed;
+	background: #bdc3c7;
 	color: #ffffff;
 }
 
 .share-buttons-inner .share-btns .twitter:hover {
-	background: #41d5fa;
+	background: #07beed;
 }
 
 .share-buttons-inner .share-btns .googleplus {
-	background: #B83B29;
+	background: #bdc3c7;
 	color: #ffffff;
 }
 
 .share-buttons-inner .share-btns .googleplus:hover {
-	background: #e8533c;
+	background: #B83B29;
 }
 
 .share-buttons-inner .share-btns .linkedin {
-	background: #0072b5;
+	background: #bdc3c7;
 	color: #ffffff;
 }
 
 .share-buttons-inner .share-btns .linkedin:hover {
-	background: #289bde;
+	background: #0072b5;
 }
 
 .share-buttons-inner .share-btns .pinterest {
-	background: #BC282D;
+	background: #bdc3c7;
 	color: #ffffff;
 }
 
 .share-buttons-inner .share-btns .pinterest:hover {
-	background: #961c15;
+	background: #BC282D;
 }
 
 .default-share-buttons {

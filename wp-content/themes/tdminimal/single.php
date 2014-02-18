@@ -17,15 +17,16 @@ get_header(); ?>
 			<?php while ( have_posts() ) : the_post(); ?>
 				<div class="container hentry-container">
 					<?php get_template_part( 'content', 'single' ); ?>
-					
-					<?php tdminimal_content_nav( 'nav-below' ); ?>
+
+					<?php //tdminimal_content_nav( 'nav-below' ); ?>
 					
 					<?php tdminimal_get_before_comment_ad(); ?>
-					
+
 					<?php
 						if ( comments_open() || '0' != get_comments_number() )
 							comments_template();
 					?>
+					
 				</div><!-- .hentry-container -->
 			<?php endwhile; // end of the loop. ?>
 
