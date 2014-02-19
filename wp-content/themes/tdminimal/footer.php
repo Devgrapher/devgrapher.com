@@ -74,6 +74,7 @@
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<div class="site-info">
 					<?php echo tdminimal_footer_text(); ?>
+					<span id="flags_language_selector"><?php language_selector_flags(); ?></span>
 				</div><!-- .site-info -->
 				<div class="social-icon-section">
 					<ul>

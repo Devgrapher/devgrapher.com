@@ -312,3 +312,34 @@ function tdminimal_custom_content( $content ) {
     return $content;
 }
 add_filter( 'the_content', 'tdminimal_custom_content', 20 );
+
+
+/**
+ * list language flags.
+ *
+ */
+function language_selector_flags(){
+    $languages = icl_get_languages('skip_missing=0&orderby=code');
+    if(!empty($languages)){
+        foreach($languages as $l){
+            if(!$l['active']) echo '<a href="'.$l['url'].'">';
+            echo '<img src="'.$l['country_flag_url'].'" height="12" alt="'.$l['language_code'].'" width="18" />';
+            if(!$l['active']) echo '</a>';
+        }
+    }
+}
+
+/**
+ * This post is also available in…
+ *
+ */
+function icl_post_languages(){
+  $languages = icl_get_languages('skip_missing=1');
+  if(1 < count($languages)){
+    echo __('This post is also available in: ');
+    foreach($languages as $l){
+      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'">'.$l['translated_name'].'</a>';
+    }
+    echo join(', ', $langs);
+  }
+}
