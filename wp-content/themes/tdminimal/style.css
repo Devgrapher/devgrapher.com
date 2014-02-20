@@ -628,6 +628,7 @@ a.button:hover,
 
 .main-navigation li {
 	display: inline-block;
+	*display: inline; zoom:1;
 	margin-right: 12px;
 	margin-bottom: 6px;
 	padding-bottom: 10px;
