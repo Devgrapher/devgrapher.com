@@ -1935,10 +1935,8 @@ ul.bxslider li img {
 }
 
 .wp-caption {
-	border: 1px solid #ecf0f1;
 	color: #adb4b8;
 	margin-bottom: 31px;
-	padding: 10px 10px 0;
 	max-width: 100%;
 	font-style: italic;
 }
@@ -1946,7 +1944,7 @@ ul.bxslider li img {
 .wp-caption img[class*="wp-image-"] {
 	display: block;
 	margin: 1.2% auto 0;
-	max-width: 98%;
+	max-width: 100%;
 }
 
 .wp-caption-text {
@@ -1954,7 +1952,8 @@ ul.bxslider li img {
 }
 
 .wp-caption .wp-caption-text {
-	margin: 0.8075em 0;
+	font-size: 12px;
+	margin: 0.5075em 0;
 }
 
 .site-main .gallery {
