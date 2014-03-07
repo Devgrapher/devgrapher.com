@@ -1,0 +1,36 @@
+tr.image-size div.image-size-item {
+	float: none;
+	text-align: left;
+	width: 100%;
+}
+
+div.search-form-off {
+	display: none;
+}
+
+div#advanced_search_form {
+}
+
+span.field-label {
+}
+
+.media-item .batch-send {
+	float: left;
+	margin-top: 6px;
+}
+
+.media-item .order {
+	float: left;
+	margin-top: 2px;
+	margin-right: 5px;
+	padding: 4px;
+}
+
+#inline-settings-content-container {
+	display: none;
+}
+
+div.save-buttons {
+	margin-top: 20px;
+	text-align: center;
+}
