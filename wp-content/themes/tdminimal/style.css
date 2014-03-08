@@ -978,6 +978,10 @@ a.more-link {
 	color: #464242;
 }
 
+a.more-link:hover {
+	color: #0099cc;
+}
+
 .entry-content blockquote,
 .entry-content blockquote p {
 	font-style: italic;
