@@ -5486,3 +5486,32 @@ a.tdbiz-btn {
 .phone-site-content .hentry-inner h4 { font-size: 1em; }
 .phone-site-content .hentry-inner h5 { font-size: .83em; }
 .phone-site-content .hentry-inner h6 { font-size: .75em; }
+
+/* Custom css
+---------------------------------------------*/
+#insert-page-custom {
+	text-align: center;
+}
+
+#insert-page-custom a {
+	background: #bdc3c7;
+	color: #ffffff;
+	font-size: 14px;
+	line-height: 30px;
+	height: 30px;
+	padding: 0 16px;
+	text-transform: uppercase;
+	display: inline-block;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	text-align: center;
+	width: auto;
+}
+
+#insert-page-custom a:hover {
+	background: #428bca;
+}
+
+#insert-page-custom a ::selection {
+	background: #fceb8d;
+}
