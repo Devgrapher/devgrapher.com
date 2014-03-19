@@ -974,6 +974,10 @@ a.thumb-mask-link-icon:hover {
 	margin-left: 4px;
 }
 
+.entry-meta.bottom .entry-cats a {
+	color: #464242;
+}
+
 a.more-link {
 	color: #464242;
 }
