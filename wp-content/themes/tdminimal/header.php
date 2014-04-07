@@ -15,6 +15,11 @@
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
+<meta name="msvalidate.01" content="81590B6B171A181146DF5658194A0EAF" />
+
+<?php tdminimal_custom_favicon(); ?>
+<?php wp_head(); ?>
+
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -24,10 +29,7 @@
   ga('create', 'UA-47679289-1', 'devgrapher.com');
   ga('send', 'pageview');
 </script>
-<meta name="msvalidate.01" content="81590B6B171A181146DF5658194A0EAF" />
 
-<?php tdminimal_custom_favicon(); ?>
-<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?>>

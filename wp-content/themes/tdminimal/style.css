@@ -657,18 +657,6 @@ a.button:hover,
 	font-weight: bold;
 }
 
-.main-navigation .nav-bar li.menu-item-has-child > a:after {
-	content: "\F107";
-	font-family: FontAwesome;
-	font-weight: normal;
-	font-style: normal;
-	text-decoration: inherit;
-	-webkit-font-smoothing: antialiased;
-	position: relative;
-	padding-left: 8px;
-	color: #2d2f30;
-}
-
 .main-navigation .nav-bar .sub-menu li.menu-item-has-child > a:after {
 	content: "\F105";
 }
