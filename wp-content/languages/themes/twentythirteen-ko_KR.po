@@ -2,111 +2,13 @@
 # This file is distributed under the same license as the Twenty Thirteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2013-11-22 07:05:01+0000\n"
+"PO-Revision-Date: 2014-03-19 04:52:31+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: GlotPress/0.1\n"
 "Project-Id-Version: Twenty Thirteen\n"
-
-#: 404.php:16
-msgid "Not Found"
-msgstr "찾을 수 없습니다."
-
-msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
-msgstr "워드프레스 2013 테마는 블로그 본래의 역할에 충실하도록 했습니다. 글 형식을 전체 지원하며 각각 고유의 형태로 아름답게 연출되는 것이 특징입니다. 세부 디자인이 풍부하며, 열정적인 색상 구조로 시작해서 헤더 이미지, 아름다운 타이포그래피, 아이콘과 조합을 이룹니다. 또한 크거나 작은 어떤 기기에도 아주 훌륭하게 표현되는 유연한 레이아웃을 갖고 있습니다."
-
-#: functions.php:237
-msgid "Appears in the footer section of the site."
-msgstr "사이트의 푸터 영역에 나타납니다."
-
-msgid "http://wordpress.org/themes/twentythirteen"
-msgstr "http://wordpress.org/themes/twentythirteen"
-
-#: image.php:38
-msgid "Link to full-size image"
-msgstr "전체 크기 이미지 링크"
-
-#: functions.php:235
-msgid "Main Widget Area"
-msgstr "주 위젯 영역"
-
-#: functions.php:245
-msgid "Secondary Widget Area"
-msgstr "부 위젯 영역"
-
-#: functions.php:247
-msgid "Appears on posts and pages in the sidebar."
-msgstr "글과 페이지의 사이드바에 나타납니다."
-
-#: image.php:39
-msgid "Full resolution"
-msgstr "최대 해상도"
-
-#: inc/back-compat.php:41 inc/back-compat.php:53 inc/back-compat.php:68
-msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
-msgstr "Twenty Thirteen은 최소한 워드프레스 3.6 버전을 사용해야합니다. 현재 버전 %s를 사용하고 있습니다. 업그레이드를 하고 다시 해주세요."
-
-#: 404.php:21
-msgid "This is somewhat embarrassing, isn&rsquo;t it?"
-msgstr "좀 당황스럽네요. 안그런가요?"
-
-#: 404.php:22
-msgid "It looks like nothing was found at this location. Maybe try a search?"
-msgstr "위 위치에서 찾을 수 있는 것이 없는 것 같습니다. 검색을 활용해보세요."
-
-#: archive.php:29
-msgid "Daily Archives: %s"
-msgstr "날짜별 글 목록: %s"
-
-#: archive.php:31
-msgid "Monthly Archives: %s"
-msgstr "월별 글 목록: %s"
-
-#: archive.php:31
-msgctxt "monthly archives date format"
-msgid "F Y"
-msgstr "Y년 M월"
-
-#: archive.php:33
-msgid "Yearly Archives: %s"
-msgstr "년도별 글 목록: %s"
-
-#: archive.php:33
-msgctxt "yearly archives date format"
-msgid "Y"
-msgstr "Y년"
-
-#: archive.php:35
-msgid "Archives"
-msgstr "글 보관함"
-
-#: author-bio.php:26
-msgid "About %s"
-msgstr "%s에 대하여"
-
-#: author-bio.php:30
-msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
-msgstr "%s의 글 모두 보기 <span class=\"meta-nav\">&rarr;</span>"
-
-#: author.php:31
-msgid "All posts by %s"
-msgstr "%s의 모든 글"
-
-#: category.php:19
-msgid "Category Archives: %s"
-msgstr "카테고리 글 목록: %s"
-
-#: comments.php:25
-msgctxt "comments title"
-msgid "One thought on &ldquo;%2$s&rdquo;"
-msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
-msgstr[0] "&ldquo;%2$s&rdquo;에 대한 %1$s개의 생각"
-
-#: comments.php:45
-msgid "Comment navigation"
-msgstr "댓글 내비게이션"
 
 #: comments.php:46
 msgid "&larr; Older Comments"
@@ -139,10 +41,6 @@ msgstr "페이지:"
 #: content-video.php:35 content.php:31 image.php:44 page.php:39
 msgid "Edit"
 msgstr "편집"
-
-#: functions.php:379
-msgid "Permalink to %s"
-msgstr "%s 고유주소"
 
 #: content-gallery.php:36 content-image.php:32 content-quote.php:22
 #: content-video.php:32 content.php:49
@@ -205,6 +103,22 @@ msgstr "켜기"
 msgid "Page %s"
 msgstr "페이지 %s"
 
+#: functions.php:235
+msgid "Main Widget Area"
+msgstr "주 위젯 영역"
+
+#: functions.php:237
+msgid "Appears in the footer section of the site."
+msgstr "사이트의 푸터 영역에 나타납니다."
+
+#: functions.php:245
+msgid "Secondary Widget Area"
+msgstr "부 위젯 영역"
+
+#: functions.php:247
+msgid "Appears on posts and pages in the sidebar."
+msgstr "글과 페이지의 사이드바에 나타납니다."
+
 #: functions.php:272
 msgid "Posts navigation"
 msgstr "글 내비게이션"
@@ -248,6 +162,10 @@ msgctxt "1: post format name. 2: date"
 msgid "%1$s on %2$s"
 msgstr "%2$s %1$s"
 
+#: functions.php:379
+msgid "Permalink to %s"
+msgstr "%s 고유주소"
+
 #: header.php:43
 msgid "Menu"
 msgstr "메뉴"
@@ -260,6 +178,14 @@ msgstr "내용으로 바로가기"
 msgid "<span class=\"attachment-meta\">Published on <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> in <a href=\"%3$s\" title=\"Return to %4$s\" rel=\"gallery\">%5$s</a></span>"
 msgstr "<span class=\"attachment-meta\"><a href=\"%3$s\" title=\"Return to %4$s\" rel=\"gallery\">%5$s</a>에서 <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time>에 발행됨</span>"
 
+#: image.php:38
+msgid "Link to full-size image"
+msgstr "전체 크기 이미지 링크"
+
+#: image.php:39
+msgid "Full resolution"
+msgstr "최대 해상도"
+
 #: image.php:51
 msgid "<span class=\"meta-nav\">&larr;</span> Previous"
 msgstr "<span class=\"meta-nav\">&larr;</span> 이전"
@@ -267,6 +193,10 @@ msgstr "<span class=\"meta-nav\">&larr;</span> 이전"
 #: image.php:52
 msgid "Next <span class=\"meta-nav\">&rarr;</span>"
 msgstr "다음 <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/back-compat.php:41 inc/back-compat.php:53 inc/back-compat.php:68
+msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Thirteen은 최소한 워드프레스 3.6 버전을 사용해야합니다. 현재 버전 %s를 사용하고 있습니다. 업그레이드를 하고 다시 해주세요."
 
 #: inc/custom-header.php:51
 msgctxt "header image description"
@@ -298,5 +228,75 @@ msgstr "%s 글 보관함"
 msgid "Twenty Thirteen"
 msgstr "Twenty Thirteen"
 
+msgid "http://wordpress.org/themes/twentythirteen"
+msgstr "http://wordpress.org/themes/twentythirteen"
+
+msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
+msgstr "워드프레스 2013 테마는 블로그 본래의 역할에 충실하도록 했습니다. 글 형식을 전체 지원하며 각각 고유의 형태로 아름답게 연출되는 것이 특징입니다. 세부 디자인이 풍부하며, 열정적인 색상 구조로 시작해서 헤더 이미지, 아름다운 타이포그래피, 아이콘과 조합을 이룹니다. 또한 크거나 작은 어떤 기기에도 아주 훌륭하게 표현되는 유연한 레이아웃을 갖고 있습니다."
+
 msgid "the WordPress team"
 msgstr "워드프레스 팀"
+
+#: 404.php:16
+msgid "Not Found"
+msgstr "찾을 수 없습니다."
+
+#: 404.php:21
+msgid "This is somewhat embarrassing, isn&rsquo;t it?"
+msgstr "좀 당황스럽네요. 안그런가요?"
+
+#: 404.php:22
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "위 위치에서 찾을 수 있는 것이 없는 것 같습니다. 검색을 활용해보세요."
+
+#: archive.php:29
+msgid "Daily Archives: %s"
+msgstr "날짜별 글 목록: %s"
+
+#: archive.php:31
+msgid "Monthly Archives: %s"
+msgstr "월별 글 목록: %s"
+
+#: archive.php:31
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "Y년 M월"
+
+#: archive.php:33
+msgid "Yearly Archives: %s"
+msgstr "년도별 글 목록: %s"
+
+#: archive.php:33
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y년"
+
+#: archive.php:35
+msgid "Archives"
+msgstr "글 보관함"
+
+#: author-bio.php:26
+msgid "About %s"
+msgstr "%s에 대하여"
+
+#: author-bio.php:30
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "%s의 글 모두 보기 <span class=\"meta-nav\">&rarr;</span>"
+
+#: author.php:31
+msgid "All posts by %s"
+msgstr "%s의 모든 글"
+
+#: category.php:19
+msgid "Category Archives: %s"
+msgstr "카테고리 글 목록: %s"
+
+#: comments.php:25
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "&ldquo;%2$s&rdquo;에 대한 %1$s개의 생각"
+
+#: comments.php:45
+msgid "Comment navigation"
+msgstr "댓글 내비게이션"

@@ -2,8 +2,8 @@
 Contributors: freelancephp
 Tags: links, external, icon, target, _blank, _new, _none, rel, nofollow, new window, new tab, javascript, xhtml, seo
 Requires at least: 3.4.0
-Tested up to: 3.8.0
-Stable tag: 1.50
+Tested up to: 3.8.2
+Stable tag: 1.51
 
 Open external links in a new window or tab, adding "nofollow", set link icon, styling, SEO friendly options and more. Easy install and go.
 
@@ -28,6 +28,9 @@ After activating the plugin all options are already set to make your external li
 = Support =
 This plugin has the same [requirements](http://wordpress.org/about/requirements/) as WordPress.
 If you are experiencing any problems, just take a look at the [FAQ](http://wordpress.org/extend/plugins/wp-external-links/faq/) or report it in the [support section](http://wordpress.org/support/plugin/wp-external-links). You can also send me a mail with [this contactform](http://www.freelancephp.net/contact/).
+
+= Github =
+I published the code on [Github](https://github.com/freelancephp/WP-External-Links) so anybody can commit code changes.
 
 = Like this plugin? =
 Please [rate this plugin](http://wordpress.org/support/view/plugin-reviews/wp-external-links-plugin) or [post a comment](http://www.freelancephp.net/wp-external-links-plugin/) on my blog.
@@ -62,7 +65,7 @@ add_action('wpel_ready', 'extra_filters');`
 
 = Filter hook =
 The wpel_external_link filter gives you the possibility to manipulate output of the mailto created by the plugin, like:
-`function special_external_link($created_link, $original_link, $label, $attrs = array()) {
+`function special_external_link($created_link, $original_link, $label, $attrs, $is_ignored_link) {
 	// skip links that contain the class "not-external"
 	if (isset($attrs['class']) && strpos($attrs['class'], 'not-external') !== false) {
 		return $original_link;
@@ -70,7 +73,7 @@ The wpel_external_link filter gives you the possibility to manipulate output of 
 
 	return '<b>'. $created_link .'</b>';
 }
-add_filter('wpel_external_link', 'special_external_link', 10, 4);`
+add_filter('wpel_external_link', 'special_external_link', 10, 5);`
 
 Now all external links will be processed and wrapped around a `<b>`-tag. And links containing the class "not-external" will not be processed by the plugin at all (and stay the way they are).
 
@@ -80,6 +83,10 @@ Now all external links will be processed and wrapped around a `<b>`-tag. And lin
 * [Icon](http://findicons.com/icon/164579/link_go?id=427009) made by [FatCow Web Hosting](http://www.fatcow.com/)
 
 == Changelog ==
+
+= 1.51 =
+* Fixed also check url's starting with //
+* Fixed wpel_external_link also applied on ignored links
 
 = 1.50 =
 * Removed stylesheet file to save extra request
