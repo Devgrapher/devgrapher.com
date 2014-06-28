@@ -15,11 +15,7 @@
         //	var wasHighlighted = false;
 
         base.setHighlight = function (highlight) {
-            if (highlight) {
-                $(s.tinymce_button).addClass('mce_crayon_tinymce_highlight');
-            } else {
-                $(s.tinymce_button).removeClass('mce_crayon_tinymce_highlight');
-            }
+            $(s.tinymce_button).closest(s.tinymce_button_generic).toggleClass(s.tinymce_highlight, highlight);
             isHighlighted = highlight;
         };
 
@@ -40,10 +36,6 @@
             return false;
         };
 
-        base.init = function (button) {
-            // TODO
-        };
-
         base.loadTinyMCE = function () {
             var version = parseInt(tinymce.majorVersion);
             if (!isNaN(version) && version <= 3) {
@@ -59,21 +51,14 @@
             tinymce.PluginManager.add(name, function (ed, url) {
                 // TODO(aramk) This is called twice for some reason.
                 ed.on('init', function () {
+                    ed.dom.loadCSS(url + '/crayon_te.css');
                     if (isInit) {
                         return;
                     }
-                    ed.dom.loadCSS(url + '/crayon_te.css');
                     $(s.tinymce_button).parent().addClass(s.tinymce_button_unique);
                     CrayonTagEditor.bind('.' + s.tinymce_button_unique);
-
                     // Remove all selected pre tags
-                    var content = $(ed.getContent());
-                    var wrapper = $('<div>');
-                    content.each(function () {
-                        $(this).removeClass(s.css_selected);
-                        wrapper.append($(this).clone());
-                    });
-                    ed.setContent(wrapper.html());
+                    $('.' + s.css_selected, ed.getContent()).removeClass(s.css_selected);
                     isInit = true;
                 });
 

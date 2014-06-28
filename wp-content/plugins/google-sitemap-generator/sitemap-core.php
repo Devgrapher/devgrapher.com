@@ -1,7 +1,7 @@
 <?php
 /*
 
- $Id: sitemap-core.php 912228 2014-05-11 18:24:30Z arnee $
+ $Id: sitemap-core.php 935247 2014-06-19 17:13:03Z arnee $
 
 */
 
@@ -846,10 +846,6 @@ final class GoogleSitemapGenerator {
 	public static function GetBackLink() {
 		global $wp_version;
 		$url = admin_url("options-general.php?page=" . GoogleSitemapGeneratorLoader::GetBaseName());
-
-		//Some browser cache the page... great! So lets add some no caching params depending on the WP and plugin version
-		$url .= '&sm_wpv=' . $wp_version . '&sm_pv=' . GoogleSitemapGeneratorLoader::GetVersion();
-
 		return $url;
 	}
 
@@ -903,7 +899,7 @@ final class GoogleSitemapGenerator {
 	 * @return true if compressed
 	 */
 	public function IsGzipEnabled() {
-		return (function_exists("gzwrite"));
+		return (function_exists("gzwrite") && $this->GetOption('b_autozip'));
 	}
 
 	/**
@@ -1145,6 +1141,7 @@ final class GoogleSitemapGenerator {
 		$this->options["sm_b_ping"] = true; //Auto ping Google
 		$this->options["sm_b_stats"] = false; //Send anonymous stats
 		$this->options["sm_b_pingmsn"] = true; //Auto ping MSN
+		$this->options["sm_b_autozip"] = true; //Try to gzip the output
 		$this->options["sm_b_memory"] = ''; //Set Memory Limit (e.g. 16M)
 		$this->options["sm_b_time"] = -1; //Set time limit in seconds, 0 for unlimited, -1 for disabled
 		$this->options["sm_b_style_default"] = true; //Use default style
@@ -1207,6 +1204,11 @@ final class GoogleSitemapGenerator {
 		if($this->optionsLoaded) return;
 
 		$this->InitOptions();
+
+		//Delete the options cache. This is unfortunately required for some hosts,
+		//but it is not that bad since it will only clear the options and only if a
+		//sitemap is actually served or the sitemap admin page is requested.
+		wp_cache_delete('alloptions', 'options');
 
 		//First init default values, then overwrite it with stored values so we can add default
 		//values with an update which get stored by the next edit.
@@ -1573,7 +1575,7 @@ final class GoogleSitemapGenerator {
 
 		//Do not index the actual XML pages, only process them.
 		//This avoids that the XML sitemaps show up in the search results.
-		if(!headers_sent()) header('X-Robots-Tag: noindex', true);
+		if(!headers_sent()) header('X-Robots-Tag: noindex', true, 200);
 
 		$this->Initate();
 
@@ -1586,16 +1588,17 @@ final class GoogleSitemapGenerator {
 		//Don't zip if anything happened before which could break the output or if the client does not support gzip.
 		//If there are already other output filters, there might be some content on another
 		//filter level already, which we can't detect. Zipping then would lead to invalid content.
-		$pack = (isset($options['zip']) ? $options['zip'] : true);
+		$pack = (isset($options['zip']) ? $options['zip'] : $this->GetOption('b_autozip'));
 		if(
-			empty($_SERVER['HTTP_ACCEPT_ENCODING']) //No encondig support
+			empty($_SERVER['HTTP_ACCEPT_ENCODING']) //No encoding support
 			|| strpos($_SERVER['HTTP_ACCEPT_ENCODING'],'gzip') === false //or no gzip
 			|| !$this->IsGzipEnabled() //No PHP gzip support
 			|| headers_sent() //Headers already sent
 			|| ob_get_contents() //there was already some output...
 			|| in_array('ob_gzhandler', ob_list_handlers()) //Some other plugin (or PHP) is already gzipping
-			|| in_array(strtolower(ini_get("zlib.output_compression")),array('yes', 'on', 'true', 1, true)) //Zlib compression in php.ini enabled
-			|| ob_get_level() > 1 //Another plugin is using an output filter already
+			|| $this->GetPhpIniBoolean(ini_get("zlib.output_compression")) //Zlib compression in php.ini enabled
+			|| ob_get_level() > (!$this->GetPhpIniBoolean(ini_get("output_buffering"))?0:1) //Another output buffer (beside of the default one) is already active
+			|| (isset($_SERVER['HTTP_X_VARNISH']) && is_numeric($_SERVER['HTTP_X_VARNISH'])) //Behind a Varnish proxy
 		) $pack = false;
 
 		$packed = false;
@@ -1688,7 +1691,6 @@ final class GoogleSitemapGenerator {
 			$this->AddElement(new GoogleSitemapGeneratorXmlEntry('<' . '?xml-stylesheet type="text/xsl" href="' . $styleSheet . '"?' . '>'));
 		}
 
-		$this->AddElement(new GoogleSitemapGeneratorDebugEntry("generator=\"wordpress/" . get_bloginfo('version') . "\""));
 		$this->AddElement(new GoogleSitemapGeneratorDebugEntry("sitemap-generator-url=\"http://www.arnebrachhold.de\" sitemap-generator-version=\"" . $this->GetVersion() . "\""));
 		$this->AddElement(new GoogleSitemapGeneratorDebugEntry("generated-on=\"" . date(get_option("date_format") . " " . get_option("time_format")) . "\""));
 
@@ -1951,9 +1953,12 @@ final class GoogleSitemapGenerator {
 
 		$results = array();
 
+		$first = true;
+
 		foreach($urls AS $url) {
-			$status = @$this->ExecutePing($url, false);
+			$status = @$this->ExecutePing($url, $first);
 			$results[] = array("sitemap"=> $url, "status" => $status);
+			$first = false;
 		}
 		return $results;
 
@@ -2052,10 +2057,23 @@ final class GoogleSitemapGenerator {
 	}
 
 	/**
-	 * Sends anonymous statistics
+	 * Sends anonymous statistics (disabled by default)
 	 */
 	private function SendStats() {
-		global $wp_version;
+		global $wp_version, $wpdb;
+		$postCount = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} p WHERE p.post_status='publish'");
+
+		//Send simple post count statistic to get an idea in which direction this plugin should be optimized
+		//Only a rough number is required, so we are rounding things up
+		if($postCount <=5) $postCount = 5;
+		else if($postCount < 25) $postCount = 10;
+		else if($postCount < 35) $postCount = 25;
+		else if($postCount < 75) $postCount = 50;
+		else if($postCount < 125) $postCount = 100;
+		else if($postCount < 2000) $postCount = round($postCount / 200) * 200;
+		else if($postCount < 10000) $postCount = round($postCount / 1000) * 1000;
+		else $postCount = round($postCount / 10000) * 10000;
+
 		$postData = array(
 			"v" => 1,
 			"tid" => "UA-65990-26",
@@ -2068,6 +2086,7 @@ final class GoogleSitemapGenerator {
 			"cd1" => $wp_version,
 			"cd2" => $this->GetVersion(),
 			"cd3" => PHP_VERSION,
+			"cd4" => $postCount,
 			"ul" => get_bloginfo('language'),
 		);
 
@@ -2080,7 +2099,7 @@ final class GoogleSitemapGenerator {
 	 * @return int The number of seconds
 	 */
 	public static function GetSupportFeedCacheLifetime() {
-		return 60*60*24*7;
+		return 60 * 60 * 24 * 7;
 	}
 
 	/**
@@ -2195,5 +2214,38 @@ final class GoogleSitemapGenerator {
 	 */
 	public function IsGreaterZero($value) {
 		return ($value > 0);
+	}
+
+	/**
+	 * Converts the various possible php.ini values for true and false to boolean
+	 *
+	 * @param $value string The value from ini_get
+	 *
+	 * @return bool The converted value
+	 */
+	public function GetPhpIniBoolean($value) {
+		if (is_string($value)) {
+			switch (strtolower($value)) {
+				case '+':
+				case '1':
+				case 'y':
+				case 'on':
+				case 'yes':
+				case 'true':
+				case 'enabled':
+					return true;
+
+				case '-':
+				case '0':
+				case 'n':
+				case 'no':
+				case 'off':
+				case 'false':
+				case 'disabled':
+					return false;
+			}
+		}
+
+		return (boolean) $value;
 	}
 }
