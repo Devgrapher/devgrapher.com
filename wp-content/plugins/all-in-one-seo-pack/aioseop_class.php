@@ -46,6 +46,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 	var $ga_token;
 	var $account_cache;
 	var $profile_id;
+	var $meta_opts = false;
  	
 	function All_in_One_SEO_Pack() {
 		global $aioseop_options;
@@ -73,6 +74,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 		$help_text = Array(
 			"donate"				=> __( "All donations support continued development of this free software.", 'all_in_one_seo_pack'),
 			"can"					=> __( "This option will automatically generate Canonical URLs for your entire WordPress installation.  This will help to prevent duplicate content penalties by <a href=\'http://googlewebmastercentral.blogspot.com/2009/02/specify-your-canonical.html\' target=\'_blank\'>Google</a>.", 'all_in_one_seo_pack'),	
+			"no_paged_canonical_links"=> __( "Checking this option will set the Canonical URL for all paginated content to the first page.", 'all_in_one_seo_pack'),
 			"use_original_title"	=> __( "Use wp_title to set the title; disable this option if you run into conflicts with the title being set by your theme or another plugin.<br /><a href='http://semperplugins.com/documentation/general-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"do_log"				=> __( "Check this and All in One SEO Pack will create a log of important events (all_in_one_seo_pack.log) in its plugin directory which might help debugging. Make sure this directory is writable.<br /><a href='http://semperplugins.com/documentation/general-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"home_title"			=> __( "As the name implies, this will be the Meta Title of your homepage. This is independent of any other option. If not set, the default Site Title (found in WordPress under Settings, General, Site Title) will be used.<br /><a href='http://semperplugins.com/documentation/home-page-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ), 
@@ -116,6 +118,11 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				__( '%category_title% - The original title of the category', 'all_in_one_seo_pack' ) . '</li><li>' . 
 				__( '%category_description% - The description of the category', 'all_in_one_seo_pack' ) . '</li></ul>',
 			"archive_title_format"	=> 
+				__( "This controls the format of the title tag for Custom Post Archives.<br /><a href='http://semperplugins.com/documentation/title-settings/' target='_blank'>Click here for documentation on this setting</a><br />The following macros are supported:", 'all_in_one_seo_pack' ) . 
+				'<ul><li>' . __( '%blog_title% - Your blog title', 'all_in_one_seo_pack' ) . '</li><li>' . 
+				__( '%blog_description% - Your blog description', 'all_in_one_seo_pack' ) . '</li><li>' . 
+				__( '%archive_title - The original archive title given by wordpress', 'all_in_one_seo_pack' ) . '</li></ul>',
+			"date_title_format"	=>
 				__( "This controls the format of the title tag for Date Archives.<br /><a href='http://semperplugins.com/documentation/title-settings/' target='_blank'>Click here for documentation on this setting</a><br />The following macros are supported:", 'all_in_one_seo_pack' ) . 
 				'<ul><li>' . __( '%blog_title% - Your blog title', 'all_in_one_seo_pack' ) . '</li><li>' . 
 				__( '%blog_description% - Your blog description', 'all_in_one_seo_pack' ) . '</li><li>' . 
@@ -142,6 +149,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				'<ul><li>' . __( '%blog_title% - Your blog title', 'all_in_one_seo_pack' ) . '</li><li>' . 
 				__( '%blog_description% - Your blog description', 'all_in_one_seo_pack' ) . '</li><li>' . 
 				__( '%description% - The original description as determined by the plugin, e.g. the excerpt if one is set or an auto-generated one if that option is set', 'all_in_one_seo_pack' ) . '</li><li>' . 
+				__( '%post_title% - The original title of the post', 'all_in_one_seo_pack' ) . '</li><li>' . 
 				__( '%wp_title% - The original wordpress title, e.g. post_title for posts', 'all_in_one_seo_pack' ) . '</li></ul>',
 			"404_title_format"	=> __( "This controls the format of the title tag for the 404 page.<br /><a href='http://semperplugins.com/documentation/title-settings/' target='_blank'>Click here for documentation on this setting</a><br />The following macros are supported:", 'all_in_one_seo_pack' ) .
 				'<ul><li>' . __( '%blog_title% - Your blog title', 'all_in_one_seo_pack' ) . '</li><li>' . 
@@ -186,9 +194,13 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			"search_noindex"		=> 	__( "Check this to ask search engines not to index the Search page. Useful for avoiding duplicate content.<br /><a href='http://semperplugins.com/documentation/noindex-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"paginated_noindex"		=> 	__( "Check this to ask search engines not to index paginated pages/posts. Useful for avoiding duplicate content.<br /><a href='http://semperplugins.com/documentation/noindex-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"paginated_nofollow"		=> 	__( "Check this to ask search engines not to follow links from paginated pages/posts. Useful for avoiding duplicate content.<br /><a href='http://semperplugins.com/documentation/noindex-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
+			'noodp'			 	 => __( 'Check this box to ask search engines not to use descriptions from the Open Directory Project for your entire site.', 'all_in_one_seo_pack' ),
+			'noydir'			 => __( 'Check this box to ask Yahoo! not to use descriptions from the Yahoo! directory for your entire site.', 'all_in_one_seo_pack' ),
 			"generate_descriptions"	=> __( "Check this and your Meta Descriptions will be auto-generated from your excerpt or content.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
+			"run_shortcodes"	=> __( "Check this and shortcodes will get executed for descriptions auto-generated from content.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"hide_paginated_descriptions"=> __( "Check this and your Meta Descriptions will be removed from page 2 or later of paginated content.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"dont_truncate_descriptions"=> __( "Check this to prevent your Description from being truncated regardless of its length.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
+			"schema_markup"=> __( "Check this to support Schema.org markup, i.e., itemprop on supported metadata.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"unprotect_meta"		=> __( "Check this to unprotect internal postmeta fields for use with XMLRPC. If you don't know what that is, leave it unchecked.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"ex_pages" 				=> 	__( "Enter a comma separated list of pages here to be excluded by All in One SEO Pack.  This is helpful when using plugins which generate their own non-WordPress dynamic pages.  Ex: <em>/forum/, /contact/</em>  For instance, if you want to exclude the virtual pages generated by a forum plugin, all you have to do is add forum or /forum or /forum/ or and any URL with the word \"forum\" in it, such as http://mysite.com/forum or http://mysite.com/forum/someforumpage here and it will be excluded from All in One SEO Pack.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
 			"post_meta_tags"		=> __( "What you enter here will be copied verbatim to the header of all Posts. You can enter whatever additional headers you want here, even references to stylesheets.<br /><a href='http://semperplugins.com/documentation/advanced-settings/' target='_blank'>Click here for documentation on this setting</a>", 'all_in_one_seo_pack' ),
@@ -236,6 +248,10 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 		   "can"=> Array(
 				'name' => __( 'Canonical URLs:', 'all_in_one_seo_pack' ),
 				'default' => 1),
+			"no_paged_canonical_links"=> Array(
+				'name' => __( 'No Pagination for Canonical URLs:', 'all_in_one_seo_pack' ),
+				'default' => 0,
+				'condshow' => Array( "aiosp_can" => 'on' ) ),
 			"rewrite_titles"=> Array( 
 				'name' => __( 'Rewrite Titles:', 'all_in_one_seo_pack' ), 
 				'default' => 1,
@@ -274,7 +290,11 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				'name' => __( 'Category Title Format:', 'all_in_one_seo_pack' ), 
 				'type' => 'text', 'default' => '%category_title% | %blog_title%',
 				'condshow' => Array( "aiosp_rewrite_titles" => 1 ) ),
-		   "archive_title_format"=> Array(
+			"archive_title_format"=> Array(
+				'name' => __( 'Archive Title Format:', 'all_in_one_seo_pack' ), 
+				'type' => 'text', 'default' => '%archive_title% | %blog_title%',
+				'condshow' => Array( "aiosp_rewrite_titles" => 1 ) ),
+			"date_title_format"=> Array(
 				'name' => __( 'Date Archive Title Format:', 'all_in_one_seo_pack' ), 
 				'type' => 'text', 'default' => '%date% | %blog_title%',
 				'condshow' => Array( "aiosp_rewrite_titles" => 1 ) ),
@@ -335,7 +355,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			"cposttitles" => Array(
 				'name' => __( 'Custom titles:', 'all_in_one_seo_pack' ), 
 				'type' => 'checkbox', 'default' => 0,
-				'condshow' => Array( 'aiosp_enablecpost' => 'on', 'aiosp_cpostadvanced' => 'on' )
+				'condshow' => Array( "aiosp_rewrite_titles" => 1, 'aiosp_enablecpost' => 'on', 'aiosp_cpostadvanced' => 'on' )
 				),
 			"posttypecolumns" => Array(
 				'name' => __( 'Show Column Labels for Custom Post Types:', 'all_in_one_seo_pack' ),
@@ -449,15 +469,28 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			"paginated_nofollow"=> Array(
 				'name' => __( 'Use nofollow for paginated pages/posts:', 'all_in_one_seo_pack' ),
 				'default' => 0),
+			"noodp"=> Array(
+				'name' => __( 'Exclude site from the Open Directory Project:', 'all_in_one_seo_pack' ),
+				'default' => 0),
+			"noydir"=> Array(
+				'name' => __( 'Exclude site from Yahoo! Directory:', 'all_in_one_seo_pack' ),
+				'default' => 0),
 			"generate_descriptions"=> Array(
 				'name' => __( 'Autogenerate Descriptions:', 'all_in_one_seo_pack' ),
 				'default' => 1),
+			"run_shortcodes"=> Array(
+				'name' => __( 'Run Shortcodes In Autogenerated Descriptions:', 'all_in_one_seo_pack' ),
+				'default' => 0,
+				'condshow' => Array( 'aiosp_generate_descriptions' => 'on' ) ),
 			"hide_paginated_descriptions"=> Array(
 				'name' => __( 'Remove Descriptions For Paginated Pages:', 'all_in_one_seo_pack' ),
 				'default' => 0),
 			"dont_truncate_descriptions"=> Array(
 				'name' => __( 'Never Shorten Long Descriptions:', 'all_in_one_seo_pack' ),
-				'default' => 0),			
+				'default' => 0),
+			"schema_markup"=> Array(
+				'name' => __( 'Use Schema.org Markup', 'all_in_one_seo_pack' ),
+				'default' => 1),
 			"unprotect_meta"=> Array(
 				'name' => __( 'Unprotect Post Meta Fields:', 'all_in_one_seo_pack' ),
 				'default' => 0),
@@ -547,7 +580,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				'title'	=> Array(
 						'name' => __( 'Title Settings', 'all_in_one_seo_pack' ),
 						'help_link' => 'http://semperplugins.com/documentation/title-settings/',
-						'options' => Array( "rewrite_titles", "force_rewrites", "cap_titles", "cap_cats", "page_title_format", "post_title_format", "category_title_format", "archive_title_format", "author_title_format",
+						'options' => Array( "rewrite_titles", "force_rewrites", "cap_titles", "cap_cats", "page_title_format", "post_title_format", "category_title_format", "archive_title_format", "date_title_format", "author_title_format",
 						 					"tag_title_format", "search_title_format", "description_format", "404_title_format", "paged_format" )						
 					),
 				'cpt' => Array(
@@ -574,12 +607,12 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				'noindex' => Array(
 						'name' => __( 'Noindex Settings', 'all_in_one_seo_pack' ),
 						'help_link' => 'http://semperplugins.com/documentation/noindex-settings/',
-						'options' => Array( 'cpostnoindex', 'cpostnofollow', 'category_noindex', 'archive_date_noindex', 'archive_author_noindex', 'tags_noindex', 'search_noindex', 'paginated_noindex', 'paginated_nofollow' )
+						'options' => Array( 'cpostnoindex', 'cpostnofollow', 'category_noindex', 'archive_date_noindex', 'archive_author_noindex', 'tags_noindex', 'search_noindex', 'paginated_noindex', 'paginated_nofollow', 'noodp', 'noydir' )
 					),
 				'advanced' => Array(
 						'name' => __( 'Advanced Settings', 'all_in_one_seo_pack' ),
 						'help_link' => 'http://semperplugins.com/documentation/advanced-settings/',
-						'options' => Array( 'generate_descriptions', 'hide_paginated_descriptions', 'dont_truncate_descriptions', 'unprotect_meta', 'ex_pages', 'post_meta_tags', 'page_meta_tags', 'front_meta_tags', 'home_meta_tags' )
+						'options' => Array( 'generate_descriptions', 'run_shortcodes', 'hide_paginated_descriptions', 'dont_truncate_descriptions', 'unprotect_meta', 'ex_pages', 'post_meta_tags', 'page_meta_tags', 'front_meta_tags', 'home_meta_tags' )
 					)
 				);
 
@@ -600,9 +633,17 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 	function custom_output_option( $buf, $args ) {
 		if ( $args['name'] == 'aiosp_snippet' )  {
 			global $post, $aioseop_options, $wp_query;
+			$title = $url = $description = '';
+			$args['options']['type'] = 'html';
+			$args['options']['nowrap'] = false;
+			$args['options']['save'] = false;
+			$p = $post; $w = $wp_query;
+			if ( !is_object( $post ) ) $post = $this->get_queried_object();
+			if ( !is_object( $post ) && is_admin() && !empty( $_GET ) && !empty( $_GET['post_type'] ) && !empty( $_GET['taxonomy'] ) && !empty( $_GET['tag_ID'] ) ) {
+				$term = get_term_by( 'id', $_GET['tag_ID'], $_GET['taxonomy'] );
+			}
 			if ( is_object( $post ) ) {
-				$post_id = $post->ID;
-				$p = $post; $w = $wp_query;
+				$post_id = $p->ID;
 				if (! $post->post_modified_gmt != '' )
 					$wp_query = new WP_Query( array( 'p' => $post_id, 'post_type' => $post->post_type ) );
 				if ( $post->post_type == 'page' )
@@ -611,71 +652,85 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 					$wp_query->is_attachment = true;
 				else
 					$wp_query->is_single = true;
-				if ( empty( $wp_query->is_front_page ) ) $wp_query->is_front_page = false;	
+				if ( empty( $wp_query->is_front_page ) ) $wp_query->is_front_page = false;
 				if 	( get_option( 'show_on_front' ) == 'page' ) {
 					if ( is_page() && $post->ID == get_option( 'page_on_front' ) )
 						$wp_query->is_front_page = true;
 					elseif ( $post->ID == get_option( 'page_for_posts' ) )
 						$wp_query->is_home = true;
 				}
-				
-				$args['options']['type'] = 'html';
-				$args['options']['nowrap'] = false;
-				$args['options']['save'] = false;
 				$wp_query->queried_object = $post;
-				
 				if ( !empty( $post ) && !$wp_query->is_home && !$wp_query->is_front_page ) {
 					$title = $this->internationalize( get_post_meta( $post->ID, "_aioseop_title", true ) );
 					if ( empty( $title ) ) $title = $post->post_title;
 				}
-				
 				$title_format = '';
 				if ( empty( $title ) ) {
 					$title = $this->wp_title();
 					$title_format = '%post_title%';
 				}
-				
-				if ( ( $aioseop_options['aiosp_can'] ) && ( $url = $this->aiosp_mrt_get_url( $wp_query ) ) )
-					$url = apply_filters( 'aioseop_canonical_url', $url );
-				if ( !$url ) $url = get_permalink();
-
-				$title = $this->apply_cf_fields( $title );
-
 				$description = $this->get_aioseop_description( $post );
-				$description = $this->apply_cf_fields( $description );
-				$description = apply_filters( 'aioseop_description', $description );				
-				
-				if ( $this->strlen( $title ) > 70 ) $title = $this->trim_excerpt_without_filters( $title, 70 ) . '...';
-				if ( $this->strlen( $description ) > 156 ) $description = $this->trim_excerpt_without_filters( $description, 156 ) . '...';
-				
 				if ( empty( $title_format ) ) {
 					if ( is_page() )
 						$title_format = $aioseop_options['aiosp_page_title_format'];
-					elseif ( is_single() )
-						$title_format = $this->get_post_title_format();					
+					elseif ( is_single() || is_attachment() )
+						$title_format = $this->get_post_title_format();
 				}
-				$extra_title_len = 0;
-				if ( empty( $title_format ) ) {
-					$title = '<span id="aioseop_snippet_title">' . esc_attr( strip_tags( $title ) ) . '</span>';
+			} else if ( is_object( $term ) ) {
+				if ( $_GET['taxonomy'] == 'category' ) {
+					query_posts( Array( 'cat' => $_GET['tag_ID'] ) );
+				} else if ( $_GET['taxonomy'] == 'post_tag' ) {
+					query_posts( Array( 'tag' => $term->slug ) );
 				} else {
-					$title_format = str_replace( '%blog_title%', get_bloginfo( 'name' ), $title_format );
-					$title_format = $this->apply_cf_fields( $title_format );
-					$replace_title = '<span id="aioseop_snippet_title">' . esc_attr( strip_tags( $title ) ) . '</span>';
-					$title_format = str_replace( '%post_title%', $replace_title, $title_format );
-					$title_format = str_replace( '%page_title%', $replace_title, $title_format );
-					$title_format = preg_replace( '/%([^%]*?)%/', '', $title_format );					
-					$title = $title_format;
-					$extra_title_len = strlen( str_replace( $replace_title, '', $title_format ) );
+					query_posts( Array( 'page' => '', $_GET['taxonomy'] => $term->slug, 'post_type' => $_GET['post_type'] ) );					
 				}
-				
-				$args['value'] = sprintf( $args['value'], $title, esc_url( $url ), esc_attr( strip_tags( $description ) ) );
-				$extra_title_len = (int)$extra_title_len;
-				$args['value'] .= "<script>var aiosp_title_extra = {$extra_title_len};</script>";
-				$buf = $this->get_option_row( $args['name'], $args['options'], $args );
-				
-				wp_reset_postdata();
-				$wp_query = $w; $post = $p;
+				if ( empty( $this->meta_opts ) )
+					$this->meta_opts = $this->get_current_options( Array(), 'aiosp' );
+				$title = $this->get_tax_name( $_GET['taxonomy'] );
+				$title_format = $this->get_tax_title_format();
+				$opts = $this->meta_opts;
+				if ( !empty( $opts ) ) $description = $opts['aiosp_description'];
+				if ( empty( $description ) ) $description = term_description();
+				$description = $this->internationalize( $description );
+			} else return '';
+			
+			$show_page = true;
+			if ( !empty( $aioseop_options["aiosp_no_paged_canonical_links"] ) ) $show_page = false;
+			
+			if ( ( $aioseop_options['aiosp_can'] ) && ( $url = $this->aiosp_mrt_get_url( $wp_query, $show_page ) ) )
+				$url = apply_filters( 'aioseop_canonical_url', $url );
+			if ( !$url ) $url = get_permalink();
+			
+			$title = $this->apply_cf_fields( $title );
+			$description = $this->apply_cf_fields( $description );
+			$description = apply_filters( 'aioseop_description', $description );
+			
+			wp_reset_postdata();
+			$wp_query = $w; $post = $p;
+			
+			if ( $this->strlen( $title ) > 70 ) $title = $this->trim_excerpt_without_filters( $title, 70 ) . '...';
+			if ( $this->strlen( $description ) > 156 ) $description = $this->trim_excerpt_without_filters( $description, 156 ) . '...';
+			
+			$extra_title_len = 0;
+			if ( empty( $title_format ) ) {
+				$title = '<span id="aioseop_snippet_title">' . esc_attr( wp_strip_all_tags( $title ) ) . '</span>';
+			} else {
+				if ( strpos( $title_format, '%blog_title%' ) !== false ) $title_format = str_replace( '%blog_title%', get_bloginfo( 'name' ), $title_format );
+				$title_format = $this->apply_cf_fields( $title_format );
+				$replace_title = '<span id="aioseop_snippet_title">' . esc_attr( wp_strip_all_tags( $title ) ) . '</span>';
+				if ( strpos( $title_format, '%post_title%' ) !== false ) $title_format = str_replace( '%post_title%', $replace_title, $title_format );
+				if ( strpos( $title_format, '%page_title%' ) !== false ) $title_format = str_replace( '%page_title%', $replace_title, $title_format );
+				if ( strpos( $title_format, '%category_title%' ) !== false ) $title_format = str_replace( '%category_title%', $replace_title, $title_format );
+				if ( strpos( $title_format, '%taxonomy_title%' ) !== false ) $title_format = str_replace( '%taxonomy_title%', $replace_title, $title_format );
+				$title_format = preg_replace( '/%([^%]*?)%/', '', $title_format );					
+				$title = $title_format;
+				$extra_title_len = strlen( str_replace( $replace_title, '', $title_format ) );
 			}
+			
+			$args['value'] = sprintf( $args['value'], $title, esc_url( $url ), esc_attr( wp_strip_all_tags( $description ) ) );
+			$extra_title_len = (int)$extra_title_len;
+			$args['value'] .= "<script>var aiosp_title_extra = {$extra_title_len};</script>";
+			$buf = $this->get_option_row( $args['name'], $args['options'], $args );
 		}
 		return $buf;
 	}
@@ -829,7 +884,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 						'</ul>',
 						'type' => 'text',
 						'default' => '%post_title% | %blog_title%',
-						'condshow' => Array( 'aiosp_enablecpost' => 'on', 'aiosp_cpostadvanced' => 'on', 'aiosp_cposttitles' => 'on', 'aiosp_cpostactive\[\]' => $p )
+						'condshow' => Array( 'aiosp_rewrite_titles' => 1, 'aiosp_enablecpost' => 'on', 'aiosp_cpostadvanced' => 'on', 'aiosp_cposttitles' => 'on', 'aiosp_cpostactive\[\]' => $p )
 				);
 				$this->layout['cpt']['options'][] = $field;
 			}
@@ -848,16 +903,16 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 	}
 	
 	function add_admin_pointers() {
-		$this->pointers['aioseop_menu_211'] = Array( 'pointer_target' => '#toplevel_page_all-in-one-seo-pack-aioseop_class',
+		$this->pointers['aioseop_menu_220'] = Array( 'pointer_target' => '#toplevel_page_all-in-one-seo-pack-aioseop_class',
 												 'pointer_text' => 	'<h3>' . sprintf( __( 'Welcome to Version %s!', 'all_in_one_seo_pack' ), AIOSEOP_VERSION )
 													. '</h3><p>' . __( 'Thank you for running the latest and greatest All in One SEO Pack ever! Please review your settings, as we\'re always adding new features for you!', 'all_in_one_seo_pack' ) . '</p>',
 												 'pointer_edge' => 'top',
 												 'pointer_align' => 'left',
 												 'pointer_scope' => 'global'
 											);
-		$this->pointers['aioseop_welcome_211'] = Array( 'pointer_target' => '#aioseop_top_button',
+		$this->pointers['aioseop_welcome_220'] = Array( 'pointer_target' => '#aioseop_top_button',
 													'pointer_text' => '<h3>' . sprintf( __( 'Review Your Settings', 'all_in_one_seo_pack' ), AIOSEOP_VERSION )
-													. '</h3><p>' . __( 'Thank you for running the latest and greatest All in One SEO Pack ever! New since 2.1: Manage how your site appears on Facebook, Google+, and Twitter with our Social Meta module.  Enable it from the Feature Manager.  Remember to review your settings, we have added some new ones!', 'all_in_one_seo_pack' ) . '</p>',
+													. '</h3><p>' . __( 'Thank you for running the latest and greatest All in One SEO Pack ever! New since 2.2: Control who accesses your site with the new Robots.txt Editor and File Editor modules!  Enable them from the Feature Manager.  Remember to review your settings, we have added some new ones!', 'all_in_one_seo_pack' ) . '</p>',
 													 'pointer_edge' => 'bottom',
 													 'pointer_align' => 'left',
 													 'pointer_scope' => 'local'
@@ -906,7 +961,8 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			$get_opts = $this->default_options( $location );
 			foreach ( Array( 'keywords', 'description', 'title', 'sitemap_exclude', 'disable', 'disable_analytics', 'noindex', 'nofollow', 'noodp', 'noydir', 'titleatr', 'menulabel' ) as $f ) {
 				$field = "aiosp_$f";
-				$get_opts[$field] = htmlspecialchars( stripslashes( get_post_meta( $post_id, '_aioseop_' . $f, true ) ) );
+				$meta = get_post_meta( $post_id, '_aioseop_' . $f, true );					
+				$get_opts[$field] = htmlspecialchars( stripslashes( $meta ) );
 			}
 			$opts = wp_parse_args( $opts, $get_opts );
 			return $opts;
@@ -1067,34 +1123,53 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 		return $p;
 	}
 	
+	function is_page_included() {
+		global $aioseop_options;
+		if ( is_feed() ) return false;
+		if ( aioseop_mrt_exclude_this_page() ) return false;
+		$post = $this->get_queried_object();
+		$post_type = '';
+		if ( !empty( $post ) && !empty( $post->post_type ) )
+			$post_type = $post->post_type;
+		if( empty( $aioseop_options['aiosp_enablecpost'] ) ) {
+			$wp_post_types = get_post_types( Array( '_builtin' => true ) ); // don't display meta if SEO isn't enabled on custom post types -- pdb
+			if( is_singular() && !in_array( $post_type, $wp_post_types ) && !is_front_page() ) return false;
+		} elseif ( !empty( $aioseop_options['aiosp_cpostadvanced'] ) ) {
+			$wp_post_types = $aioseop_options['aiosp_cpostactive'];
+			if ( is_singular() && !in_array( $post_type, $wp_post_types ) && !is_front_page() ) return false;
+			if ( is_post_type_archive() && !is_post_type_archive( $wp_post_types ) ) return false;
+		}
+		
+		$this->meta_opts = $this->get_current_options( Array(), 'aiosp' );
+		
+		$aiosp_disable = $aiosp_disable_analytics = false;
+		
+		if  ( !empty( $this->meta_opts ) ) {
+			if ( isset( $this->meta_opts['aiosp_disable'] ) ) 			$aiosp_disable			 = $this->meta_opts['aiosp_disable'];
+			if ( isset( $this->meta_opts['aiosp_disable_analytics'] ) ) $aiosp_disable_analytics = $this->meta_opts['aiosp_disable_analytics'];
+		}
+		
+		if ( $aiosp_disable ) {
+			if ( !$aiosp_disable_analytics ) {
+				if ( aioseop_option_isset( 'aiosp_google_analytics_id' ) ) {
+					remove_action( 'aioseop_modules_wp_head', array( $this, 'aiosp_google_analytics' ) );
+					add_action( 'wp_head', array( $this, 'aiosp_google_analytics' ) );
+				}
+			}
+			return false;
+		}
+		
+		if ( !empty( $this->meta_opts ) && $this->meta_opts['aiosp_disable'] == true ) return false;
+		
+		return true;
+	}
+	
 	function template_redirect() {
 		global $aioseop_options;
-		
-		if ( is_feed() ) return;
-		if ( aioseop_mrt_exclude_this_page() ) return;
-		
+
 		$post = $this->get_queried_object();
 		
-		if ( is_single() || is_page() ) {
-		    $aiosp_disable = htmlspecialchars(stripslashes( get_post_meta( $post->ID, '_aioseop_disable', true ) ) );
-		    if ( $aiosp_disable ) {
-				$aiosp_disable_analytics = htmlspecialchars(stripslashes( get_post_meta( $post->ID, '_aioseop_disable_analytics', true ) ) );
-				if ( !$aiosp_disable_analytics ) {
-					if ( aioseop_option_isset( 'aiosp_google_analytics_id' ) ) {
-						remove_action( 'aioseop_modules_wp_head', array( $this, 'aiosp_google_analytics' ) );
-						add_action( 'wp_head', array( $this, 'aiosp_google_analytics' ) );
-					}
-				}
-				return;
-			}
-			
-			if ( !empty( $aioseop_options['aiosp_cpostadvanced'] ) ) {
-				$wp_post_types = $aioseop_options['aiosp_cpostactive'];
-				if ( empty( $aioseop_options['aiosp_cpostactive'] ) ) return;
-				if( !is_singular( $wp_post_types ) && !is_front_page() ) return;
-			}
-		}
-
+		if ( !$this->is_page_included() ) return;
 		if ( !empty( $aioseop_options['aiosp_rewrite_titles'] ) ) {
 			$force_rewrites = 1;
 			if ( isset( $aioseop_options['aiosp_force_rewrites'] ) )
@@ -1141,7 +1216,6 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			add_filter( 'wp_list_pages_excludes', 'aioseop_get_pages_start' );
 			add_filter( 'get_pages', 'aioseop_get_pages' );	
 		}
-		
 	}
 
 	function is_static_front_page() {
@@ -1161,14 +1235,13 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 	}
 
 	function wp_head() {
-			if ( is_feed() ) return;
-
-			if( aioseop_mrt_exclude_this_page() ) return;
+			if ( !$this->is_page_included() ) return;
+			$opts = $this->meta_opts;
 			
 			static $aioseop_dup_counter = 0;
 			$aioseop_dup_counter++;
 			if ( $aioseop_dup_counter > 1 ) {
-			    echo "\n<!-- Debug Warning: All in One SEO Pack Pro meta data was included again from " . current_filter() . " filter. Called {$aioseop_dup_counter} times! -->\n";
+			    echo "\n<!-- " . sprintf( __( "Debug Warning: All in One SEO Pack meta data was included again from %s filter. Called %s times!", 'all_in_one_seo_pack' ), current_filter(), $aioseop_dup_counter ) . " -->\n";
 			    return;
 			}
 
@@ -1182,21 +1255,6 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			global $aioseop_options;
 			$meta_string = null;
 			$description = '';
-			
-			if ( is_single() || is_page() ) {
-			    $aiosp_disable = htmlspecialchars( stripslashes( get_post_meta( $post->ID, '_aioseop_disable', true ) ) );
-			    if ( $aiosp_disable ) return;
-				if( empty( $aioseop_options['aiosp_enablecpost'] ) ) {
-					$wp_post_types = get_post_types( Array( '_builtin' => true ) ); // don't display meta if SEO isn't enabled on custom post types -- pdb
-					if( !is_singular( $wp_post_types ) && !is_front_page() ) return;
-				} else {
-					if ( !empty( $aioseop_options['aiosp_cpostadvanced'] ) ) {
-						$wp_post_types = $aioseop_options['aiosp_cpostactive'];
-						if ( empty( $aioseop_options['aiosp_cpostactive'] ) ) return;
-						if( !is_singular( $wp_post_types ) && !is_front_page() ) return;
-					}
-				}
-			}
 
 			$force_rewrites = 1;
 			if ( isset( $aioseop_options['aiosp_force_rewrites'] ) )
@@ -1238,23 +1296,22 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			
 			if ( $is_front_page_keywords )
 				$keywords = trim( $this->internationalize( $aioseop_options['aiosp_home_keywords'] ) );
-			elseif ( $this->is_static_posts_page() && !$aioseop_options['aiosp_dynamic_postspage_keywords'] )  // and if option = use page set keywords instead of keywords from recent posts
-					$keywords = stripslashes( $this->internationalize( get_post_meta( $post->ID, "_aioseop_keywords", true ) ) );
-			elseif ( !empty( $blog_page )  && !$aioseop_options['aiosp_dynamic_postspage_keywords'] )
+			elseif ( ( ( $this->is_static_posts_page() ) && empty( $aioseop_options['aiosp_dynamic_postspage_keywords'] ) ) || ( !empty( $aioseop_options['aiosp_dynamic_postspage_keywords'] ) && (is_archive() || is_post_type_archive() ) ) ) // and if option = use page set keywords instead of keywords from recent posts
+					$keywords = stripslashes( $this->internationalize( $opts["aiosp_keywords"] ) );
+			elseif ( !empty( $blog_page )  && empty( $aioseop_options['aiosp_dynamic_postspage_keywords'] ) )
 					$keywords = stripslashes( $this->internationalize( get_post_meta( $blog_page->ID, "_aioseop_keywords", true ) ) );
+			elseif ( empty( $aioseop_options['aiosp_dynamic_postspage_keywords'] ) && (is_archive() || is_post_type_archive() ) )
+					$keywords = '';
 			else	$keywords = $this->get_all_keywords();
 
-			if ( is_category() && $this->show_page_description() )
-				$description = $this->internationalize( category_description() );
-			elseif ( is_tag()  && $this->show_page_description() )
-				$description = $this->internationalize( tag_description() );
-			elseif ( is_tax()  && $this->show_page_description() )
-				$description = $this->internationalize( term_description() );
-			elseif ( is_author()  && $this->show_page_description() )
+			if ( ( is_category() || is_tag() || is_tax() ) && $this->show_page_description() ) {
+				if ( empty( $description ) ) $description = term_description();
+				$description = $this->internationalize( $description );
+			} elseif ( is_author()  && $this->show_page_description() )
 				$description = $this->internationalize( get_the_author_meta( 'description' ) );
 			else if ( $is_front_page )
 				$description = trim( stripslashes( $this->internationalize( $aioseop_options['aiosp_home_description'] ) ) );
-			else if ( is_single() || is_page() || is_home() || $this->is_static_posts_page() )
+			else if ( is_single() || is_page() || is_attachment() || is_home() || $this->is_static_posts_page() )
 				$description = $this->get_aioseop_description( $post );
 			
 			if ( empty( $aioseop_options['aiosp_dont_truncate_descriptions'] ) ) {
@@ -1264,7 +1321,19 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			$description = apply_filters( 'aioseop_description', $description );
 			
 			if ( isset($description) && ( $this->strlen($description) > $this->minimum_description_length ) && !( $is_front_page && is_paged() ) ) {
-				$description = trim( strip_tags( $description ) );
+				// description format
+				$description_format = $aioseop_options['aiosp_description_format'];
+				if ( !isset( $description_format ) || empty( $description_format ) ) {
+					$description_format = "%description%";
+				}
+				
+				$description = str_replace( '%description%', apply_filters( 'aioseop_description_override', $description ), $description_format );
+				if ( strpos( $description, '%blog_title%'		) !== false ) $description = str_replace( '%blog_title%',		get_bloginfo( 'name' ), $description );
+				if ( strpos( $description, '%blog_description%'	) !== false ) $description = str_replace( '%blog_description%',	get_bloginfo( 'description' ), $description );
+				if ( strpos( $description, '%wp_title%'			) !== false ) $description = str_replace( '%wp_title%',			$this->get_original_title(), $description );
+				if ( strpos( $description, '%post_title%'		) !== false ) $description = str_replace( '%post_title%',		$this->get_aioseop_title( $post ), $description );
+				
+				$description = trim( wp_strip_all_tags( $description ) );
 				$description = str_replace( '"', '&quot;', $description );
 
 				// replace newlines on mac / windows?
@@ -1276,16 +1345,7 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 				if ( !isset( $meta_string) ) {
 					$meta_string = '';
 				}
-
-				// description format
-				$description_format = $aioseop_options['aiosp_description_format'];
-				if ( !isset( $description_format ) || empty( $description_format ) ) {
-					$description_format = "%description%";
-				}
-				$description = str_replace( '%description%', apply_filters( 'aioseop_description_override', $description ), $description_format );
-				$description = str_replace( '%blog_title%', get_bloginfo( 'name' ), $description );
-				$description = str_replace( '%blog_description%', get_bloginfo( 'description' ), $description );
-				$description = str_replace( '%wp_title%', $this->get_original_title(), $description );
+				
 				if( $aioseop_options['aiosp_can'] && is_attachment() ) {
 					$url = $this->aiosp_mrt_get_url( $wp_query );
 					if ( $url ) {
@@ -1297,7 +1357,12 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 					}
 					$description .= ' ' . $uniqueDesc;
 				}
-				$meta_string .= sprintf( "<meta name=\"description\" content=\"%s\" />\n", $description );
+				$description = apply_filters( 'aioseop_description_full', $description );
+				$desc_attr = '';
+				if ( !empty( $aioseop_options['aiosp_schema_markup'] ) )
+					$desc_attr = 'itemprop="description"';
+				$desc_attr = apply_filters( 'aioseop_description_attributes', $desc_attr );
+				$meta_string .= sprintf( "<meta name=\"description\" %s content=\"%s\" />\n", $desc_attr, $description );
 			}
 			$keywords = $this->apply_cf_fields( $keywords );
 			$keywords = apply_filters( 'aioseop_keywords', $keywords );
@@ -1307,10 +1372,14 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			else
 				$togglekeywords = 0;
 
-			if ( isset( $keywords ) && $togglekeywords == 0 && !empty( $keywords ) && !( is_home() && is_paged() ) ) {
+			if ( isset( $keywords ) && $togglekeywords == 0 && !empty( $keywords ) && !( $is_front_page && is_paged() ) ) {
 				if ( isset( $meta_string ) ) $meta_string .= "\n";
-				$keywords = wp_filter_nohtml_kses( str_replace( '"', '', $keywords ) );				
-				$meta_string .= sprintf( "<meta name=\"keywords\" content=\"%s\" />\n", $keywords );
+				$keywords = wp_filter_nohtml_kses( str_replace( '"', '', $keywords ) );
+				$key_attr = '';
+				if ( !empty( $aioseop_options['aiosp_schema_markup'] ) )
+					$key_attr = 'itemprop="keywords"';
+				$key_attr = apply_filters( 'aioseop_keywords_attributes', $key_attr );
+				$meta_string .= sprintf( "<meta name=\"keywords\" %s content=\"%s\" />\n", $key_attr, $keywords );
 			}
 
 			$is_tag = is_tag();
@@ -1318,35 +1387,36 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			$page = $this->get_page_number();
 
 			$robots_meta = '';
-
-			if ( ( is_category() && !empty( $aioseop_options['aiosp_category_noindex'] ) ) || ( !is_category() && is_archive() && !$is_tag 
+			
+			$aiosp_noindex = $aiosp_nofollow = $aiosp_noodp = $aiosp_noydir = '';
+			$noindex = "index";
+			$nofollow = "follow";
+			if ( ( is_category() && !empty( $aioseop_options['aiosp_category_noindex'] ) ) || ( !is_category() && is_archive() && !is_tag() && !is_tax()
 				&& ( ( is_date() && !empty( $aioseop_options['aiosp_archive_date_noindex'] ) ) || ( is_author() && !empty( $aioseop_options['aiosp_archive_author_noindex'] ) ) ) ) 
-				|| ( $is_tag && !empty( $aioseop_options['aiosp_tags_noindex'] ) ) || ( is_search() && !empty( $aioseop_options['aiosp_search_noindex'] ) ) ) {
-				$robots_meta = 'noindex,follow';
-			} else {
-				if ( is_single() || is_page() ) {
-					$post_type = get_post_type();
-				    $aiosp_noindex = htmlspecialchars( stripslashes( get_post_meta( $post->ID, '_aioseop_noindex', true ) ) );
-				    $aiosp_nofollow = htmlspecialchars( stripslashes( get_post_meta( $post->ID, '_aioseop_nofollow', true ) ) );
-				    $aiosp_noodp = htmlspecialchars( stripslashes( get_post_meta( $post->ID, '_aioseop_noodp', true ) ) );
-				    $aiosp_noydir = htmlspecialchars( stripslashes( get_post_meta( $post->ID, '_aioseop_noydir', true ) ) );
-					if ( $aiosp_noindex || $aiosp_nofollow || $aiosp_noodp || $aiosp_noydir || !empty( $aioseop_options['aiosp_cpostnoindex'] ) || !empty( $aioseop_options['aiosp_cpostnofollow'] ) || !empty( $aioseop_options['aiosp_paginated_noindex'] ) || !empty( $aioseop_options['aiosp_paginated_nofollow'] ) ) {
-						$noindex = "index";
-						$nofollow = "follow";
-						$noodp = $noydir = '';
-						if ( ( $aiosp_noindex == 'on' ) || ( ( !empty( $aioseop_options['aiosp_paginated_noindex'] ) ) && ( ( $page > 1 ) ) ) ||
-							 ( ( $aiosp_noindex == '' ) && ( !empty( $aioseop_options['aiosp_cpostnoindex'] ) ) && ( in_array( $post_type, $aioseop_options['aiosp_cpostnoindex'] ) ) ) )
-							$noindex = "no" . $noindex;
-						if ( ( $aiosp_nofollow == 'on' ) || ( ( !empty( $aioseop_options['aiosp_paginated_nofollow'] ) ) && ( ( $page > 1 ) ) ) ||
-							 ( ( $aiosp_nofollow == '' ) && ( !empty( $aioseop_options['aiosp_cpostnofollow'] ) ) && ( in_array( $post_type, $aioseop_options['aiosp_cpostnofollow'] ) ) ) )
-							$nofollow = "no" . $nofollow;
-						if ( $aiosp_noodp ) $nofollow .= ',noodp';
-						if ( $aiosp_noydir ) $nofollow .= ',noydir';
-						$robots_meta = $noindex . ',' . $nofollow;
-					}
+				|| ( is_tag() && !empty( $aioseop_options['aiosp_tags_noindex'] ) ) || ( is_search() && !empty( $aioseop_options['aiosp_search_noindex'] ) ) ) {
+					$noindex = 'noindex';
+			} elseif ( is_single() || is_page() || $this->is_static_posts_page() || is_attachment() || ( $page > 1 ) ) {
+				$post_type = get_post_type();
+				if ( !empty( $opts ) ) {
+				    $aiosp_noindex = htmlspecialchars( stripslashes( $opts['aiosp_noindex'] ) );
+				    $aiosp_nofollow = htmlspecialchars( stripslashes( $opts['aiosp_nofollow'] ) );
+				    $aiosp_noodp = htmlspecialchars( stripslashes( $opts['aiosp_noodp'] ) );
+				    $aiosp_noydir = htmlspecialchars( stripslashes( $opts['aiosp_noydir'] ) );					
+				}
+				if ( $aiosp_noindex || $aiosp_nofollow || $aiosp_noodp || $aiosp_noydir || !empty( $aioseop_options['aiosp_cpostnoindex'] ) || !empty( $aioseop_options['aiosp_cpostnofollow'] ) || !empty( $aioseop_options['aiosp_paginated_noindex'] ) || !empty( $aioseop_options['aiosp_paginated_nofollow'] ) ) {
+					if ( ( $aiosp_noindex == 'on' ) || ( ( !empty( $aioseop_options['aiosp_paginated_noindex'] ) ) && ( ( $page > 1 ) ) ) ||
+						 ( ( $aiosp_noindex == '' ) && ( !empty( $aioseop_options['aiosp_cpostnoindex'] ) ) && ( in_array( $post_type, $aioseop_options['aiosp_cpostnoindex'] ) ) ) )
+						$noindex = "no" . $noindex;
+					if ( ( $aiosp_nofollow == 'on' ) || ( ( !empty( $aioseop_options['aiosp_paginated_nofollow'] ) ) && ( ( $page > 1 ) ) ) ||
+						 ( ( $aiosp_nofollow == '' ) && ( !empty( $aioseop_options['aiosp_cpostnofollow'] ) ) && ( in_array( $post_type, $aioseop_options['aiosp_cpostnofollow'] ) ) ) )
+						$nofollow = "no" . $nofollow;
 				}
 			}
-			
+			if ( !empty( $aioseop_options['aiosp_noodp'] ) && $aioseop_options['aiosp_noodp'] )   $aiosp_noodp = true;
+			if ( !empty( $aioseop_options['aiosp_noydir'] ) && $aioseop_options['aiosp_noydir'] ) $aiosp_noydir = true;
+			if ( $aiosp_noodp ) $nofollow .= ',noodp';
+			if ( $aiosp_noydir ) $nofollow .= ',noydir';
+			$robots_meta = $noindex . ',' . $nofollow;
 			if ( $robots_meta == 'index,follow' ) $robots_meta = '';
 			
 			$robots_meta = apply_filters( 'aioseop_robots_meta', $robots_meta );
@@ -1496,9 +1566,10 @@ class All_in_One_SEO_Pack extends All_in_One_SEO_Pack_Module {
 			if ( !empty( $next ) ) $meta_string .= "<link rel='next' href='" . esc_url( $next ) . "' />\n";
 			
 			if ( $meta_string != null ) echo "$meta_string\n";
-
-			if ( ( $aioseop_options['aiosp_can'] ) && ( $url = $this->aiosp_mrt_get_url( $wp_query ) ) ) {
-				$url = apply_filters( 'aioseop_canonical_url',$url );
+			$show_page = true;
+			if ( !empty( $aioseop_options["aiosp_no_paged_canonical_links"] ) ) $show_page = false;
+			if ( ( $aioseop_options['aiosp_can'] ) && ( $url = $this->aiosp_mrt_get_url( $wp_query, $show_page ) ) ) {
+				$url = apply_filters( 'aioseop_canonical_url', $url );
 				if ( !empty( $url ) )
 					echo '<link rel="canonical" href="'. esc_url( $url ) . '" />'."\n";
 			}
@@ -1907,7 +1978,7 @@ function aiosp_google_analytics() {
 	
 // Thank you, Yoast de Valk, for much of this code.	
 
-	function aiosp_mrt_get_url( $query ) {
+	function aiosp_mrt_get_url( $query, $show_page = true ) {
 		if ( $query->is_404 || $query->is_search )
 			return false;
 		
@@ -1962,14 +2033,16 @@ function aiosp_google_analytics() {
 			if ( !empty( $term ) )
 				$link = get_term_link( $term, $taxonomy );
         } elseif ( $query->is_archive && function_exists( 'get_post_type_archive_link' ) && ( $post_type = get_query_var( 'post_type' ) ) ) {
-					if ( is_array( $post_type ) )
-					$post_type = reset( $post_type );
-	            $link = get_post_type_archive_link( $post_type );		
+			if ( is_array( $post_type ) )
+				$post_type = reset( $post_type );
+			$link = get_post_type_archive_link( $post_type );		
 	    } else {
 	        return false;
 	    }
 		if ( empty( $link ) || !is_string( $link ) ) return false;
-		return $this->get_paged( $link );
+		if ( apply_filters( 'aioseop_canonical_url_pagination', $show_page ) )
+			$link = $this->get_paged( $link );
+		return $link;
 	}
 	
 	function get_page_number() {
@@ -2014,7 +2087,10 @@ function aiosp_google_analytics() {
 		if ( !$description ) {
 			$description = $this->trim_excerpt_without_filters_full_length( $this->internationalize( $post->post_excerpt ) );
 			if ( !$description && $aioseop_options["aiosp_generate_descriptions"] ) {
-				$description = $this->trim_excerpt_without_filters( $this->internationalize( $post->post_content ) );				
+				$content = $post->post_content;
+				if ( !empty( $aioseop_options["aiosp_run_shortcodes"] ) ) $content = do_shortcode( $content );
+				$content = wp_strip_all_tags( $content );
+				$description = $this->trim_excerpt_without_filters( $this->internationalize( $content ) );
 			}
 		}
 		
@@ -2033,7 +2109,7 @@ function aiosp_google_analytics() {
 		}
 		if ( $blog_page === '' ) {
 			if ( $page_for_posts === '' ) $page_for_posts = get_option( 'page_for_posts' );
-			if ( $page_for_posts && ( !is_object( $post ) || ( $page_for_posts != $post->ID ) ) && is_home() )
+			if ( $page_for_posts && is_home() && ( !is_object( $post ) || ( $page_for_posts != $post->ID ) ) )
 				$blog_page = get_post( $page_for_posts );			
 		}
 		return $blog_page;
@@ -2145,9 +2221,9 @@ function aiosp_google_analytics() {
 		} else if ( is_404() ) {
 		    $title_format = $aioseop_options['aiosp_404_title_format'];
 		    $new_title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $title_format );
-		    $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
-		    $new_title = str_replace( '%request_url%', $_SERVER['REQUEST_URI'], $new_title);
-		    $new_title = str_replace( '%request_words%', $this->request_as_words( $_SERVER['REQUEST_URI'] ), $new_title );
+		    if ( strpos( $new_title, '%blog_description%' ) !== false ) $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
+		    if ( strpos( $new_title, '%request_url%'	  ) !== false ) $new_title = str_replace( '%request_url%', $_SERVER['REQUEST_URI'], $new_title);
+		    if ( strpos( $new_title, '%request_words%'	  ) !== false ) $new_title = str_replace( '%request_words%', $this->request_as_words( $_SERVER['REQUEST_URI'] ), $new_title );
 			$title = $new_title;
 		}
 		return trim( $title );
@@ -2172,6 +2248,77 @@ function aiosp_google_analytics() {
 		}
 		return $title;
 	}
+	
+	function get_tax_title_format( $tax = '' ) {
+		global $aioseop_options;
+		$title_format = '%category_title% | %blog_title%';
+		if ( !empty( $aioseop_options['aiosp_category_title_format'] ) )
+			$title_format = $aioseop_options['aiosp_category_title_format'];
+		return $title_format;
+	}
+	
+	function apply_tax_title_format( $category_name, $category_description, $tax = '' ) {
+		if ( empty( $tax ) ) $tax = get_query_var( 'taxonomy' );
+        $title_format = $this->get_tax_title_format( $tax );
+        $title = str_replace( '%taxonomy_title%', $category_name, $title_format );
+        if ( strpos( $title, '%taxonomy_description%' ) !== false ) $title = str_replace( '%taxonomy_description%', $category_description, $title );
+        if ( strpos( $title, '%category_title%'		  ) !== false ) $title = str_replace( '%category_title%', $category_name, $title );
+        if ( strpos( $title, '%category_description%' ) !== false ) $title = str_replace( '%category_description%', $category_description, $title );
+        if ( strpos( $title, '%blog_title%'			  ) !== false ) $title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $title );
+        if ( strpos( $title, '%blog_description%'	  ) !== false ) $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $title );
+		$title = trim( wp_strip_all_tags( $title ) );
+		$title = str_replace( Array( '"', "\r\n", "\n" ), Array( '&quot;', ' ', ' ' ), $title );
+        return $this->paged_title( $title );
+	}
+	
+	function get_tax_name( $tax ) {
+		$name = '';
+		if ( empty( $name ) ) $name = single_term_title( '', false );
+		if ( ( $tax == 'category' ) && ( !empty( $aioseop_options['aiosp_cap_cats'] ) ) )
+				$name = $this->ucwords( $name );
+		return $this->internationalize( $name );
+	}
+	
+	function get_tax_desc( $tax ) {
+		$desc = '';
+		if ( empty( $desc ) ) $desc = term_description( '', $tax );
+		return $this->internationalize( $desc );
+	}
+	
+	function get_tax_title( $tax = '' ) {
+		if ( empty( $tax ) )
+			if ( is_category() )
+				$tax = 'category';
+			else
+				$tax = get_query_var( 'taxonomy' );
+		$name = $this->get_tax_name( $tax );
+		$desc = $this->get_tax_desc( $tax );
+		return $this->apply_tax_title_format( $name, $desc, $tax );
+	}
+	
+	function get_archive_title_format() {
+		global $aioseop_options;
+		$title_format = '%archive_title% | %blog_title%';
+		if ( isset( $aioseop_options['aiosp_archive_title_format'] ) )
+			$title_format = $aioseop_options['aiosp_archive_title_format'];
+		if( !empty( $aioseop_options['aiosp_enablecpost'] ) && !empty( $aioseop_options['aiosp_cpostadvanced'] ) && !empty( $aioseop_options['aiosp_cpostactive'] ) ) {
+			$wp_post_types = $aioseop_options['aiosp_cpostactive'];
+			if ( is_post_type_archive( $wp_post_types ) && !empty( $aioseop_options["aiosp_cposttitles"] ) ) {
+				$post_type = get_post_type();
+				if ( !empty( $aioseop_options["aiosp_archive_{$post_type}_title_format"] ) )
+					$title_format = $aioseop_options["aiosp_archive_{$post_type}_title_format"];
+			}
+		}
+		return $title_format;
+	}
+	
+	function apply_archive_title_format( $title, $category = '' ) {
+		$title_format = $this->get_archive_title_format();
+		$r_title = array( '%blog_title%', '%blog_description%', '%archive_title%' );
+		$d_title = array( $this->internationalize( get_bloginfo('name') ), $this->internationalize( get_bloginfo( 'description' ) ), post_type_archive_title( '', false ) );
+		$title = trim( str_replace( $r_title, $d_title, $title_format ) );
+		return $title;
+	}
 
 	function get_post_title_format() {
 		global $aioseop_options;
@@ -2189,27 +2336,42 @@ function aiosp_google_analytics() {
 		return $title_format;
 	}
 	
-	function apply_post_title_format( $title, $category = '' ) {
-		global $post;
+	function apply_post_title_format( $title, $category = '', $p = null ) {
+		if ( $p === null ) {
+			global $post;			
+		} else {
+			$post = $p;
+		}
 		$title_format = $this->get_post_title_format();
-		$authordata = get_userdata( $post->post_author );
+		if ( !empty( $post ) )
+			$authordata = get_userdata( $post->post_author );
+		else
+			$authordata = new WP_User();
 		$r_title = array( '%blog_title%', '%blog_description%', '%post_title%', '%category%', '%category_title%', '%post_author_login%', '%post_author_nicename%', '%post_author_firstname%', '%post_author_lastname%' );
 		$d_title = array( $this->internationalize( get_bloginfo('name') ), $this->internationalize( get_bloginfo( 'description' ) ), $title, $category, $category, $authordata->user_login, $authordata->user_nicename, $this->ucwords( $authordata->first_name ), $this->ucwords( $authordata->last_name ) );
 		$title = trim( str_replace( $r_title, $d_title, $title_format ) );
 		return $title;
 	}
 	
-	function apply_page_title_format( $title ) {
-		global $aioseop_options, $post;
+	function apply_page_title_format( $title, $p = null ) {
+		global $aioseop_options;
+		if ( $p === null ) {
+			global $post;			
+		} else {
+			$post = $p;
+		}
 		$title_format = $aioseop_options['aiosp_page_title_format'];
-		$authordata = get_userdata( $post->post_author );
+		if ( !empty( $post ) )
+			$authordata = get_userdata( $post->post_author );
+		else
+			$authordata = new WP_User();
         $new_title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $title_format );
-        $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
-        $new_title = str_replace( '%page_title%', $title, $new_title );
-        $new_title = str_replace( '%page_author_login%', $authordata->user_login, $new_title );
-        $new_title = str_replace( '%page_author_nicename%', $authordata->user_nicename, $new_title );
-        $new_title = str_replace( '%page_author_firstname%', $this->ucwords($authordata->first_name ), $new_title );
-        $new_title = str_replace( '%page_author_lastname%', $this->ucwords($authordata->last_name ), $new_title );
+        if ( strpos( $new_title, '%blog_description%'	   ) !== false ) $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
+        if ( strpos( $new_title, '%page_title%'			   ) !== false ) $new_title = str_replace( '%page_title%', $title, $new_title );
+        if ( strpos( $new_title, '%page_author_login%'	   ) !== false ) $new_title = str_replace( '%page_author_login%', $authordata->user_login, $new_title );
+        if ( strpos( $new_title, '%page_author_nicename%'  ) !== false ) $new_title = str_replace( '%page_author_nicename%', $authordata->user_nicename, $new_title );
+        if ( strpos( $new_title, '%page_author_firstname%' ) !== false ) $new_title = str_replace( '%page_author_firstname%', $this->ucwords($authordata->first_name ), $new_title );
+        if ( strpos( $new_title, '%page_author_lastname%'  ) !== false ) $new_title = str_replace( '%page_author_lastname%', $this->ucwords($authordata->last_name ), $new_title );
 		$title = trim( $new_title );
 		return $title;
 	}
@@ -2219,6 +2381,7 @@ function aiosp_google_analytics() {
 		global $aioseop_options;
 		// the_search_query() is not suitable, it cannot just return
 		global $s, $STagging;
+		$opts = $this->meta_opts;
 		if ( is_front_page() ) {
 			$title = $this->internationalize( $aioseop_options['aiosp_home_title'] );
 			if (empty( $title ) )
@@ -2226,17 +2389,14 @@ function aiosp_google_analytics() {
 			return $this->paged_title( $title );
 		} else if ( is_attachment() ) {
 			if ( $post === null ) return false;
-			$title = $this->internationalize( get_post_meta( $post->ID, "_aioseop_title", true ) );
-			if ( !empty( $title ) )
-				return apply_filters( 'aioseop_attachment_title', $this->apply_post_title_format( $title ) );
-			$title = $this->internationalize( $post->post_title );
-			if ( !$title )
-				$title = $this->internationalize( $this->get_original_title( '', false ) );
-			$title = get_the_title( $post->post_parent ) . ' ' . $title . ' - ' . get_option( 'blogname' );
-			apply_filters( 'aioseop_attachment_title', $title );
+			$title = get_post_meta( $post->ID, "_aioseop_title", true );
+			if ( empty( $title ) ) $title = $post->post_title;
+			if ( empty( $title ) ) $title = $this->get_original_title( '', false );
+			if ( empty( $title ) ) $title = get_the_title( $post->post_parent );
+			$title = apply_filters( 'aioseop_attachment_title', $this->internationalize( $this->apply_post_title_format( $title, '', $post ) ) );
+			return $title;
 		} else if ( is_page() || $this->is_static_posts_page() || ( is_home() && !$this->is_static_posts_page() ) ) {
 			if ( $post === null ) return false;
-			// we're not in the loop :(
 			if ( ( $this->is_static_front_page() ) && ( $home_title = $this->internationalize( $aioseop_options['aiosp_home_title'] ) ) ) {
 				//home title filter
 				return apply_filters( 'aioseop_home_page_title', $home_title );
@@ -2258,7 +2418,7 @@ function aiosp_google_analytics() {
 				if ( !$title )
 					$title = $this->internationalize( $this->get_original_title( '', false ) );
 
-				$title = $this->apply_page_title_format( $title );
+				$title = $this->apply_page_title_format( $title, $post );
                 $title = $this->paged_title( $title );
 				$title = apply_filters( 'aioseop_title_page', $title );
 				if ( $this->is_static_posts_page() )
@@ -2280,7 +2440,7 @@ function aiosp_google_analytics() {
 			}
 			if ( empty( $title ) ) $title = $post->post_title;
 			if ( !empty( $title ) )
-				$title = $this->apply_post_title_format( $title, $category );
+				$title = $this->apply_post_title_format( $title, $category, $post );
 			$title = $this->paged_title( $title );
 			return apply_filters( 'aioseop_title_single', $title );
 		} else if ( is_search() && isset( $s ) && !empty( $s ) ) {
@@ -2289,8 +2449,8 @@ function aiosp_google_analytics() {
 				$search = $this->capitalize( $search );
             $title_format = $aioseop_options['aiosp_search_title_format'];
             $title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $title_format );
-            $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $title );
-            $title = str_replace( '%search%', $search, $title );
+            if ( strpos( $title, '%blog_description%' ) !== false ) $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $title );
+            if ( strpos( $title, '%search%'			  ) !== false ) $title = str_replace( '%search%', $search, $title );
 			$title = $this->paged_title( $title );
 			return $title;
 		} else if ( is_tag() ) {
@@ -2300,33 +2460,25 @@ function aiosp_google_analytics() {
 				$tag = $tags[0]->tag;
 	            $tag = str_replace('-', ' ', $tag);
 			} else {
-				// wordpress > 2.3
-				$tag = $this->internationalize( $this->get_original_title( '', false ) );
+				if ( empty( $tag ) ) $tag = $this->get_original_title( '', false );
+				$tag = $this->internationalize( $tag );
 			}
-			if ($tag) {
+			if ( $tag ) {
 				if ( !empty( $aioseop_options['aiosp_cap_titles'] ) )
 					$tag = $this->capitalize( $tag );
 	            $title_format = $aioseop_options['aiosp_tag_title_format'];
 	            $title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo('name') ), $title_format );
-	            $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description') ), $title );
-	            $title = str_replace( '%tag%', $tag, $title );
+	            if ( strpos( $title, '%blog_description%' ) !== false ) $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description') ), $title );
+	            if ( strpos( $title, '%tag%'			  ) !== false ) $title = str_replace( '%tag%', $tag, $title );
+		        if ( strpos( $title, '%tag_description%' ) !== false ) $title = str_replace( '%tag_description%', tag_description(), $title );
+		        if ( strpos( $title, '%taxonomy_description%' ) !== false ) $title = str_replace( '%taxonomy_description%', tag_description(), $title );
+				$title = trim( wp_strip_all_tags( $title ) );
+				$title = str_replace( Array( '"', "\r\n", "\n" ), Array( '&quot;', ' ', ' ' ), $title );
 	            $title = $this->paged_title( $title );
 				return $title;
 			}
 		} else if ( ( is_tax() || is_category() ) && !is_feed() ) {
-			$category_description = $this->internationalize( category_description() );
-				if( !empty( $aioseop_options['aiosp_cap_cats'] ) ) {
-					$category_name = $this->ucwords( $this->internationalize( single_cat_title( '', false ) ) );
-				} else {
-						$category_name = $this->internationalize( single_cat_title( '', false ) );
-				}
-            $title_format = $aioseop_options['aiosp_category_title_format'];
-            $title = str_replace( '%category_title%', $category_name, $title_format );
-            $title = str_replace( '%category_description%', $category_description, $title );
-            $title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $title );
-            $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $title );
-            $title = $this->paged_title( $title );
-			return $title;
+			return $this->get_tax_title();
 		} else if ( isset( $STagging ) && $STagging->is_tag_view() ) { // simple tagging support
 			$tag = $STagging->search_tag;
 			if ( $tag ) {
@@ -2334,12 +2486,12 @@ function aiosp_google_analytics() {
 					$tag = $this->capitalize($tag);
 	            $title_format = $aioseop_options['aiosp_tag_title_format'];
 	            $title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name') ), $title_format);
-	            $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description') ), $title);
-	            $title = str_replace( '%tag%', $tag, $title );
+	            if ( strpos( $title, '%blog_description%' ) !== false ) $title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description') ), $title);
+	            if ( strpos( $title, '%tag%'			  ) !== false ) $title = str_replace( '%tag%', $tag, $title );
 	            $title = $this->paged_title( $title );
 				return $title;
 			}
-		} else if ( is_archive() ) {
+		} else if ( is_archive() || is_post_type_archive() ) {
 			if ( is_author() ) {
 				$author = $this->internationalize( $this->get_original_title( '', false ) );
 	            $title_format = $aioseop_options['aiosp_author_title_format'];
@@ -2347,7 +2499,7 @@ function aiosp_google_analytics() {
 			} else if ( is_date() ) {
 				global $wp_query;
 				$date = $this->internationalize( $this->get_original_title( '', false ) );
-	            $title_format = $aioseop_options['aiosp_archive_title_format'];
+	            $title_format = $aioseop_options['aiosp_date_title_format'];
 	            $new_title = str_replace( '%date%', $date, $title_format );
 				$day = get_query_var( 'day' );
 				if ( empty( $day ) ) $day = '';
@@ -2360,21 +2512,24 @@ function aiosp_google_analytics() {
 				}
 				$month = date( "F", mktime( 0,0,0,(int)$monthnum,1,(int)$year ) );
 				$new_title = str_replace( '%monthnum%', $monthnum, $new_title );
-				$new_title = str_replace( '%month%', $month, $new_title );
-	            $new_title = str_replace( '%year%', get_query_var( 'year' ), $new_title );
+				if ( strpos( $new_title, '%month%' ) !== false ) $new_title = str_replace( '%month%', $month, $new_title );
+	            if ( strpos( $new_title, '%year%' ) !== false ) $new_title = str_replace( '%year%', get_query_var( 'year' ), $new_title );
+			} else if ( is_post_type_archive() ) {
+				if ( empty( $title ) ) $title = $this->get_original_title( '', false );
+				$new_title = apply_filters( 'aioseop_archive_title', $this->apply_archive_title_format( $title ) );
 			} else return false;
-            $new_title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $new_title );
-            $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
+			$new_title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name' ) ), $new_title );
+            if ( strpos( $new_title, '%blog_description%' ) !== false ) $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
 			$title = trim( $new_title );
             $title = $this->paged_title( $title );
 			return $title;
 		} else if ( is_404() ) {
             $title_format = $aioseop_options['aiosp_404_title_format'];
             $new_title = str_replace( '%blog_title%', $this->internationalize( get_bloginfo( 'name') ), $title_format );
-            $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
-            $new_title = str_replace( '%request_url%', $_SERVER['REQUEST_URI'], $new_title );
-            $new_title = str_replace( '%request_words%', $this->request_as_words( $_SERVER['REQUEST_URI'] ), $new_title );
-			$new_title = str_replace( '%404_title%', $this->internationalize( $this->get_original_title( '', false ) ), $new_title );
+            if ( strpos( $new_title, '%blog_description%' ) !== false ) $new_title = str_replace( '%blog_description%', $this->internationalize( get_bloginfo( 'description' ) ), $new_title );
+            if ( strpos( $new_title, '%request_url%' ) !== false	  ) $new_title = str_replace( '%request_url%', $_SERVER['REQUEST_URI'], $new_title );
+            if ( strpos( $new_title, '%request_words%' ) !== false	  ) $new_title = str_replace( '%request_words%', $this->request_as_words( $_SERVER['REQUEST_URI'] ), $new_title );
+			if ( strpos( $new_title, '%404_title%' ) !== false		  ) $new_title = str_replace( '%404_title%', $this->internationalize( $this->get_original_title( '', false ) ), $new_title );
 			return $new_title;
 		}
 		return false;
@@ -2417,6 +2572,7 @@ function aiosp_google_analytics() {
 		$request = str_replace( '.htm', ' ', $request );
 		$request = str_replace( '.', ' ', $request );
 		$request = str_replace( '/', ' ', $request );
+		$request = str_replace( '-', ' ', $request );
 		$request_a = explode( ' ', $request );
 		$request_new = array();
 		foreach ( $request_a as $token ) {
@@ -2440,12 +2596,13 @@ function aiosp_google_analytics() {
 	function trim_excerpt_without_filters( $text, $max = 0 ) {
 		$text = str_replace( ']]>', ']]&gt;', $text );
                 $text = preg_replace( '|\[(.+?)\](.+?\[/\\1\])?|s', '', $text );
-		$text = strip_tags( $text );
+		$text = wp_strip_all_tags( $text );
 		if ( !$max ) $max = $this->maximum_description_length;
 		$len = $this->strlen( $text );
 		if ( $max < $len ) {
 			if ( function_exists( 'mb_strrpos' ) ) {
 				$pos = mb_strrpos( $text, ' ', -($len - $max) );
+				if ( $pos === false ) $pos = $max;
 				if ( $pos > $this->minimum_description_length ) {
 					$max = $pos;
 				} else {
@@ -2464,7 +2621,7 @@ function aiosp_google_analytics() {
 	function trim_excerpt_without_filters_full_length( $text ) {
 		$text = str_replace( ']]>', ']]&gt;', $text );
                 $text = preg_replace( '|\[(.+?)\](.+?\[/\\1\])?|s', '', $text );
-		$text = strip_tags( $text );
+		$text = wp_strip_all_tags( $text );
 		return trim( stripslashes( $text ) );
 	}
 	
@@ -2478,7 +2635,7 @@ function aiosp_google_analytics() {
 		if ( is_404() ) return null;
 		
 		// if we are on synthetic pages
-		if ( !is_home() && !is_page() && !is_single() && !$this->is_static_front_page() && !$this->is_static_posts_page() )
+		if ( !is_home() && !is_page() && !is_single() && !$this->is_static_front_page() && !$this->is_static_posts_page() && !is_archive() && !is_post_type_archive() )
 			return null;
 
 	    $keywords = array();
@@ -2577,6 +2734,7 @@ function aiosp_google_analytics() {
 
 	function save_post_data( $id ) {
 		$awmp_edit = $nonce = null;
+		if ( empty( $_POST ) ) return false;
 		if ( isset( $_POST[ 'aiosp_edit' ] ) )				$awmp_edit = $_POST['aiosp_edit'];
 		if ( isset( $_POST[ 'nonce-aioseop-edit' ] ) )		$nonce     = $_POST['nonce-aioseop-edit'];
 
@@ -2586,7 +2744,7 @@ function aiosp_google_analytics() {
 				$field = "aiosp_$f";
 				if ( isset( $_POST[$field] ) ) $$field = $_POST[$field];
 		    }
-
+			
 			foreach ( Array( 'keywords', 'description', 'noindex', 'nofollow', 'noodp', 'noydir', 'title', 'titleatr', 'menulabel' ) as $f )
 				delete_post_meta( $id, "_aioseop_{$f}" );
 			
@@ -2649,7 +2807,7 @@ function aiosp_google_analytics() {
 			}
 		}
 	}
-		
+			
 	function admin_bar_upgrade_menu() {
 		global $wp_admin_bar;
 		$wp_admin_bar->add_menu( array( 'parent' => AIOSEOP_PLUGIN_DIRNAME, 'title' => __( 'Upgrade To Pro', 'all_in_one_seo_pack' ), 'id' => 'aioseop-pro-upgrade', 'href' => 'http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/?loc=menu', 'meta' => Array( 'target' => '_blank' ) ) );
@@ -2658,7 +2816,7 @@ function aiosp_google_analytics() {
 	function menu_order() {
 		return 5;
 	}
-
+	
 	function admin_menu() {
 		$file = plugin_basename( __FILE__ );
 		$menu_name = __( 'All in One SEO', 'all_in_one_seo_pack' );
@@ -2696,6 +2854,7 @@ function aiosp_google_analytics() {
 			if ( isset( $this->options["aiosp_custom_menu_order"] ) )
 				$custom_menu_order = $this->options["aiosp_custom_menu_order"];
 		}
+		
 		if ( $custom_menu_order ) {
 			add_filter( 'custom_menu_order', '__return_true' );
 			add_filter( 'menu_order', array( $this, 'set_menu_order' ) );
@@ -2755,7 +2914,7 @@ function aiosp_google_analytics() {
 						if ( $title != $this->plugin_name ) $title = $this->plugin_name . ' - ' . $title;
 						if ( $tab_num <= 1 ) {
 							if ( !empty( $m[0]['callback_args']['help_link'] ) )
-								$title .= "<a class='aioseop_help_text_link aioseop_meta_box_help' target='_blank' href='" . $m[0]['callback_args']['help_link'] . "'>" . __( 'Help', 'all_in_one_seo_pack' ) . "</a>";
+								$title .= "<a class='aioseop_help_text_link aioseop_meta_box_help' target='_blank' href='" . $m[0]['callback_args']['help_link'] . "'><span>" . __( 'Help', 'all_in_one_seo_pack' ) . "</span></a>";
 							add_meta_box( $m[0]['id'], $title, $m[0]['callback'], $m[0]['post_type'], $m[0]['context'], $m[0]['priority'], $m[0]['callback_args'] );
 						} elseif ( $tab_num > 1 ) {
 							add_meta_box( $m[0]['id'] . '_tabbed', $title, Array( $this, 'display_tabbed_metabox' ), $m[0]['post_type'], $m[0]['context'], $m[0]['priority'], $m );
@@ -2767,7 +2926,7 @@ function aiosp_google_analytics() {
 					$title = $m['title'];
 					if ( $title != $this->plugin_name ) $title = $this->plugin_name . ' - ' . $title;
 					if ( !empty( $m['help_link'] ) )
-						$title .= "<a class='aioseop_help_text_link aioseop_meta_box_help' target='_blank' href='" . $m['help_link'] . "'>" . __( 'Help', 'all_in_one_seo_pack' ) . "</a>";
+						$title .= "<a class='aioseop_help_text_link aioseop_meta_box_help' target='_blank' href='" . $m['help_link'] . "'><span>" . __( 'Help', 'all_in_one_seo_pack' ) . "</span></a>";
 					add_meta_box( $m['id'], $title, $m['callback'], $m['post_type'], $m['context'], $m['priority'], $m['callback_args'] );
 				}
 			}
@@ -2863,4 +3022,3 @@ function aiosp_google_analytics() {
 <?php
 	}
 }
-

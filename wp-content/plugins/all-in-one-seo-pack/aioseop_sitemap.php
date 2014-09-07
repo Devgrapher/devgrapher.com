@@ -354,6 +354,7 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 
 		/** Handle 'all' option for post types / taxonomies, further sanitization of filename, rewrites on for multisite, setting up addl pages option. **/
 		function filter_options( $options ) {
+			if ( !isset( $this->default_options['posttypes' ]['initial_options'] ) ) $this->add_post_types();
 			if ( is_array( $options["{$this->prefix}posttypes"] ) && in_array( 'all', $options["{$this->prefix}posttypes"] ) && is_array( $this->default_options['posttypes' ]['initial_options'] ) )
 				$options["{$this->prefix}posttypes"] = array_keys( $this->default_options['posttypes' ]['initial_options'] );
 			if ( is_array( $options["{$this->prefix}taxonomies"] ) && in_array( 'all', $options["{$this->prefix}taxonomies"] ) && is_array( $this->default_options['taxonomies' ]['initial_options'] ) )
@@ -826,8 +827,12 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 				$field = $this->prefix . $prefix . $item;
 				if ( $this->option_isset( $prefix . $item ) && $this->options[ $field ] != 'no' ) {
 					if ( ( $this->options[ $field ] == 'sel' ) && !empty( $type ) && ( isset( $this->options[ $this->prefix . $prefix . $item . '_' . $type ] ) ) ) {
+						if ( $this->options[ $this->prefix . $prefix . $item . '_' . $type ] == 'no' ) return false;
+						if ( $this->options[ $this->prefix . $prefix . $item . '_' . $type ] == 'sel' ) return false;
 						$cache[ $item . $type ] = $this->options[ $this->prefix . $prefix . $item . '_' . $type ];
 					} else {
+						if ( $this->options[ $field ] == 'no' ) return false;
+						if ( $this->options[ $field ] == 'sel' ) return false;
 						$cache[ $item . $type ] = $this->options[ $field ];
 					}
 					return $cache[ $item . $type ];
@@ -1178,10 +1183,10 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 				foreach ($terms as $term) {
 					$pr_info = Array();
 					$pr_info['loc'] = $this->get_term_link( $term, $term->taxonomy );
-					if ( ( $this->options[ $this->prefix . 'prio_taxonomies' ] == 'sel' ) && ( isset( $this->options[ $this->prefix . 'prio_taxonomies_' . $term->taxonomy ] ) ) ) {
+					if ( ( $this->options[ $this->prefix . 'prio_taxonomies' ] == 'sel' ) && ( isset( $this->options[ $this->prefix . 'prio_taxonomies_' . $term->taxonomy ] ) ) && ( $this->options[ $this->prefix . 'prio_taxonomies_' . $term->taxonomy ] != 'no' ) ) {
 							$pr_info['priority'] = $this->options[ $this->prefix . 'prio_taxonomies_' . $term->taxonomy ];
 					} else $pr_info['priority'] = $def_prio;
-					if ( ( $this->options[ $this->prefix . 'freq_taxonomies' ] == 'sel' ) && ( isset( $this->options[ $this->prefix . 'freq_taxonomies_' . $term->taxonomy ] ) ) ) {
+					if ( ( $this->options[ $this->prefix . 'freq_taxonomies' ] == 'sel' ) && ( isset( $this->options[ $this->prefix . 'freq_taxonomies_' . $term->taxonomy ] ) ) && ( $this->options[ $this->prefix . 'freq_taxonomies_' . $term->taxonomy ] != 'no' ) ) {
 							$pr_info['changefreq'] = $this->options[ $this->prefix . 'freq_taxonomies_' . $term->taxonomy ];
 					} else $pr_info['changefreq'] = $def_freq;
 					$prio[] = $pr_info;
@@ -1470,9 +1475,11 @@ if ( !class_exists( 'All_in_One_SEO_Pack_Sitemap' ) ) {
 					if ( $freq_override )
 						$pr_info[ 'changefreq' ] = $freq_override;
 					if ( ( $this->options[ $this->prefix . 'prio_post' ] == 'sel' ) && ( isset( $this->options[ $this->prefix . 'prio_post_' . $post->post_type ] ) ) ) {
+						if ( ( $this->options[ $this->prefix . 'prio_post_' . $post->post_type ] != 'no' ) && ( $this->options[ $this->prefix . 'prio_post_' . $post->post_type ] != 'sel' ) )
 							$pr_info[ 'priority' ] = $this->options[ $this->prefix . 'prio_post_' . $post->post_type ];
 					}
 					if ( ( $this->options[ $this->prefix . 'freq_post' ] == 'sel' ) && ( isset( $this->options[ $this->prefix . 'freq_post_' . $post->post_type ] ) ) ) {
+						if ( ( $this->options[ $this->prefix . 'freq_post_' . $post->post_type ] != 'no' ) && ( $this->options[ $this->prefix . 'freq_post_' . $post->post_type ] != 'sel' ) )
 							$pr_info[ 'changefreq' ] = $this->options[ $this->prefix . 'freq_post_' . $post->post_type ];
 					}
 					$pr_info['loc'] = $url;

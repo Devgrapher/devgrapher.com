@@ -87,12 +87,13 @@ function wp_pagenavi( $args = array() ) {
 			if ( $paged > 1 && !empty( $options['prev_text'] ) ) {
 				$out .= $instance->get_single( $paged - 1, $options['prev_text'], array(
 					'class' => 'previouspostslink',
+					'rel'	=> 'prev'
 				) );
 			}
 
 			if ( $start_page >= 2 && $pages_to_show < $total_pages ) {
 				if ( !empty( $options['dotleft_text'] ) )
-					$out .= "<a class='extend'>{$options['dotleft_text']}</a>";
+					$out .= "<span class='extend'>{$options['dotleft_text']}</span>";
 			}
 
 			// Smaller pages
@@ -112,14 +113,14 @@ function wp_pagenavi( $args = array() ) {
 			}
 
 			if ( $larger_page_start )
-				$out .= "<a class='extend'>{$options['dotleft_text']}</a>";
+				$out .= "<span class='extend'>{$options['dotleft_text']}</span>";
 
 			// Page numbers
 			$timeline = 'smaller';
 			foreach ( range( $start_page, $end_page ) as $i ) {
 				if ( $i == $paged && !empty( $options['current_text'] ) ) {
 					$current_page_text = str_replace( '%PAGE_NUMBER%', number_format_i18n( $i ), $options['current_text'] );
-					$out .= "<a class='current'>$current_page_text</a>";
+					$out .= "<span class='current'>$current_page_text</span>";
 					$timeline = 'larger';
 				} else {
 					$out .= $instance->get_single( $i, $options['page_text'], array(
@@ -141,19 +142,20 @@ function wp_pagenavi( $args = array() ) {
 			}
 
 			if ( $larger_page_out ) {
-				$out .= "<a class='extend'>{$options['dotright_text']}</a>";
+				$out .= "<span class='extend'>{$options['dotright_text']}</span>";
 			}
 			$out .= $larger_page_out;
 
 			if ( $end_page < $total_pages ) {
 				if ( !empty( $options['dotright_text'] ) )
-					$out .= "<a class='extend'>{$options['dotright_text']}</a>";
+					$out .= "<span class='extend'>{$options['dotright_text']}</span>";
 			}
 
 			// Next
 			if ( $paged < $total_pages && !empty( $options['next_text'] ) ) {
 				$out .= $instance->get_single( $paged + 1, $options['next_text'], array(
 					'class' => 'nextpostslink',
+					'rel'	=> 'next'
 				) );
 			}
 
@@ -288,7 +290,7 @@ class PageNavi_Core {
 	static function init( $options ) {
 		self::$options = $options;
 
-		add_action( 'wp_print_styles', array( __CLASS__, 'stylesheets' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'stylesheets' ) );
 	}
 
 	static function stylesheets() {

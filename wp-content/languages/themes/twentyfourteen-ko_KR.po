@@ -42,8 +42,8 @@ msgstr "더 많은 추가정보"
 msgid "%s <span class=\"meta-nav\">&rarr;</span>"
 msgstr "%s <span class=\"meta-nav\">&rarr;</span>"
 
-#: inc/customizer.php:37 inc/customizer.php:102 inc/featured-content.php:410
-#: inc/featured-content.php:419 inc/featured-content.php:479
+#: inc/customizer.php:37 inc/customizer.php:102 inc/featured-content.php:407
+#: inc/featured-content.php:416 inc/featured-content.php:476
 msgctxt "featured content default tag slug"
 msgid "featured"
 msgstr "특성"
@@ -55,7 +55,7 @@ msgstr "이 위젯을 사용하면 최근 추가정보, 인용, 비디오, 오�
 msgid "http://wordpress.org/themes/twentyfourteen"
 msgstr "http://wordpress.org/themes/twentyfourteen"
 
-#: inc/customizer.php:36 inc/featured-content.php:409
+#: inc/customizer.php:36 inc/featured-content.php:406
 msgid "Use a <a href=\"%1$s\">tag</a> to feature your posts. If no posts match the tag, <a href=\"%2$s\">sticky posts</a> will be displayed instead."
 msgstr "글을 특성화 하려면 <a href=\"%1$s\">태그</a>를 사용하세요. 태그와 일치하는 글이 없는 경우 <a href=\"%2$s\">붙박이 글</a>이 대신 표시될 것입니다."
 
@@ -85,11 +85,11 @@ msgstr "Y"
 msgid "Site Title Color"
 msgstr "사이트 제목 색상"
 
-#: inc/featured-content.php:431
+#: inc/featured-content.php:428
 msgid "Tag Name"
 msgstr "태그 이름"
 
-#: inc/featured-content.php:436
+#: inc/featured-content.php:433
 msgid "Don&rsquo;t display tag on front end."
 msgstr "사이트 전면에서 태그를 표시하지 않기"
 
@@ -152,7 +152,7 @@ msgstr "Twenty Fourteen은 최소한 워드프레스 3.6이 필요합니다. 현
 msgid "Background may only be visible on wide screens."
 msgstr "배경은 넓은 화면에서만 보일 수 있습니다."
 
-#: inc/customizer.php:35 inc/featured-content.php:408
+#: inc/customizer.php:35 inc/featured-content.php:405
 msgid "Featured Content"
 msgstr "특성 콘텐츠"
 
@@ -172,19 +172,19 @@ msgstr "슬라이더"
 msgid "Enhance your site design by using <a href=\"%s\">Featured Images</a> for posts you&rsquo;d like to stand out (also known as post thumbnails). This allows you to associate an image with your post without inserting it. Twenty Fourteen uses featured images for posts and pages&mdash;above the title&mdash;and in the Featured Content area on the home page."
 msgstr "글을 두드러지게 표현하고 싶다면 <a href=\"%s\">특성 이미지</a>(글 썸네일로도 알려져 있음)를 사용해서 사이트 디자인을 향상 시킬 수 있습니다. 이것은 이미지를 글에 추가하지 않고도 연관지을 수 있습니다. Twenty Fourteen은 글과 페이지&mdash;제목 위에&mdash;에 그리고 홈 페이지에서 특성 콘텐츠 영역에 특성 이미지를 사용합니다. "
 
-#: inc/template-tags.php:53
+#: inc/template-tags.php:58
 msgid "Posts navigation"
 msgstr "글 내비게이션"
 
-#: inc/template-tags.php:84
+#: inc/template-tags.php:89
 msgid "<span class=\"meta-nav\">Published In</span>%title"
 msgstr "%title로 <span class=\"meta-nav\">발행됩</span>"
 
-#: inc/template-tags.php:86
+#: inc/template-tags.php:91
 msgid "<span class=\"meta-nav\">Previous Post</span>%title"
 msgstr "<span class=\"meta-nav\">이전 글</span>%title"
 
-#: inc/template-tags.php:87
+#: inc/template-tags.php:92
 msgid "<span class=\"meta-nav\">Next Post</span>%title"
 msgstr "<span class=\"meta-nav\">다음 글</span>%title"
 
@@ -331,7 +331,7 @@ msgctxt "Lato font: on or off"
 msgid "on"
 msgstr "켜기"
 
-#: functions.php:488
+#: functions.php:491
 msgid "Page %s"
 msgstr "페이지 %s"
 
@@ -347,19 +347,19 @@ msgstr "주 메뉴"
 msgid "Skip to content"
 msgstr "콘텐츠로 바로가기"
 
-#: inc/template-tags.php:80
+#: inc/template-tags.php:85
 msgid "Post navigation"
 msgstr "글 내비게이션"
 
-#: inc/template-tags.php:45
+#: inc/template-tags.php:50
 msgid "&larr; Previous"
 msgstr "&larr; 이전"
 
-#: inc/template-tags.php:46
+#: inc/template-tags.php:51
 msgid "Next &rarr;"
 msgstr "다음 &rarr;"
 
-#: inc/template-tags.php:104
+#: inc/template-tags.php:109
 msgid "Sticky"
 msgstr "붙박이"
 
