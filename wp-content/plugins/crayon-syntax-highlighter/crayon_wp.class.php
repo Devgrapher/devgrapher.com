@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Crayon Syntax Highlighter
-Plugin URI: https://github.com/aramkocharyan/crayon-syntax-highlighter
+Plugin URI: https://github.com/aramk/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.6.6
+Version: 2.6.9
 Author: Aram Kocharyan
 Author URI: http://aramk.com/
 Text Domain: crayon-syntax-highlighter
@@ -251,6 +251,12 @@ class CrayonWP {
         // Will contain captured crayons and altered $wp_content
         $capture = array('capture' => array(), 'content' => $wp_content, 'has_captured' => FALSE);
 
+        // Do not apply Crayon for posts older than a certain date.
+        $disable_date = trim(CrayonGlobalSettings::val(CrayonSettings::DISABLE_DATE));
+        if ($disable_date && get_post_time('U', true, $wp_id) <= strtotime($disable_date)) {
+            return $capture;
+        }
+
         // Flags for which Crayons to convert
         $in_flag = self::in_flag($flags);
 
@@ -288,7 +294,6 @@ class CrayonWP {
         if ((CrayonGlobalSettings::val(CrayonSettings::PLAIN_TAG) || $skip_setting_check) && $in_flag[CrayonSettings::PLAIN_TAG]) {
             $wp_content = preg_replace_callback('#(?<!\$)\[\s*plain\s*\](.*?)\[\s*/\s*plain\s*\]#msi', 'CrayonFormatter::plain_code', $wp_content);
         }
-
 
         // Add IDs to the Crayons
         CrayonLog::debug('capture adding id ' . $wp_id . ' , now has len ' . strlen($wp_content));
@@ -345,6 +350,11 @@ class CrayonWP {
                     for ($j = 0; $j < count($att_matches[1]); $j++) {
                         $atts_array[trim(strtolower($att_matches[1][$j]))] = trim($att_matches[3][$j]);
                     }
+                }
+
+                if (isset($atts_array[CrayonSettings::IGNORE]) && $atts_array[CrayonSettings::IGNORE]) {
+                    // TODO(aramk) Revert to the original content.
+                    continue;
                 }
 
                 // Capture theme
@@ -755,7 +765,7 @@ class CrayonWP {
         return $the_excerpt . ' ';
     }
 
-    // Refactored, used to capture pre and span tags which have settings in class attribute
+    // Used to capture pre and span tags which have settings in class attribute
     public static function class_tag($matches) {
         // If class exists, atts is not captured
         $pre_class = $matches[1];
@@ -775,6 +785,10 @@ class CrayonWP {
         }
 
         if (!empty($class)) {
+            if (preg_match('#\bignore\s*:\s*true#', $class)) {
+                // Prevent any changes if ignoring the tag.
+                return $matches[0];
+            }
             // crayon-inline is turned into inline="1"
             $class = preg_replace('#' . self::REGEX_INLINE_CLASS . '#mi', 'inline="1"', $class);
             // "setting[:_]value" style settings in the class attribute

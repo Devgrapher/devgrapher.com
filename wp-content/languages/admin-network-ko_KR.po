@@ -2,15 +2,16 @@
 # This file is distributed under the same license as the Network Admin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-03-19 10:39:40+0000\n"
+"PO-Revision-Date: 2014-12-10 11:40:43+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/0.1\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
 "Project-Id-Version: Network Admin\n"
 
-#: wp-admin/network.php:477 wp-admin/network.php:513
+#. translators: 1: a filename like .htaccess. 2: a file path.
+#: wp-admin/network.php:479 wp-admin/network.php:516
 msgid "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
 msgstr "다음을 %2$s의 %1$s 파일에 추가하세요, <strong>교체</strong>워드프레스 규칙:"
 
@@ -34,7 +35,7 @@ msgstr "작업 확인"
 msgid "Transfer or delete content before deleting users."
 msgstr "사용자를 삭제하기 전에 콘텐츠 이전 또는 삭제."
 
-#: wp-admin/network/settings.php:104
+#: wp-admin/network/settings.php:139
 msgid "This email address will receive notifications. Registration and support emails will also come from this address."
 msgstr "이 이메일 주소는 알림을 받습니다. 회원 가입과 지원 이메일도 이 주소로부터 오게 됩니다."
 
@@ -62,7 +63,7 @@ msgstr "사이트를 검색하려면 <strong>경로나 도메인을 입력하세
 msgid "The database upgrade process may take a little while, so please be patient."
 msgstr "데이터베이스 업그레이드 과정이 시간이 걸릴 수 있습니다. 잠시만 기다려주세요."
 
-#: wp-admin/network/settings.php:82
+#: wp-admin/network/settings.php:117
 msgid "Options saved."
 msgstr "옵션이 저장됐습니다."
 
@@ -123,7 +124,7 @@ msgstr "데이터베이스 업그레이드가 필요합니다."
 msgid "WordPress has been updated! Before we send you on your way, we need to individually upgrade the sites in your network."
 msgstr "워드프레스가 업데이트됐습니다! 계속 진행하기 전에 네트워크에 있는 사이트를 개별적으로 업그레이드 해야 합니다."
 
-#: wp-admin/network/site-new.php:87
+#: wp-admin/network/site-new.php:91
 msgid ""
 "New site created by %1$s\n"
 "\n"
@@ -139,11 +140,11 @@ msgstr ""
 msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
 msgstr "wp-config.php 파일 ( <code>/*...stop editing...*/</code> 바로 전에)과  <code>.htaccess</code>(기존의 워드프레스 코드 교체) 파일에서 지정된 코드를 추가하세요."
 
-#: wp-admin/network.php:238 wp-admin/network.php:481 wp-admin/network.php:517
+#: wp-admin/network.php:238 wp-admin/network.php:483 wp-admin/network.php:520
 msgid "Subdirectory networks may not be fully compatible with custom wp-content directories."
 msgstr "서브 디렉토리 네트워크는 사용자 정의된 wp-content 디렉토리와 완전히 호환되지 않을 수도 있습니다."
 
-#: wp-admin/network/settings.php:37
+#: wp-admin/network/settings.php:64
 msgid "<a href=\"http://codex.wordpress.org/Network_Admin_Settings_Screen\" target=\"_blank\">Documentation on Network Settings</a>"
 msgstr "<a href=\"http://codex.wordpress.org/Network_Admin_Settings_Screen\" target=\"_blank\">네트워크 설정 문서</a>"
 
@@ -199,21 +200,21 @@ msgstr "경고! 사용자 %s을(를) 삭제할 수 없습니다."
 msgid "Enter the username of an existing user."
 msgstr "존재하는 사용자의 사용자명을 입력하세요."
 
-#: wp-admin/network/themes.php:240
+#: wp-admin/network/themes.php:265
 msgid "You cannot delete a theme while it is active on the main site."
 msgstr "메인 사이트에서 활성화되어 있는한 테마를 삭제할 수 없습니다."
 
-#: wp-admin/network/site-new.php:106 wp-admin/network/site-new.php:116
+#: wp-admin/network/site-new.php:110 wp-admin/network/site-new.php:120
 msgid "Add New Site"
 msgstr "새로운 사이트 추가"
 
-#: wp-admin/network/themes.php:236
+#: wp-admin/network/themes.php:261
 msgctxt "network"
 msgid "Theme deleted."
 msgid_plural "%s themes deleted."
 msgstr[0] "테마 삭제됨."
 
-#: wp-admin/network/themes.php:208
+#: wp-admin/network/themes.php:233
 msgid "<a href=\"http://codex.wordpress.org/Network_Admin_Themes_Screen\" target=\"_blank\">Documentation on Network Themes</a>"
 msgstr "<a href=\"http://codex.wordpress.org/Network_Admin_Themes_Screen\" target=\"_blank\">네트워크 테마 문서</a>"
 
@@ -222,31 +223,31 @@ msgstr "<a href=\"http://codex.wordpress.org/Network_Admin_Themes_Screen\" targe
 msgid "Info"
 msgstr "정보"
 
-#: wp-admin/network/themes.php:142
+#: wp-admin/network/themes.php:165
 msgid "Are you sure you wish to delete these themes?"
 msgstr "이 테마를 삭제하시겠습니까?"
 
-#: wp-admin/network/themes.php:151
+#: wp-admin/network/themes.php:175
 msgid "Yes, Delete this theme"
 msgid_plural "Yes, Delete these themes"
 msgstr[0] "네, 이 테마를 삭제합니다"
 
-#: wp-admin/network/themes.php:137
+#: wp-admin/network/themes.php:156
 msgid "You are about to remove the following theme:"
 msgid_plural "You are about to remove the following themes:"
 msgstr[0] "다음 테마를 제거하려고 합니다:"
 
-#: wp-admin/network/themes.php:136
+#: wp-admin/network/themes.php:155
 msgid "This theme may be active on other sites in the network."
 msgid_plural "These themes may be active on other sites in the network."
 msgstr[0] "이 테마는 네트워크 내의 다른 사이트에서 활성화되어 있을 수 있습니다."
 
-#: wp-admin/network/themes.php:134
+#: wp-admin/network/themes.php:153
 msgid "Delete Theme"
 msgid_plural "Delete Themes"
 msgstr[0] "테마 삭제"
 
-#: wp-admin/network/menu.php:46 wp-admin/network/settings.php:19
+#: wp-admin/network/menu.php:46 wp-admin/network/settings.php:22
 msgid "Network Settings"
 msgstr "네트워크 설정"
 
@@ -275,7 +276,7 @@ msgstr "사이트 편집 : <a href=\"%1$s\">%2$s</a> "
 msgid "You do not have sufficient permissions to delete themes for this site."
 msgstr "이 사이트의 테마를 삭제할 권한이 없습니다."
 
-#: wp-admin/network/site-themes.php:163 wp-admin/network/themes.php:233
+#: wp-admin/network/site-themes.php:163 wp-admin/network/themes.php:258
 msgid "Theme disabled."
 msgid_plural "%s themes disabled."
 msgstr[0] "테마 비활성됨."
@@ -285,12 +286,12 @@ msgstr[0] "테마 비활성됨."
 msgid "Invalid site ID."
 msgstr "잘못된 사이트 ID."
 
-#: wp-admin/network/site-themes.php:160 wp-admin/network/themes.php:230
+#: wp-admin/network/site-themes.php:160 wp-admin/network/themes.php:255
 msgid "Theme enabled."
 msgid_plural "%s themes enabled."
 msgstr[0] "테마 활성됨."
 
-#: wp-admin/network/site-themes.php:165 wp-admin/network/themes.php:238
+#: wp-admin/network/site-themes.php:165 wp-admin/network/themes.php:263
 msgid "No theme selected."
 msgstr "선택된 테마 없음."
 
@@ -304,7 +305,7 @@ msgstr "<strong>테마</strong> - 이 화면은 네트워크 전체에 활성화
 msgid "Edit Site: %s"
 msgstr "사이트 편집: %s"
 
-#: wp-admin/network/themes.php:154
+#: wp-admin/network/themes.php:178
 msgid "No, Return me to the theme list"
 msgstr "아니오, 테마 목록으로 돌아가주세요"
 
@@ -313,7 +314,7 @@ msgstr "아니오, 테마 목록으로 돌아가주세요"
 msgid "<strong>Settings</strong> - This page shows a list of all settings associated with this site. Some are created by WordPress and others are created by plugins you activate. Note that some fields are grayed out and say Serialized Data. You cannot modify these values due to the way the setting is stored in the database."
 msgstr "<strong>설정</strong> - 이 화면은 사이트와 관련된 모든 설정을 할 수 있는 목록을 보여줍니다. 몇개는 워드프레스에 의해 만들어졌고 다른 것은 활성화된 플러그인에 만들어진 것입니다. 어떤 항목은 회색으로 비활성화되어있고 Serialized Data로 표시됩니다. 이 값은 설정이 데이터베이스에 저장된 방식으로 인해 수정할 수 없습니다. "
 
-#: wp-admin/network/site-themes.php:130 wp-admin/network/themes.php:195
+#: wp-admin/network/site-themes.php:130 wp-admin/network/themes.php:220
 msgctxt "themes per page (screen options)"
 msgid "Themes"
 msgstr "테마"
@@ -337,11 +338,11 @@ msgstr "이 메뉴는 각 사이트에 특정된 정보를 편집하기 위한 �
 msgid "Dashboard leads to the Dashboard for that site."
 msgstr "대시보드는 해당 사이트의 대시보드로 이르게 합니다."
 
-#: wp-admin/network/settings.php:145
+#: wp-admin/network/settings.php:180
 msgid "Allow site administrators to add new users to their site via the \"Users &rarr; Add New\" page."
 msgstr "사이트 관리자에게 \"사용자 &rarr; 사용자 추가하기\"에서 새로운 사용자를 추가를 허용합니다."
 
-#: wp-admin/network/settings.php:280
+#: wp-admin/network/settings.php:316
 msgid "Language Settings"
 msgstr "언어 설정"
 
@@ -380,7 +381,7 @@ msgstr "<a href=\"http://codex.wordpress.org/Network_Admin\" target=\"_blank\">�
 msgid "You do not have sufficient permissions to manage themes for this site."
 msgstr "이 사이트의 테마를 관리할 권한이 없습니다."
 
-#: wp-admin/network/site-new.php:103
+#: wp-admin/network/site-new.php:107
 msgid "Site added. <a href=\"%1$s\">Visit Dashboard</a> or <a href=\"%2$s\">Edit Site</a>"
 msgstr "사이트가 추가됨. <a href=\"%1$s\">대시보드 방문</a> 또는 <a href=\"%2$s\">사이트 편집</a>"
 
@@ -405,7 +406,7 @@ msgstr "이 사이트를 삭제할 권한이 없습니다."
 msgid "You do not have sufficient permissions to add sites to this network."
 msgstr "이 네트워크에 사이트를 추가할 권한이 없습니다."
 
-#: wp-admin/network/menu.php:32 wp-admin/network/themes.php:222
+#: wp-admin/network/menu.php:32 wp-admin/network/themes.php:247
 msgctxt "theme"
 msgid "Add New"
 msgstr "새로 추가"
@@ -422,7 +423,7 @@ msgstr "굵은 타이틀 글자를 클릭하면 이 테이블을 재분류합니
 msgid "Delete which is a permanent action after the confirmation screens."
 msgstr "삭제는 확인 화면 다음에 최종적으로 이루어집니다."
 
-#: wp-admin/network/themes.php:203
+#: wp-admin/network/themes.php:228
 msgid "Themes can be enabled on a site by site basis by the network admin on the Edit Site screen (which has a Themes tab); get there via the Edit action link on the All Sites screen. Only network admins are able to install or edit themes."
 msgstr "테마는 사이트 편집화면(테마 탭이 있음)에서 네트워크 관리자가 각 사이트에서 사이트별로 활성화시킬 수 있습니다; 모든 사이트 화면에서 편집 링크를 클릭하면 해당화면으로 이동합니다. 네트워크 관리자만 테마를 설치하거나 편집할 수 있습니다."
 
@@ -438,7 +439,7 @@ msgstr "이 화면에서 최고관리자가 네트워크에 새로운 사이트�
 msgid "Updates"
 msgstr "업데이트"
 
-#: wp-admin/network/settings.php:32
+#: wp-admin/network/settings.php:59
 msgid "Super admins can no longer be added on the Options screen. You must now go to the list of existing users on Network Admin > Users and click on Username or the Edit action link below that name. This goes to an Edit User page where you can check a box to grant super admin privileges."
 msgstr "최고 관리자는 옵션 화면에서 추가될 수 없습니다. 네트워크 관리화면 > 모든 사용자 화면에서 기존 사용자 목록에서 사용자 이름을 클릭하거나 이름 아래의 편집 링크를 클릭합니다. 사용자 편집화면으로 이동하며 최고 관리자 권한을 부여하는 체크박스가 있으니 이곳에 체크하면 됩니다. "
 
@@ -471,7 +472,7 @@ msgstr "서브 도메인 설치"
 msgid "Because your install is not new, the sites in your WordPress network must use sub-domains."
 msgstr "워드프레스 설치가 새로운 것이 아니기 때문에, 네트워크 내의 사이트는 서브 도메인을 사용해야 합니다."
 
-#: wp-admin/network/settings.php:93 wp-admin/network.php:294
+#: wp-admin/network/settings.php:128 wp-admin/network.php:294
 msgid "Network Title"
 msgstr "네트워크 제목"
 
@@ -523,7 +524,7 @@ msgstr "아래에서 정보를 입력하면 워드프레스 네트워크 사이�
 msgid "Please make sure the Apache <code>mod_rewrite</code> module is installed as it will be used at the end of this installation."
 msgstr "이 설치의 마지막에 사용될 아파치 <code>mod_rewrite</code> 모듈이 설치되어 있는지 확인하세요."
 
-#: wp-admin/network.php:416
+#: wp-admin/network.php:417
 msgid "This unique authentication key is also missing from your <code>wp-config.php</code> file."
 msgid_plural "These unique authentication keys are also missing from your <code>wp-config.php</code> file."
 msgstr[0] "이 고유의 인증키 또한 <code>wp-config.php</code>파일에 없습니다."
@@ -562,7 +563,7 @@ msgstr "경고!"
 msgid "Sub-domains"
 msgstr "서브 도메인"
 
-#: wp-admin/network.php:416
+#: wp-admin/network.php:417
 msgid "To make your installation more secure, you should also add:"
 msgstr "설치를 좀 더 보안적으로 하려면 다음을 추가하세요:"
 
@@ -574,7 +575,7 @@ msgstr "서브 도메인이나 서브 디렉토리를 선택하세요; 이것은
 msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
 msgstr "네트워크 설정의 다음 화면은 wp-config.php 파일과 .htaccess파일에 추가할 코드가 생성됩니다. FTP프로그램에서 점으로 시작하는 파일(히든 파일)이 보일 수 있도록 설정을 변경하세요. 그러면 .htaccess파일을 찾을 수 있습니다. 만일 이 파일이 없다면 새로 만들어야 하며, 코드를 삽입하기전에 두개의 파일을 백업하세요."
 
-#: wp-admin/network.php:526
+#: wp-admin/network.php:529
 msgid "Once you complete these steps, your network is enabled and configured. You will have to log in again."
 msgstr "이 과정이 완료되면, 네트워크는 활성화되고 환경 설정이 완료됩니다. 다시 로그인해야 합니다."
 
@@ -632,10 +633,10 @@ msgstr "대시보드로 돌아가기"
 
 #: wp-admin/network.php:27
 msgid "The Network creation panel is not for WordPress MU networks."
-msgstr "네트워크 생성 패널은 워드프레스 뮤 네트워크를 위한 것이 아닙니다."
+msgstr "네트워크 생성 패널은 워드프레스 MU 네트워크를 위한 것이 아닙니다."
 
-#: wp-admin/network.php:165 wp-admin/network.php:359 wp-admin/network.php:481
-#: wp-admin/network.php:517
+#: wp-admin/network.php:165 wp-admin/network.php:359 wp-admin/network.php:483
+#: wp-admin/network.php:520
 msgid "Warning:"
 msgstr "경고:"
 
@@ -701,7 +702,7 @@ msgstr "사이트 아이디가 내부에서 사용되고 있으며 사이트 화
 msgid "Hovering over each site reveals seven options (three for the primary site):"
 msgstr "각 사이트를 마우스 오버하면 7개의 옵션이 나타납니다(주 사이트는 3개)."
 
-#: wp-admin/network/settings.php:27
+#: wp-admin/network/settings.php:53
 msgid "Operational settings has fields for the network&#8217;s name and admin email."
 msgstr "운영 환경 설정은 네트워크명과 네트워크 관리자 이메일을 위한 필드가 있습니다."
 
@@ -713,7 +714,7 @@ msgstr "각 사용자명을 클릭하면 해당 사용자의 프로필 화면으
 msgid "The bulk action will permanently delete selected users, or mark/unmark those selected as spam. Spam users will have posts removed and will be unable to sign up again with the same email addresses."
 msgstr "일괄 처리는 선택된 사용자를 영원히 삭제합니다. 또는 선택된 항목을 스팸으로 체크하거나 체크해제합니다.  스팸 사용자는 포스트가 삭제되고 같은 이메일 주소로 재등록할 수 없습니다."
 
-#: wp-admin/network/settings.php:30
+#: wp-admin/network/settings.php:56
 msgid "Upload settings control the size of the uploaded files and the amount of available upload space for each site. You can change the default value for specific sites when you edit a particular site. Allowed file types are also listed (space separated only)."
 msgstr "업로드 설정은 각 사이트의 업로드 공간의 용량과  업로드 파일의 크기를 제어합니다. 개별 사이트에서 편집하면 해당 사이트의 기본 값을 변경할 수 있습니다. 허용된 파일 형태도 열거되어 있습니다(스페이스 분리만 가능)."
 
@@ -721,27 +722,27 @@ msgstr "업로드 설정은 각 사이트의 업로드 공간의 용량과  업�
 msgid "Visit to go to the frontend site live."
 msgstr "블로그 화면이 활성화 되었는지 방문하세요"
 
-#: wp-admin/network/settings.php:29
+#: wp-admin/network/settings.php:55
 msgid "New site settings are defaults applied when a new site is created in the network. These include welcome email for when a new site or user account is registered, and what&#8127;s put in the first post, page, comment, comment author, and comment URL."
 msgstr "새 사이트 설정은 네트워크에 새 사이트가 만들어지면 적용되는 기본 내용입니다. 여기에는 새 사이트나 사용자가 등록될 때 사용되는 환영 이메일, 처음 글, 첫 페이지, 첫 댓글, 첫 댓글 작성자, 첫 댓글 작성자 URL이 포함됩니다. "
 
-#: wp-admin/network/themes.php:201
+#: wp-admin/network/themes.php:226
 msgid "This screen enables and disables the inclusion of themes available to choose in the Appearance menu for each site. It does not activate or deactivate which theme a site is currently using."
 msgstr "이 화면에서는 각 사이트의 테마 메뉴에서 선택이 가능하도록 테마를 추가하거나 제거할 수 있습니다. 사이트에서 현재 사용되고 있는 테마를 활성화하거나 비활성화시킬 수는 없습니다."
 
-#: wp-admin/network/themes.php:202
+#: wp-admin/network/themes.php:227
 msgid "If the network admin disables a theme that is in use, it can still remain selected on that site. If another theme is chosen, the disabled theme will not appear in the site&#8217;s Appearance > Themes screen."
 msgstr "네트워크 관리자가 현재 사용되고 있는 테마를 비활성화한다면 해당 사이트에서는 아직은 선택된 것으로 남아있을 수 있습니다. 다른 테마가 선택되면 비활성화된 테마는 사이트의 테마 > 설치된 테마 화면에 나타나지 않습니다."
 
-#: wp-admin/network/settings.php:26
+#: wp-admin/network/settings.php:52
 msgid "This screen sets and changes options for the network as a whole. The first site is the main site in the network and network options are pulled from that original site&#8217;s options."
 msgstr "이 화면에서 네트워크 전체의 옵션을 설정하거나 변경할 수 있습니다. 네트워크에서 첫 사이트는 주 사이트가 되며 아래의 네트워크 옵션은 주 사이트에서 이미 설정한 옵션에서 불러온 것입니다. "
 
-#: wp-admin/network/settings.php:28
+#: wp-admin/network/settings.php:54
 msgid "Registration settings can disable/enable public signups. If you let others sign up for a site, install spam plugins. Spaces, not commas, should separate names banned as sites for this network."
 msgstr "등록 설정은 회원가입을 가능하게 하거나 불가능하게 할 수 있습니다. 회원 등록을 가능하게 하였다면 스팸 방지 플러그인을 설치하세요. 네트워크의 사이트 이름으로 사용할 수 없는 단어를 콤마가 아닌 스페이스로 분리하여 입력합니다."
 
-#: wp-admin/network/settings.php:31
+#: wp-admin/network/settings.php:58
 msgid "Menu setting enables/disables the plugin menus from appearing for non super admins, so that only super admins, not site admins, have access to activate plugins."
 msgstr "메뉴설정은 일반 관리자 사이트에서 플러그인 메뉴가 나타나게 하거나 나타나지 않게 할 수 있습니다. 그러므로 일반 관리자를 제외한 최고 관리자만 플러그인을 활성화할 수 있는 권한이 있습니다. "
 
@@ -775,21 +776,21 @@ msgstr "기존의 사용자를 최고 관리자로 추가할 수 있으며 사�
 
 #: wp-admin/network/site-new.php:49
 msgid "The following words are reserved for use by WordPress functions and cannot be used as blog names: <code>%s</code>"
-msgstr "다음 단어는 워드프레스가 함수로 사용하기 위해 보존되었고 블로그 이름으로 사용할 수 없습니다 : <code>%s</code>"
+msgstr "다음 단어는 워드프레스 함수로 사용하기 위해 예약되어있으므로 블로그이름으로 사용할 수 없습니다: <code>%s</code>"
 
 #: wp-admin/network/upgrade.php:69
 msgid "Warning! Problem updating %1$s. Your server may not be able to connect to sites running on it. Error message: <em>%2$s</em>"
 msgstr "경고! %1$s 업데이트 문제입니다. 사이트의 서버에 연결될 수 없습니다. 에러 메시지 :  <em>%2$s</em>"
 
-#: wp-admin/network/settings.php:167
+#: wp-admin/network/settings.php:202
 msgid "If you want to limit site registrations to certain domains. One domain per line."
 msgstr "만약 특정 도메인에게만 사이트 등록을 한정하려면 한 줄에 한 개의 도메인을 입력하세요."
 
-#: wp-admin/network/settings.php:178
+#: wp-admin/network/settings.php:213
 msgid "If you want to ban domains from site registrations. One domain per line."
 msgstr "만약 사이트 등록에 특정 도메인을 차단하기를 원한다면 한 줄에 한 개의 도메인을 입력하세요."
 
-#: wp-admin/network/settings.php:125
+#: wp-admin/network/settings.php:160
 msgid "If registration is disabled, please set <code>NOBLOGREDIRECT</code> in <code>wp-config.php</code> to a URL you will redirect visitors to if they visit a non-existent site."
 msgstr "회원 가입이 안되도록 설정할 경우 방문자가 존재하지 않는 사이트를 방문할 때 이들을 다른 페이지로 이동할 수 있도록 <code>wp-config.php</code>파일에서 <code>NOBLOGREDIRECT</code>를 다른 URL로 설정합니다. "
 
@@ -833,7 +834,7 @@ msgstr "사이트 삭제됨."
 msgid "Users marked as spam."
 msgstr "사용자들을 스팸으로 표시함."
 
-#: wp-admin/network/site-info.php:141
+#: wp-admin/network/site-info.php:142
 msgid "Update <code>siteurl</code> and <code>home</code> as well."
 msgstr "<code>siteurl</code> 과 <code>home</code>도 업데이트."
 
@@ -857,11 +858,11 @@ msgstr "사용자들이 삭제됨."
 msgid "Site archived."
 msgstr "사이트 보관됨."
 
-#: wp-admin/network/site-new.php:60
+#: wp-admin/network/site-new.php:63
 msgid "Invalid email address."
 msgstr "잘못된 이메일."
 
-#: wp-admin/network/site-new.php:76
+#: wp-admin/network/site-new.php:80
 msgid "There was an error creating the user."
 msgstr "사용자를 생성하는 과정에서 에러가 발생했습니다."
 
@@ -869,36 +870,36 @@ msgstr "사용자를 생성하는 과정에서 에러가 발생했습니다."
 msgid "You are not allowed to change the current site."
 msgstr "현재 사이트를 변경할 권한이 없습니다."
 
-#: wp-admin/network/settings.php:272
+#: wp-admin/network/settings.php:307
 msgctxt "File size in kilobytes"
 msgid "%s KB"
 msgstr "%s KB"
 
-#: wp-admin/network/settings.php:266
+#: wp-admin/network/settings.php:301
 msgid "Upload file types"
 msgstr "업로드 파일 타입"
 
-#: wp-admin/network/settings.php:261
+#: wp-admin/network/settings.php:296
 msgid "Limit total size of files uploaded to %s MB"
 msgstr "업로드의 최대 한도 크기는 %s MB"
 
-#: wp-admin/network/settings.php:242
+#: wp-admin/network/settings.php:277
 msgid "The author of the first comment on a new site."
 msgstr "새로운 사이트의 첫번째 댓글의 작성자."
 
-#: wp-admin/network/settings.php:213
+#: wp-admin/network/settings.php:248
 msgid "The first post on a new site."
 msgstr "새로운 사이트의 첫번째 글."
 
-#: wp-admin/network/settings.php:223
+#: wp-admin/network/settings.php:258
 msgid "The first page on a new site."
 msgstr "새로운 사이트의 첫번째 페이지."
 
-#: wp-admin/network/settings.php:233
+#: wp-admin/network/settings.php:268
 msgid "The first comment on a new site."
 msgstr "새로운 사이트의 첫번째 댓글."
 
-#: wp-admin/network/settings.php:251
+#: wp-admin/network/settings.php:286
 msgid "The URL for the first comment on a new site."
 msgstr "새로운 사이트의 첫번째 댓글의 URL."
 
@@ -906,43 +907,43 @@ msgstr "새로운 사이트의 첫번째 댓글의 URL."
 msgid "All done!"
 msgstr "모두 완료!"
 
-#: wp-admin/network/settings.php:121
+#: wp-admin/network/settings.php:156
 msgid "Logged in users may register new sites."
 msgstr "로그인 사용자만 새로운 사이트를 등록할 수 있습니다."
 
-#: wp-admin/network/settings.php:122
+#: wp-admin/network/settings.php:157
 msgid "Both sites and user accounts can be registered."
 msgstr "사이트와 사용자 계정 모두 등록할 수 있습니다."
 
-#: wp-admin/network/settings.php:120
+#: wp-admin/network/settings.php:155
 msgid "User accounts may be registered."
 msgstr "사용자 계정만 등록할 수 있습니다."
 
-#: wp-admin/network/settings.php:119
+#: wp-admin/network/settings.php:154
 msgid "Registration is disabled."
 msgstr "등록은 비활성되었습니다."
 
-#: wp-admin/network/settings.php:308
+#: wp-admin/network/settings.php:346
 msgid "Enable administration menus"
 msgstr "관리자 메뉴 활성"
 
-#: wp-admin/network/settings.php:90
+#: wp-admin/network/settings.php:125
 msgid "Operational Settings"
 msgstr "운영환경 설정"
 
-#: wp-admin/network/settings.php:256
+#: wp-admin/network/settings.php:291
 msgid "Upload Settings"
 msgstr "업로드 설정"
 
-#: wp-admin/network/settings.php:184
+#: wp-admin/network/settings.php:219
 msgid "New Site Settings"
 msgstr "새 사이트 설정"
 
-#: wp-admin/network/settings.php:109
+#: wp-admin/network/settings.php:144
 msgid "Registration Settings"
 msgstr "등록 설정"
 
-#: wp-admin/network/site-new.php:56
+#: wp-admin/network/site-new.php:55
 msgid "Missing or invalid site address."
 msgstr "누락 또는 잘못된 사이트 주소."
 
@@ -950,27 +951,27 @@ msgstr "누락 또는 잘못된 사이트 주소."
 msgid "Missing email address."
 msgstr "이메일 누락."
 
-#: wp-admin/network/settings.php:100 wp-admin/network.php:303
+#: wp-admin/network/settings.php:135 wp-admin/network.php:303
 msgid "Network Admin Email"
 msgstr "네트워크 관리자 이메일"
 
-#: wp-admin/network/site-new.php:91
+#: wp-admin/network/site-new.php:95
 msgid "[%s] New Site Created"
 msgstr "[%s] 새로운 사이트 생성됨"
 
-#: wp-admin/network/settings.php:193
+#: wp-admin/network/settings.php:228
 msgid "The welcome email sent to new site owners."
 msgstr "새로운 사이트 주인들에게 환영 이메일이 전송되었습니다."
 
-#: wp-admin/network/settings.php:259
+#: wp-admin/network/settings.php:294
 msgid "Site upload space"
 msgstr "사이트 업로드 공간"
 
-#: wp-admin/network/settings.php:138
+#: wp-admin/network/settings.php:173
 msgid "Send the network admin an email notification every time someone registers a site or user account."
 msgstr "누군가 사이트 계정이나 사용자 계정을 등록하면 네트워크 관리자에게 이메일 통지를 보냅니다.  "
 
-#: wp-admin/network/settings.php:154
+#: wp-admin/network/settings.php:189
 msgid "Users are not allowed to register these sites. Separate names by spaces."
 msgstr "사용자는 위 이름으로 사이트 개설이 허용되지 않습니다. 이름을 스페이스로 분리합니다."
 
@@ -978,7 +979,7 @@ msgstr "사용자는 위 이름으로 사이트 개설이 허용되지 않습니
 msgid "Next Sites"
 msgstr "다음 사이트"
 
-#: wp-admin/network/index.php:20 wp-admin/network/settings.php:17
+#: wp-admin/network/index.php:20 wp-admin/network/settings.php:20
 #: wp-admin/network/site-info.php:43 wp-admin/network/site-settings.php:43
 #: wp-admin/network/site-themes.php:60 wp-admin/network/site-users.php:53
 #: wp-admin/network/sites.php:17 wp-admin/network/sites.php:100
@@ -1001,83 +1002,83 @@ msgstr "빈 사용자를 생성할 수 없습니다."
 msgid "Duplicated username or email address."
 msgstr "중복된 사용자명 또는 이메일."
 
-#: wp-admin/network/settings.php:112
+#: wp-admin/network/settings.php:147
 msgid "Allow new registrations"
 msgstr "새로운 등록 허용"
 
-#: wp-admin/network/settings.php:132
+#: wp-admin/network/settings.php:167
 msgid "Registration notification"
 msgstr "등록 알림"
 
-#: wp-admin/network/settings.php:143
+#: wp-admin/network/settings.php:178
 msgid "Add New Users"
 msgstr "새로운 사용자 추가"
 
-#: wp-admin/network/settings.php:150
+#: wp-admin/network/settings.php:185
 msgid "Banned Names"
 msgstr "차단된 이름"
 
-#: wp-admin/network/settings.php:160
+#: wp-admin/network/settings.php:195
 msgid "Limited Email Registrations"
 msgstr "한정된 이메일 등록"
 
-#: wp-admin/network/settings.php:173
+#: wp-admin/network/settings.php:208
 msgid "Banned Email Domains"
 msgstr "차단된 이메일 도메인"
 
-#: wp-admin/network/settings.php:188
+#: wp-admin/network/settings.php:223
 msgid "Welcome Email"
 msgstr "환영 이메일"
 
-#: wp-admin/network/settings.php:198
+#: wp-admin/network/settings.php:233
 msgid "Welcome User Email"
 msgstr "환영 사용자 이메일"
 
-#: wp-admin/network/settings.php:203
+#: wp-admin/network/settings.php:238
 msgid "The welcome email sent to new users."
 msgstr "새로운 사용자들에게 환영 이메일이 전송되었습니다."
 
-#: wp-admin/network/settings.php:218
+#: wp-admin/network/settings.php:253
 msgid "First Page"
 msgstr "첫 페이지"
 
-#: wp-admin/network/settings.php:228
+#: wp-admin/network/settings.php:263
 msgid "First Comment"
 msgstr "첫 댓글"
 
-#: wp-admin/network/settings.php:238
+#: wp-admin/network/settings.php:273
 msgid "First Comment Author"
 msgstr "첫번째 댓글 작성자"
 
-#: wp-admin/network/settings.php:247
+#: wp-admin/network/settings.php:282
 msgid "First Comment URL"
 msgstr "첫 댓글 URL"
 
-#: wp-admin/network/settings.php:271
+#: wp-admin/network/settings.php:306
 msgid "Max upload file size"
 msgstr "최대 업로드 파일 용량"
 
-#: wp-admin/network/settings.php:283
+#: wp-admin/network/settings.php:319
 msgid "Default Language"
 msgstr "기본 언어"
 
-#: wp-admin/network/site-new.php:149
+#: wp-admin/network/site-new.php:153
 msgid "Add Site"
 msgstr "사이트 추가"
 
-#: wp-admin/network/site-new.php:126
+#: wp-admin/network/site-new.php:130
 msgid "Site Address"
 msgstr "사이트 주소"
 
-#: wp-admin/network/site-new.php:142
+#: wp-admin/network/site-new.php:146
 msgid "Admin Email"
 msgstr "관리자 이메일"
 
-#: wp-admin/network/site-new.php:146
+#: wp-admin/network/site-new.php:150
 msgid "A new user will be created if the above email address is not in the database."
 msgstr "위의 이메일 주소가 데이터베이스에 없으면 새로운 사용자를 만들수 있습니다."
 
-#: wp-admin/network/site-new.php:146
+#: wp-admin/network/site-new.php:150
 msgid "The username and password will be mailed to this email address."
 msgstr "이 이메일 주소로 사용자명과 비밀번호가 보내집니다."
 

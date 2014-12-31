@@ -132,7 +132,10 @@ namespace quick_cache
 	/*
 	 * Include shared methods between {@link advanced_cache} and {@link plugin}.
 	 */
-	require_once dirname(QUICK_CACHE_PLUGIN_FILE).'/includes/share.php';
+	if(defined('WP_DEBUG') && WP_DEBUG)
+		require_once dirname(QUICK_CACHE_PLUGIN_FILE).'/includes/share.php';
+	else if((@require_once(dirname(QUICK_CACHE_PLUGIN_FILE).'/includes/share.php')) === FALSE)
+		return; // Unable to find class dependency. Fail softly.
 
 	/**
 	 * Quick Cache (Advanced Cache Handler)
@@ -675,13 +678,13 @@ namespace quick_cache
 			if(!QUICK_CACHE_FEEDS_ENABLE && $this->is_feed())
 				return $this->maybe_set_debug_info($this::NC_DEBUG_FEED_REQUEST);
 
-			if(preg_match('/\/(?:wp\-[^\/]+|xmlrpc)\.php(?:[?]|$)/', $_SERVER['REQUEST_URI']))
+			if(preg_match('/\/(?:wp\-[^\/]+|xmlrpc)\.php(?:[?]|$)/i', $_SERVER['REQUEST_URI']))
 				return $this->maybe_set_debug_info($this::NC_DEBUG_WP_SYSTEMATICS);
 
-			if(is_admin() || preg_match('/\/wp-admin(?:[\/?]|$)/', $_SERVER['REQUEST_URI']))
+			if(is_admin() || preg_match('/\/wp-admin(?:[\/?]|$)/i', $_SERVER['REQUEST_URI']))
 				return $this->maybe_set_debug_info($this::NC_DEBUG_WP_ADMIN);
 
-			if(is_multisite() && preg_match('/\/files(?:[\/?]|$)/', $_SERVER['REQUEST_URI']))
+			if(is_multisite() && preg_match('/\/files(?:[\/?]|$)/i', $_SERVER['REQUEST_URI']))
 				return $this->maybe_set_debug_info($this::NC_DEBUG_MS_FILES);
 
 			if($this->is_like_user_logged_in()) // Commenters, password-protected access, or actually logged-in.
@@ -879,7 +882,7 @@ namespace quick_cache
 			if($this->is_404 && !QUICK_CACHE_CACHE_404_REQUESTS) // Not caching 404 errors.
 				return (boolean)$this->maybe_set_debug_info($this::NC_DEBUG_404_REQUEST);
 
-			if(strpos($cache, '<body id="error-page">') !== FALSE) // A WordPress-generated {@link \wp_die()} error?
+			if(stripos($cache, '<body id="error-page">') !== FALSE) // A WordPress-generated error?
 				return (boolean)$this->maybe_set_debug_info($this::NC_DEBUG_WP_ERROR_PAGE);
 
 			if(!$this->function_is_possible('http_response_code')) // Unable to reliably detect HTTP status code?
@@ -899,6 +902,14 @@ namespace quick_cache
 			   && (!($zlib_oc = ini_get('zlib.output_compression')) || !filter_var($zlib_oc, FILTER_VALIDATE_BOOLEAN))
 			) return (boolean)$this->maybe_set_debug_info($this::NC_DEBUG_OB_ZLIB_CODING_TYPE);
 
+			# Lock the cache directory while writes take place here.
+
+			$cache_lock = $this->cache_lock(); // Lock cache directory.
+
+			# Construct a temp file for atomic cache writes.
+
+			$cache_file_tmp = $this->add_tmp_suffix($this->cache_file);
+
 			# Cache directory checks. The cache file directory is created here if necessary.
 
 			if(!is_dir(QUICK_CACHE_DIR) && mkdir(QUICK_CACHE_DIR, 0775, TRUE) && !is_file(QUICK_CACHE_DIR.'/.htaccess'))
@@ -910,14 +921,16 @@ namespace quick_cache
 
 			# This is where a new 404 request might be detected for the first time; and where the 404 error file already exists in this case.
 
-			$cache_file_tmp = $this->cache_file.'.'.uniqid('', TRUE).'.tmp'; // Cache/symlink creation is atomic; e.g. tmp file w/ rename.
-
 			if($this->is_404 && is_file($this->cache_file_404))
+			{
 				if(!(symlink($this->cache_file_404, $cache_file_tmp) && rename($cache_file_tmp, $this->cache_file)))
 					throw new \exception(sprintf(__('Unable to create symlink: `%1$s` » `%2$s`. Possible permissions issue (or race condition), please check your cache directory: `%3$s`.', $this->text_domain), $this->cache_file, $this->cache_file_404, QUICK_CACHE_DIR));
-				else return (boolean)$this->maybe_set_debug_info($this::NC_DEBUG_1ST_TIME_404_SYMLINK);
 
-			/* ------- Otherwise, we need to construct & store a new cache file. -------- */
+				$this->cache_unlock($cache_lock); // Unlock cache directory.
+
+				return (boolean)$this->maybe_set_debug_info($this::NC_DEBUG_1ST_TIME_404_SYMLINK);
+			}
+			/* ------- Otherwise, we need to construct & store a new cache file. ----------------------------------------------- */
 
 			if(QUICK_CACHE_DEBUGGING_ENABLE && $this->is_html_xml_doc($cache)) // Only if HTML comments are possible.
 			{
@@ -927,25 +940,28 @@ namespace quick_cache
 				                                                ($this->is_404) ? '404 [error document]' : $this->salt_location, $total_time, date('M jS, Y @ g:i a T'))).' -->';
 				$cache .= "\n".'<!-- '.htmlspecialchars(sprintf(__('This Quick Cache file will auto-expire (and be rebuilt) on: %1$s (based on your configured expiration time).', $this->text_domain), date('M jS, Y @ g:i a T', strtotime('+'.QUICK_CACHE_MAX_AGE)))).' -->';
 			}
+			# NOT a 404, or it is 404 and the 404 cache file doesn't yet exist (so we need to create it).
 
-			/*
-			 * This is NOT a 404, or it is 404 and the 404 cache file doesn't yet exist (so we need to create it).
-			 */
 			if($this->is_404) // This is a 404; let's create 404 cache file and symlink to it.
 			{
 				if(file_put_contents($cache_file_tmp, serialize($this->cacheable_headers_list()).'<!--headers-->'.$cache) && rename($cache_file_tmp, $this->cache_file_404))
 				{
 					if(!(symlink($this->cache_file_404, $cache_file_tmp) && rename($cache_file_tmp, $this->cache_file)))
 						throw new \exception(sprintf(__('Unable to create symlink: `%1$s` » `%2$s`. Possible permissions issue (or race condition), please check your cache directory: `%3$s`.', $this->text_domain), $this->cache_file, $this->cache_file_404, QUICK_CACHE_DIR));
-					else
-						return $cache; // Return the newly built cache; with possible debug information also.
+
+					$this->cache_unlock($cache_lock); // Unlock cache directory.
+
+					return $cache; // Return the newly built cache; with possible debug information also.
 				}
-
-			} // NOT a 404; let's write a new cache file.
+			} // NOT a 404; let's write a new cache file! This is where pages get cached. The cache is served back out on this first-time access.
 			else if(file_put_contents($cache_file_tmp, serialize($this->cacheable_headers_list()).'<!--headers-->'.$cache) && rename($cache_file_tmp, $this->cache_file))
-				return $cache; // Return the newly built cache; with possible debug information also.
+			{
+				$this->cache_unlock($cache_lock); // Unlock cache directory.
 
+				return $cache; // Return the newly built cache; with possible debug information also.
+			}
 			@unlink($cache_file_tmp); // Clean this up (if it exists); and throw an exception with information for the site owner.
+
 			throw new \exception(sprintf(__('Quick Cache: failed to write cache file for: `%1$s`; possible permissions issue (or race condition), please check your cache directory: `%2$s`.', $this->text_domain), $_SERVER['REQUEST_URI'], QUICK_CACHE_DIR));
 		}
 
