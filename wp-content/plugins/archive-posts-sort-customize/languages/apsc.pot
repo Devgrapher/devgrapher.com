@@ -1,0 +1,281 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Archive Posts Sort Customize\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-19 13:11+0900\n"
+"PO-Revision-Date: 2014-12-19 13:11+0900\n"
+"Last-Translator: gqevu6bsiz <gqevu6bsiz@gmail.com>\n"
+"Language-Team: gqevu6bsiz <gqevu6bsiz@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: archive-posts-sort-customize.php:4
+msgid "Customize the posts order of the list of Archive Posts."
+msgstr ""
+
+#: includes/lists.php:77
+#: includes/lists.php:86
+#: includes/lists.php:95
+msgid "Sort settings"
+msgstr ""
+
+#: includes/lists.php:129
+msgid "Custom Taxonomies"
+msgstr ""
+
+#: includes/lists.php:131
+#, php-format
+msgid "Another sort settings of only this %s."
+msgstr ""
+
+#: includes/lists.php:144
+msgid "Number of posts per page"
+msgstr ""
+
+#: includes/lists.php:147
+#: includes/lists.php:158
+#: includes/lists.php:175
+#, php-format
+msgid "The default is <strong>%s</strong>."
+msgstr ""
+
+#: includes/lists.php:147
+#: includes/lists.php:249
+msgid "Follow Reading Setting"
+msgstr ""
+
+#: includes/lists.php:155
+msgid "Sort target"
+msgstr ""
+
+#: includes/lists.php:179
+msgid "From new to old"
+msgstr ""
+
+#: includes/lists.php:179
+msgid "From many to small"
+msgstr ""
+
+#: includes/lists.php:180
+msgid "From old to new"
+msgstr ""
+
+#: includes/lists.php:180
+msgid "From small to many"
+msgstr ""
+
+#: includes/lists.php:235
+#: includes/manage.php:61
+#: views/monthly.php:13
+msgid "Monthly"
+msgstr ""
+
+#: includes/lists.php:248
+msgid "View all posts"
+msgstr ""
+
+#: includes/lists.php:250
+msgid "Set the number of posts"
+msgstr ""
+
+#: includes/lists.php:271
+msgid "Current number of Reading Setting"
+msgstr ""
+
+#: includes/lists.php:307
+msgid "Comments Count"
+msgstr ""
+
+#: includes/lists.php:344
+msgid "Please enter the name of the custom field you want to sort."
+msgstr ""
+
+#: includes/lists.php:345
+msgid "Custom Fields Name"
+msgstr ""
+
+#: includes/lists.php:359
+msgid "Click here, please look for the required custom fields if you do not know the name of the custom field."
+msgstr ""
+
+#: includes/lists.php:382
+msgid "If you want to ignore some words of beginning, please enter the word."
+msgstr ""
+
+#: includes/lists.php:384
+msgid "Add New Word"
+msgstr ""
+
+#: includes/lists.php:403
+#: includes/lists.php:414
+msgid "Remove Word"
+msgstr ""
+
+#: includes/manage.php:47
+#: includes/manage.php:48
+#: includes/manage.php:49
+#: includes/manage.php:56
+#: includes/manage.php:60
+#: includes/manage.php:61
+#: views/category.php:13
+#: views/custom_taxonomies.php:14
+#: views/default.php:13
+#: views/monthly.php:13
+#: views/search.php:13
+#: views/tag.php:13
+#, php-format
+msgid "%1$s %2$s for %3$s %4$s"
+msgstr ""
+
+#: includes/manage.php:77
+#: views/donation.php:6
+msgid "Thank you for your donation."
+msgstr ""
+
+#: includes/manage.php:180
+msgid "Please consider a donate if you are satisfied with this plugin."
+msgstr ""
+
+#: views/category.php:14
+#: views/custom_taxonomies.php:15
+#: views/default.php:14
+#: views/monthly.php:14
+#: views/search.php:14
+#: views/tag.php:14
+msgid "Please set your favorite."
+msgstr ""
+
+#: views/category.php:29
+#: views/custom_taxonomies.php:30
+#, php-format
+msgid "Settings for per %1$s"
+msgstr ""
+
+#: views/category.php:47
+#: views/custom_taxonomies.php:48
+#: views/default.php:33
+#: views/monthly.php:33
+#: views/search.php:33
+#: views/tag.php:33
+msgid "Reset all settings?"
+msgstr ""
+
+#: views/category.php:48
+#: views/custom_taxonomies.php:49
+#: views/default.php:34
+#: views/monthly.php:34
+#: views/search.php:34
+#: views/tag.php:34
+msgid "Reset settings"
+msgstr ""
+
+#: views/donation.php:11
+msgid "How may I help you?"
+msgstr ""
+
+#: views/donation.php:17
+msgid "I am good at Admin Screen Customize."
+msgstr ""
+
+#: views/donation.php:18
+msgid "Please consider the request to me if it is good."
+msgstr ""
+
+#: views/donation.php:20
+msgid "Example Customize"
+msgstr ""
+
+#: views/donation.php:21
+msgid "Contact me"
+msgstr ""
+
+#: views/donation.php:27
+msgid "Please donate."
+msgstr ""
+
+#: views/donation.php:28
+msgid "You are contented with this plugin?<br />By the laws of Japan, Japan's new paypal user can not make a donate button.<br />So i would like you to buy this plugin as the replacement for the donate."
+msgstr ""
+
+#: views/donation.php:35
+msgid "Features"
+msgstr ""
+
+#: views/donation.php:36
+msgid "Line Break First and End plugin is In the visual editor TinyMCE, It is a plugin that will help when you will not be able to enter a line break."
+msgstr ""
+
+#: views/donation.php:39
+msgid "The primary use of donations"
+msgstr ""
+
+#: views/donation.php:41
+msgid "Liquidation of time and value"
+msgstr ""
+
+#: views/donation.php:42
+msgid "Additional suggestions feature"
+msgstr ""
+
+#: views/donation.php:43
+msgid "Maintain motivation"
+msgstr ""
+
+#: views/donation.php:44
+msgid "Ensure time as the father of Sunday"
+msgstr ""
+
+#: views/donation.php:48
+msgid "If you have already donated to."
+msgstr ""
+
+#: views/donation.php:49
+msgid "Please enter the 'Donate delete key' that have been described in the 'Line Break First and End download page'."
+msgstr ""
+
+#: views/donation.php:52
+msgid "Donate delete key"
+msgstr ""
+
+#: views/donation.php:62
+msgid "About plugin"
+msgstr ""
+
+#: views/donation.php:64
+msgid "Version checked"
+msgstr ""
+
+#: views/donation.php:66
+msgid "Developer's site"
+msgstr ""
+
+#: views/donation.php:68
+msgid "Reviews"
+msgstr ""
+
+#: views/donation.php:76
+#, php-format
+msgid "Do you have a proposal you want to improve? Please contact to %s if it is necessary."
+msgstr ""
+
+#: views/donation.php:81
+msgid "Useful plugins"
+msgstr ""
+
+#: views/donation.php:84
+msgid "Customize a variety of screen management."
+msgstr ""
+
+#: views/donation.php:86
+msgid "Customize the list of the post and page. custom post type page, too. You can customize the column display items freely."
+msgstr ""
+
+#: views/donation.php:88
+msgid "The plugin that allows you to add the value of the options. Option value that you have created, can be used in addition to the template tag, Short code can be used in the body of the article."
+msgstr ""
+
