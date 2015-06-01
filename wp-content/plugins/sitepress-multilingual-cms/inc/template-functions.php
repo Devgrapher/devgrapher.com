@@ -1,8 +1,29 @@
 <?php
+function icl_sitepress_get_capabilities() {
+	return array(
+		'wpml_manage_translation_management',
+		'wpml_manage_languages',
+		'wpml_manage_theme_and_plugin_localization',
+		'wpml_manage_support',
+		'wpml_manage_media_translation',
+		'wpml_manage_navigation',
+		'wpml_manage_sticky_links',
+		'wpml_manage_string_translation',
+		'wpml_manage_translation_analytics',
+		'wpml_manage_wp_menus_sync',
+		'wpml_manage_taxonomy_translation',
+		'wpml_manage_troubleshooting',
+		'wpml_manage_translation_options',
+		'wpml_manage_woocommerce_multilingual',
+		'wpml_operate_woocommerce_multilingual',
+	);
+}
 
 function icl_get_home_url() {
     global $sitepress;
-    return $sitepress->language_url($sitepress->get_current_language());
+	$current_language = $sitepress->get_current_language();
+
+	return $sitepress->language_url( $current_language );
 }
 
 // args:
@@ -20,36 +41,48 @@ function icl_get_languages($a='') {
     return $langs;
 }
 
-function icl_disp_language($native_name, $translated_name,
-        $lang_native_hidden = false, $lang_translated_hidden = false) {
-    if (!$native_name && !$translated_name) {
-        $ret = '';
-    } elseif ($native_name && $translated_name) {
-        $hidden1 = $hidden2 = $hidden3 = '';
-        if ($lang_native_hidden) {
-            $hidden1 = 'style="display:none;"';
-        }
-        if ($lang_translated_hidden) {
-            $hidden2 = 'style="display:none;"';
-        }
-        if ($lang_native_hidden && $lang_translated_hidden) {
-            $hidden3 = 'style="display:none;"';
-        }
+function icl_disp_language( $native_name, $translated_name = false, $lang_native_hidden = false, $lang_translated_hidden = false ) {
+	$ret = '';
 
-        if ($native_name != $translated_name) {
-            $ret = '<span ' . $hidden1 . ' class="icl_lang_sel_native">' . $native_name .
-                    '</span> <span ' . $hidden2 . ' class="icl_lang_sel_translated"><span ' . $hidden1 . ' class="icl_lang_sel_native">(</span>' . $translated_name .
-                    '<span ' . $hidden1 . ' class="icl_lang_sel_native">)</span></span>';
-        } else {
-            $ret = '<span ' . $hidden3 . ' class="icl_lang_sel_current">' . $native_name . '</span>';
-        }
-    } elseif ($native_name) {
-        $ret = $native_name;
-    } elseif ($translated_name) {
-        $ret = $translated_name;
-    }
+	if ( !$native_name && !$translated_name ) {
+		$ret = '';
+	} elseif ( $native_name && $translated_name ) {
+		$hidden1 = $hidden2 = $hidden3 = '';
+		if ( $lang_native_hidden ) {
+			$hidden1 = 'style="display:none;"';
+		}
+		if ( $lang_translated_hidden ) {
+			$hidden2 = 'style="display:none;"';
+		}
+		if ( $lang_native_hidden && $lang_translated_hidden ) {
+			$hidden3 = 'style="display:none;"';
+		}
 
-    return $ret;
+		if ( $native_name != $translated_name ) {
+			$ret =
+				'<span ' .
+				$hidden1 .
+				' class="icl_lang_sel_native">' .
+				$native_name .
+				'</span> <span ' .
+				$hidden2 .
+				' class="icl_lang_sel_translated"><span ' .
+				$hidden1 .
+				' class="icl_lang_sel_native">(</span>' .
+				$translated_name .
+				'<span ' .
+				$hidden1 .
+				' class="icl_lang_sel_native">)</span></span>';
+		} else {
+			$ret = '<span ' . $hidden3 . ' class="icl_lang_sel_current">' . $native_name . '</span>';
+		}
+	} elseif ( $native_name ) {
+		$ret = $native_name;
+	} elseif ( $translated_name ) {
+		$ret = $translated_name;
+	}
+
+	return $ret;
 }
 
 function icl_link_to_element($element_id, $element_type='post', $link_text='',
@@ -66,8 +99,8 @@ function icl_link_to_element($element_id, $element_type='post', $link_text='',
     $taxonomies = array_keys((array) $wp_taxonomies);
 
     if (in_array($element_type, $taxonomies)) {
-        $element_id = $wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id= %d AND taxonomy='{$element_type}'",
-                        $element_id));
+        $element_id = $wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id= %d AND taxonomy=%s",
+                        $element_id, $element_type ) );
     } elseif (in_array($element_type, $post_types)) {
         $element_type = 'post';
     }
@@ -79,9 +112,12 @@ function icl_link_to_element($element_id, $element_type='post', $link_text='',
     if (in_array($element_type, $taxonomies)) {
         $icl_element_type = 'tax_' . $element_type;
     } elseif (in_array($element_type, $post_types)) {
-        $icl_element_type = 'post_' . $wpdb->get_var("SELECT post_type FROM {$wpdb->posts} WHERE ID='{$element_id}'");
+        $icl_element_type = 'post_' . $wpdb->get_var($wpdb->prepare("SELECT post_type
+                                                                     FROM {$wpdb->posts}
+                                                                     WHERE ID = %d", $element_id  ) );
+    } else {
+        return '';
     }
-
 
     $trid = $sitepress->get_element_trid($element_id, $icl_element_type);
     $translations = $sitepress->get_element_translations($trid,
@@ -106,8 +142,8 @@ function icl_link_to_element($element_id, $element_type='post', $link_text='',
             $url = get_category_link($term_id);
             $title = apply_filters('single_cat_title', $title);
         } else {
-            list($term_id, $title) = $wpdb->get_row($wpdb->prepare("SELECT t.term_id, t.name FROM {$wpdb->term_taxonomy} tx JOIN {$wpdb->terms} t ON t.term_id = tx.term_id WHERE tx.term_taxonomy_id = %d AND tx.taxonomy='{$element_type}'",
-                            $translations[ICL_LANGUAGE_CODE]->element_id),
+            list($term_id, $title) = $wpdb->get_row($wpdb->prepare("SELECT t.term_id, t.name FROM {$wpdb->term_taxonomy} tx JOIN {$wpdb->terms} t ON t.term_id = tx.term_id WHERE tx.term_taxonomy_id = %d AND tx.taxonomy=%s",
+                            $translations[ICL_LANGUAGE_CODE]->element_id, $element_type),
                     ARRAY_N);
             $url = get_term_link($term_id, $element_type);
             $title = apply_filters('single_cat_title', $title);
@@ -165,6 +201,14 @@ function icl_link_to_element($element_id, $element_type='post', $link_text='',
     }
 }
 
+/**
+ * @param int    $element_id                 Use term_id for taxonomies, post_id for posts
+ * @param string $element_type               Use comment, post, page, {custom post time name}, nav_menu, nav_menu_item, category, post_tag, etc.
+ * @param bool   $return_original_if_missing If set to true it will always return a value (the original value, if translation is missing)
+ * @param null   $ulanguage_code             If missing, it will use the current language, if set to a language code, it will return a translation for that language code (or the original, if missing and $return_original_if_missing is set to true).
+ *
+ * @return bool|mixed|null|string
+ */
 function icl_object_id($element_id, $element_type='post', $return_original_if_missing=false, $ulanguage_code=null) {
     global $sitepress, $wpdb, $wp_post_types, $wp_taxonomies;
 
@@ -174,10 +218,17 @@ function icl_object_id($element_id, $element_type='post', $return_original_if_mi
 
 	// special case of any - we assume it's a post type
     if($element_type == 'any' && $_dtype = $wpdb->get_var($wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID=%d", $element_id))){
-        $element_type = $_dtype;    
+        $element_type = $_dtype;
     }
-    // 
+    //
     
+	$cache_key_args = array_filter( array( $element_id, $element_type, $return_original_if_missing, $ulanguage_code ) );
+	$cache_key      = md5( json_encode( $cache_key_args ) );
+	$cache_group    = 'icl_object_id';
+
+	$ret_element_id = wp_cache_get($cache_key, $cache_group);
+	if($ret_element_id) return $ret_element_id;
+
     static $fcache = array();
     $fcache_key = $element_id . '#' . $element_type . '#' . intval($return_original_if_missing) . '#' . $ulanguage_code;
     if (isset($fcache[$fcache_key])) {
@@ -192,18 +243,15 @@ function icl_object_id($element_id, $element_type='post', $return_original_if_mi
     $taxonomies = array_keys((array) $wp_taxonomies);
     $element_types = array_merge($post_types, $taxonomies);
     $element_types[] = 'comment';
-    
-    if (!in_array($element_type, $element_types)) {
-        trigger_error(sprintf(__('Invalid object kind: %s', 'sitepress'), $element_type), E_USER_NOTICE);
-        return null;
-    } elseif (!$element_id) {
+
+    if (!$element_id) {
         trigger_error(__('Invalid object id', 'sitepress'), E_USER_NOTICE);
         return null;
     }
 
     if (in_array($element_type, $taxonomies)) {
-        $icl_element_id = $wpdb->get_var($wpdb->prepare("SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id= %d AND taxonomy='{$element_type}'",
-                        $element_id));
+		$icl_element_id_prepared = $wpdb->prepare( "SELECT term_taxonomy_id FROM {$wpdb->term_taxonomy} WHERE term_id=%d AND taxonomy=%s", array($element_id, $element_type) );
+		$icl_element_id = $wpdb->get_var( $icl_element_id_prepared );
     } else {
         $icl_element_id = $element_id;
     }
@@ -217,13 +265,29 @@ function icl_object_id($element_id, $element_type='post', $return_original_if_mi
     }
 
     $trid = $sitepress->get_element_trid($icl_element_id, $icl_element_type);
-    $translations = $sitepress->get_element_translations($trid, $icl_element_type);
-
+		if (!$trid) {
+			$trid = $sitepress->get_element_trid($icl_element_id, 'tax_'.$icl_element_type);
+			if ($trid) {
+				$icl_element_type = 'tax_'.$icl_element_type;
+			} else {
+				$trid = $sitepress->get_element_trid($icl_element_id, 'post_'.$icl_element_type);
+				if ($trid) {
+					$icl_element_type = 'post_'.$icl_element_type;
+				}
+			}
+		}
+		
+		if ($trid) {
+			$translations = $sitepress->get_element_translations($trid, $icl_element_type, false, true, true);
+		}
+    
+    
     if (isset($translations[$ulanguage_code]->element_id)) {
         $ret_element_id = $translations[$ulanguage_code]->element_id;
+        
         if (in_array($element_type, $taxonomies)) {
-            $ret_element_id = $wpdb->get_var($wpdb->prepare("SELECT t.term_id FROM {$wpdb->term_taxonomy} tx JOIN {$wpdb->terms} t ON t.term_id = tx.term_id WHERE tx.term_taxonomy_id = %d AND tx.taxonomy='{$element_type}'",
-                            $ret_element_id));
+			$ret_element_id_prepared = $wpdb->prepare( "SELECT t.term_id FROM {$wpdb->term_taxonomy} tx JOIN {$wpdb->terms} t ON t.term_id = tx.term_id WHERE tx.term_taxonomy_id = %d AND tx.taxonomy=%s", array($ret_element_id, $element_type) );
+			$ret_element_id = $wpdb->get_var( $ret_element_id_prepared );
         }
     } else {
         $ret_element_id = $return_original_if_missing ? $element_id : null;
@@ -231,7 +295,17 @@ function icl_object_id($element_id, $element_type='post', $return_original_if_mi
 
     $fcache[$fcache_key] = $ret_element_id;
 
+	wp_cache_set($cache_key, $ret_element_id, $cache_group);
+    
     return $ret_element_id;
+}
+
+add_filter('translate_object_id', 'icl_object_id', 10, 4);    
+
+
+function icl_get_current_language() {
+    global $sitepress;
+    return $sitepress->get_current_language();
 }
 
 function icl_get_default_language() {
@@ -245,7 +319,7 @@ function icl_tf_determine_mo_folder($folder, $rec = 0) {
     $dh = @opendir($folder);
     $lfn = $sitepress->get_locale_file_names();
 
-    while ($file = readdir($dh)) {
+    while ( $dh && $file = readdir( $dh ) ) {
         if (0 === strpos($file, '.'))
             continue;
         if (is_file($folder . '/' . $file) && preg_match('#\.mo$#i', $file) && in_array(preg_replace('#\.mo$#i',
@@ -284,7 +358,8 @@ function wpml_cf_translation_preferences($id, $custom_field = false,
             if (isset($iclTranslationManagement->settings['custom_fields_translation'][$custom_field])) {
                 $action = intval($iclTranslationManagement->settings['custom_fields_translation'][$custom_field]);
             }
-            $disabled = $xml_override = in_array($custom_field, (array)$iclTranslationManagement->settings['custom_fields_readonly_config']);
+			$xml_override = isset($iclTranslationManagement->settings['custom_fields_readonly_config']) ? in_array($custom_field, (array)$iclTranslationManagement->settings['custom_fields_readonly_config']) : false;
+            $disabled = $xml_override;
             if ($disabled) {
                 $output .= '<div style="color:Red;font-style:italic;margin: 10px 0 0 0;">' . __('The translation preference for this field are being controlled by a language configuration XML file. If you want to control it manually, remove the entry from the configuration file.', 'wpml') . '</div>';
             }
@@ -367,6 +442,7 @@ function wpml_cf_translation_preferences_store($id, $custom_field) {
         }
         $custom_field = @strval($custom_field);
         $action = @intval($_POST['wpml_cf_translation_preferences'][$id]);
+        /** @var TranslationManagement $iclTranslationManagement */
         global $iclTranslationManagement;
         if (!empty($iclTranslationManagement)) {
             $iclTranslationManagement->settings['custom_fields_translation'][$custom_field] = $action;
@@ -387,10 +463,11 @@ function wpml_cf_translation_preferences_store($id, $custom_field) {
  *
  * This should be used to popupate any custom field controls when
  * a new translation is selected and the field is marked as "copy" (sync)
- * 
- * @param array fields
+ *
+ * @param array $fields
+ *
+ * @return array
  */
-
 function wpml_get_copied_fields_for_post_edit( $fields = array() ) {
     global $sitepress, $wpdb, $sitepress_settings, $pagenow;
     
@@ -407,9 +484,8 @@ function wpml_get_copied_fields_for_post_edit( $fields = array() ) {
             
                 $source_lang = isset($_GET['source_lang'])?$_GET['source_lang']:$sitepress->get_default_language();
                 $lang_details = $sitepress->get_language_details($source_lang);
-            } else if (isset($_GET['post'])) {
-                $post_id = @intval($_GET['post']);
-                $post_type = $wpdb->get_var("SELECT post_type FROM {$wpdb->posts} WHERE ID='{$post_id}'");
+            } else if ($post_id = filter_input(INPUT_GET, 'post', FILTER_SANITIZE_NUMBER_INT)) {
+                $post_type = $wpdb->get_var( $wpdb->prepare("SELECT post_type FROM {$wpdb->posts} WHERE ID = %d", $post_id));
                 $trid = $sitepress->get_element_trid($post_id, 'post_' . $post_type);    
                 $original_id = $wpdb->get_var($wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE source_language_code IS NULL AND trid=%d", $trid));
                 if ($original_id != $post_id) {
@@ -420,7 +496,7 @@ function wpml_get_copied_fields_for_post_edit( $fields = array() ) {
                 }
             }
             
-            if ($translations) {
+            if ($translations && isset( $source_lang ) ) {
                 $original_custom = get_post_custom($translations[$source_lang]->element_id);
                 
                 $copied_cf['original_post_id'] = $translations[$source_lang]->element_id;
@@ -463,13 +539,14 @@ function wpml_get_language_information($post_id = null){
     
     $language = $sitepress->get_language_for_element($post_id, 'post_' . $post->post_type);
     $language_information = $sitepress->get_language_details($language);
-    
-    $info = array(
+
+	$current_language = $sitepress->get_current_language();
+	$info = array(
         'locale'                => $sitepress->get_locale($language),
         'text_direction'        => $sitepress->is_rtl($language),
-        'display_name'          => $sitepress->get_display_language_name($language, $sitepress->get_current_language()),
+        'display_name'          => $sitepress->get_display_language_name($language, $current_language ),
         'native_name'           => $language_information['display_name'],
-        'different_language'    => $language != $sitepress->get_current_language()    
+        'different_language'    => $language != $current_language
         
     );
     
@@ -528,4 +605,101 @@ function wpml_custom_post_translation_options($type_id){
     
     return $out;
     
+}
+
+
+/**
+ * Choose appropriate template file when paged and not default language
+ *
+ * Some fix when somebody uses 'page_on_front', set page with custom Template,
+ * this page has Loop of posts. Before that, when you changed language to
+ * non-default and paged, WPML looses page Template and uses index.php from theme
+ *
+ * @since 3.1.5
+ *
+ * @param string $template Template path retrieved from @see wp-includes/template-loader.php
+ *
+ * @return string New template path (or default)
+ *
+ */
+function icl_template_paged($template) {
+   global $wp_query, $sitepress;
+   
+   // we don't want to run this on default language 
+   if (ICL_LANGUAGE_CODE == icl_get_default_language()) return $template;
+   
+   // seems WPML overwrite 'page' param too early, let's fix this
+   if ( $sitepress->get_setting('language_negotiation_type') == 3) {
+       set_query_var('page', get_query_var('paged'));
+   }
+   
+   
+   // if template is chosen correctly there is no need to change it
+   if ($template != get_home_template()) return $template;
+   
+   // this is a place where real error occurs. on paged page result we loose 
+   // $wp_query->queried_object. so if it set correctly, there is no need to 
+   // change template
+   if ($wp_query->get_queried_object() != null) return $template;
+   
+   // does our site really use custom page as front page?
+   if (1 > intval( get_option('page_on_front') )) return $template;
+   
+   // get template slug for custom page chosen as front page
+   $template_slug = get_page_template_slug( get_option('page_on_front') );
+   
+   // "The function get_page_template_slug() returns an empty string when the value of '_wp_page_template' is either empty or 'default'."
+   if ( !$template_slug ) return $template;
+   
+   $templates = array();
+   
+   $templates[] = $template_slug;
+   
+   $template = get_query_template( 'page', $templates );
+       
+   return $template;
+}
+
+// apply this filter only on non default language
+add_filter('template_include', 'icl_template_paged');
+
+function icl_language_selector() {
+	global $sitepress;
+	return $sitepress->get_language_selector();
+}
+
+function icl_language_selector_footer() {
+	return SitePressLanguageSwitcher::get_language_selector_footer();
+}
+
+/**
+ * Returns an HTML hidden input field with name="lang" and value of current language
+ * This is for theme authors, to make their themes compatible with WPML when using the search form.
+ * In order to make the search form work properly, they should use standard WordPress template tag get_search_form()
+ * In this case WPML will handle the the rest.
+ * If for some reasons the template function can't be used and form is created differently,
+ * authors must the following code between inside the form
+ * <?php
+ * if (function_exists('wpml_the_language_input_field')) {
+ *	wpml_the_language_input_field();
+ * }
+ *
+ * @global SitePress $sitepress
+ * @return string|null HTML input field or null
+ */
+function wpml_get_language_input_field() {
+	global $sitepress;
+	if (isset($sitepress)) {
+		return "<input type='hidden' name='lang' value='" . $sitepress->get_current_language() . "' />";
+	}
+	return null;
+}
+
+/**
+ * Echoes the value returned by \wpml_the_language_input_field
+ *
+ * @since 3.1.7.3
+ */
+function wpml_the_language_input_field() {
+	echo wpml_get_language_input_field(); 
 }

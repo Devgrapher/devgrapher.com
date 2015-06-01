@@ -1,48 +1,89 @@
 <?php
-// included from Sitepress::ajax_setup
-//
+/**
+ * @package wpml-core
+ * @used-by Sitepress::ajax_setup
+ */
+global $wpdb, $sitepress, $sitepress_settings;
 
-global $wpdb;
+@header( 'Content-Type: ' . get_option( 'html_type' ) . '; charset=' . get_option( 'blog_charset' ) );
+header( "Cache-Control: no-cache, must-revalidate" );
+header( "Expires: Sat, 16 Aug 1980 05:00:00 GMT" );
 
-
-if (!isset($_POST['unit-test'])) {
-    @header('Content-Type: ' . get_option('html_type') . '; charset=' . get_option('blog_charset'));
-    header("Cache-Control: no-cache, must-revalidate");
-    header("Expires: Sat, 16 Aug 1980 05:00:00 GMT");
-}
-
-$_icl_ajx_actions_no_nonce = array(
-    'health_check' => 1,
-    'get_language_status_text' => 1,
-    'get_original_comment' => 1,
-    'get_browser_language'  => 1
-);
-
-if(!isset($_icl_ajx_actions_no_nonce[$_REQUEST['icl_ajx_action']])
-    && !wp_verify_nonce($_REQUEST['_icl_nonce'], $_REQUEST['icl_ajx_action'] . '_nonce')){
-    die('Invalid nonce');
-}
-
-switch($_REQUEST['icl_ajx_action']){
+$request = filter_input( INPUT_POST, 'icl_ajx_action', FILTER_SANITIZE_FULL_SPECIAL_CHARS  );
+$request = $request ? $request : filter_input( INPUT_GET, 'icl_ajx_action', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+switch ( $request ) {
     case 'health_check':
-        $iclsettings['ajx_health_checked'] = 1;
-        $this->save_settings($iclsettings);
-        break;
+        icl_set_setting( 'ajx_health_checked', true, true );
+        exit;
+    case 'get_original_comment':
+	    $comment_id             = filter_input( INPUT_POST, 'comment_id', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+        $trid                   = $this->get_element_trid( $comment_id, 'comment' );
+        $res                    = $wpdb->get_row(
+            $wpdb->prepare(
+                " SELECT element_id, language_code
+                  FROM {$wpdb->prefix}icl_translations
+                  WHERE trid=%d
+                    AND element_type='comment'
+                    AND element_id <> %d ",
+                $trid,
+                $comment_id
+            )
+        );
+        $original_cid           = $res->element_id;
+        $comment                = $wpdb->get_row( $wpdb->prepare("SELECT * FROM {$wpdb->comments}
+                                                                  WHERE comment_ID = %d", $original_cid ) );
+        $comment->language_code = $res->language_code;
+        if ( isset( $IclCommentsTranslation ) && $res->language_code == $IclCommentsTranslation->user_language ) {
+            $comment->translated_version = 1;
+        } else {
+            $comment->translated_version = 0;
+            $comment->anchor_text        = __( 'Back to translated version', 'sitepress' );
+        }
+        echo wp_json_encode( $comment );
+        exit;
+    case 'get_browser_language':
+        $http_accept_language            = $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ];
+        $accepted_languages              = explode( ';', $http_accept_language );
+        $default_accepted_language       = $accepted_languages[ 0 ];
+        $default_accepted_language_codes = explode( ',', $default_accepted_language );
+        echo strtolower( $default_accepted_language_codes[ 0 ] );
+        exit;
+}
+
+$nonce = filter_input( INPUT_POST, '_icl_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+$nonce = $nonce ? $nonce : filter_input( INPUT_GET, '_icl_nonce', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+
+if ( !$request || !$nonce || !wp_verify_nonce( $nonce, $request . '_nonce' ) ) {
+    die( 'Invalid nonce' );
+}
+
+$iclsettings = $this->get_settings();
+$default_language = $this->get_default_language();
+
+switch($request){
     case 'set_active_languages':
         $resp = array();
         $old_active_languages_count = count($this->get_active_languages());
-        $lang_codes = explode(',',$_POST['langs']);
+	    $lang_codes = filter_input( INPUT_POST, 'langs', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+        $lang_codes = explode(',',$lang_codes);
         if($this->set_active_languages($lang_codes)){
             $resp[0] = 1;
             $active_langs = $this->get_active_languages();
             $iclresponse ='';
             $default_categories = $this->get_default_categories();
-            $default_category_main = $wpdb->get_var("SELECT name FROM {$wpdb->terms} t JOIN {$wpdb->term_taxonomy} tx ON t.term_id=tx.term_id
-                WHERE term_taxonomy_id='{$default_categories[$this->get_default_language()]}' AND taxonomy='category'");
-            $default_category_trid = $wpdb->get_var("SELECT trid FROM {$wpdb->prefix}icl_translations WHERE element_id={$default_categories[$this->get_default_language()]} AND element_type='tax_category'");
-
+            $default_category_main = $wpdb->get_var(
+                $wpdb->prepare("SELECT name FROM {$wpdb->terms} t
+                                JOIN {$wpdb->term_taxonomy} tx ON t.term_id=tx.term_id
+                                WHERE term_taxonomy_id = %d
+                                  AND taxonomy='category'",
+                               $default_categories[$default_language] ));
+            $default_category_trid = $wpdb->get_var(
+                $wpdb->prepare("SELECT trid FROM {$wpdb->prefix}icl_translations
+                                WHERE element_id = %d
+                                  AND element_type='tax_category'",
+                               $default_categories[$default_language]));
             foreach($active_langs as $lang){
-                $is_default = ($this->get_default_language()==$lang['code']);
+                $is_default = ( $default_language ==$lang['code']);
                 $iclresponse .= '<li ';
                 if($is_default) $iclresponse .= 'class="default_language"';
                 $iclresponse .= '><label><input type="radio" name="default_language" value="' . $lang['code'] .'" ';
@@ -67,7 +108,14 @@ switch($_REQUEST['icl_ajx_action']){
 
                    $tmp = term_exists($tr_cat, 'category');
                    if(!$tmp){
-                       $tmp = wp_insert_term($tr_cat, 'category');
+						 $tmp = wp_insert_term($tr_cat, 'category');
+						 if (is_wp_error($tmp)) {
+							trigger_error($tmp->get_error_message(), E_USER_ERROR);
+							continue;
+						}
+						//during installation sitepress filters are disabled
+						//we have to manually add entries to icl_translations table
+						$sitepress->create_term( $tmp['term_id'], $tmp['term_taxonomy_id'] );
                    }
                    $default_categories[$lang['code']] = $tmp['term_taxonomy_id'];
                 }
@@ -77,19 +125,19 @@ switch($_REQUEST['icl_ajx_action']){
             $resp[1] = $iclresponse;
             // response 1 - blog got more than 2 languages; -1 blog reduced to 1 language; 0 - no change
             if(count($lang_codes) > 1){
-                if(empty($this->settings['setup_complete'])){
+                if(!$this->get_setting('setup_complete')){
                     $resp[2] = -2; //don't refresh the page and enable 'next'
                 }else{
                     $resp[2] = 1;
                 }
             }elseif($old_active_languages_count > 1 && count($lang_codes) < 2){
-                if(!$this->settings['setup_complete']){
+                if(!$this->get_setting('setup_complete')){
                     $resp[2] = -3; //don't refresh the page and disable 'next'
                 }else{
                     $resp[2] = -1;
                 }
             }else{
-                if(!$this->settings['setup_complete']){
+                if(!$this->get_setting('setup_complete')){
                     $resp[2] = -3; //don't refresh the page and disable 'next'
                 }else{
                     $resp[2] = 0;
@@ -112,8 +160,9 @@ switch($_REQUEST['icl_ajx_action']){
         do_action('icl_update_active_languages');
         break;
     case 'set_default_language':
-        $previous_default = $this->get_default_language();
-        if($response = $this->set_default_language($_POST['lang'])){
+        $previous_default = $default_language;
+	    $new_default_language = filter_input( INPUT_POST, 'lang', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+        if($response = $this->set_default_language( $new_default_language )){
             echo '1|'.$previous_default.'|';
         }else{
             echo'0||' ;
@@ -123,29 +172,38 @@ switch($_REQUEST['icl_ajx_action']){
         }
         break;
     case 'set_languages_order':
-        $iclsettings['languages_order'] = explode(';', $_POST['order']);
+	    $languages_order = filter_input( INPUT_POST, 'order', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+        $iclsettings['languages_order'] = explode(';', $languages_order );
         $this->save_settings($iclsettings);
         echo json_encode(array('message' => __('Languages order updated', 'sitepress')));
         break;
     case 'icl_tdo_options':
-        $iclsettings['translated_document_status'] = intval($_POST['icl_translated_document_status']);
-        $iclsettings['translated_document_page_url'] = $_POST['icl_translated_document_page_url'];
+        $iclsettings['translated_document_status']      = filter_input( INPUT_POST, 'icl_translated_document_status' );
+        $iclsettings['translated_document_page_url']    = filter_input( INPUT_POST, 'icl_translated_document_page_url' );
         $this->save_settings($iclsettings);
         echo '1|';
        break;
     case 'icl_save_language_negotiation_type':
-        $iclsettings['language_negotiation_type'] = $_POST['icl_language_negotiation_type'];
-        if(!empty($_POST['language_domains'])){
-            $iclsettings['language_domains'] = $_POST['language_domains'];
+
+	    $filtered_icl_language_negotiation_type = filter_input( INPUT_POST, 'icl_language_negotiation_type', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+	    $filtered_language_domains              = filter_input( INPUT_POST, 'language_domains', FILTER_UNSAFE_RAW, FILTER_REQUIRE_ARRAY | FILTER_NULL_ON_FAILURE  );
+	    $filtered_use_directory                 = filter_input( INPUT_POST, 'use_directory', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+	    $filtered_show_on_root                  = filter_input( INPUT_POST, 'show_on_root' );
+	    $filtered_root_html_file_path           = filter_input( INPUT_POST, 'root_html_file_path' );
+	    $filtered_hide_language_switchers       = filter_input( INPUT_POST, 'hide_language_switchers', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+
+        $iclsettings['language_negotiation_type'] = $filtered_icl_language_negotiation_type;
+        if( !empty( $filtered_language_domains ) ) {
+            $iclsettings['language_domains'] = $filtered_language_domains;
         }
         if($iclsettings['language_negotiation_type'] == 1){
-            $iclsettings['urls']['directory_for_default_language'] = isset($_POST['use_directory']) ? intval($_POST['use_directory']) : 0;
+            $iclsettings['urls']['directory_for_default_language'] = $filtered_use_directory !== false ? $filtered_use_directory : 0;
             if($iclsettings['urls']['directory_for_default_language']){
-                $iclsettings['urls']['show_on_root']   = isset($_POST['use_directory']) ? $_POST['show_on_root'] : '';
+                $iclsettings['urls']['show_on_root']   = $filtered_use_directory ? $filtered_show_on_root : '';
                 if($iclsettings['urls']['show_on_root'] == 'html_file'){
-                    $iclsettings['urls']['root_html_file_path'] = isset($_POST['root_html_file_path']) ? $_POST['root_html_file_path'] : '';
+                    $iclsettings['urls']['root_html_file_path'] = $filtered_root_html_file_path ? $filtered_root_html_file_path : '';
                 }else{
-                    $iclsettings['urls']['hide_language_switchers'] = isset($_POST['hide_language_switchers']) ? $_POST['hide_language_switchers'] : 0;
+                    $iclsettings['urls']['hide_language_switchers'] = $filtered_hide_language_switchers !=- false ? $filtered_hide_language_switchers : 0;
                 }
             }
         }
@@ -154,40 +212,80 @@ switch($_REQUEST['icl_ajx_action']){
         break;
     case 'icl_save_language_switcher_options':
         $_POST   = stripslashes_deep( $_POST );
-        if(isset($_POST['icl_language_switcher_sidebar'])){
-            global $wp_registered_widgets, $wp_registered_sidebars;
-            $swidgets = wp_get_sidebars_widgets();
-            if(empty($swidgets)){
-                $sidebars = array_keys($wp_registered_sidebars);
-                foreach($sidebars as $sb){
-                    $swidgets[$sb] = array();
-                }
-            }
-            foreach($swidgets as $k=>$v){
-                $key = array_search('icl_lang_sel_widget',(array)$swidgets[$k]);
-                if(false !== $key && $k !== $_POST['icl_language_switcher_sidebar']){
-                    unset($swidgets[$k][$key]);
-                }elseif($k==$_POST['icl_language_switcher_sidebar'] && !in_array('icl_lang_sel_widget',$swidgets[$k])){
-                    $swidgets[$k] = array_reverse($swidgets[$k], false);
-                    array_push($swidgets[$k],'icl_lang_sel_widget');
-                    $swidgets[$k] = array_reverse($swidgets[$k], false);
-                }
-            }
-            wp_set_sidebars_widgets($swidgets);
-        }
-        $iclsettings['icl_lso_link_empty'] = @intval($_POST['icl_lso_link_empty']);
-        $iclsettings['icl_lso_flags'] = isset($_POST['icl_lso_flags']) ? @intval($_POST['icl_lso_flags']) : 0;
-        $iclsettings['icl_lso_native_lang'] = @intval($_POST['icl_lso_native_lang']);
-        $iclsettings['icl_lso_display_lang'] = @intval($_POST['icl_lso_display_lang']);
 
-        if(empty($this->settings['setup_complete'])){
-            $iclsettings['setup_wizard_step'] = 3;
-            $iclsettings['setup_complete'] = 1;
+	    if ( isset( $_POST[ 'icl_language_switcher_sidebars' ] ) ) {
+		    global $wp_registered_widgets, $wp_registered_sidebars;
+		    $widget_icl_lang_sel_widget = get_option( 'widget_icl_lang_sel_widget' );
+		    $counter                    = is_array( $widget_icl_lang_sel_widget ) ? max( array_keys( $widget_icl_lang_sel_widget ) ) : 0;
+		    if ( ! is_numeric( $counter ) || $counter<=0 ) {
+			    $counter = 1;
+		    }
+
+		    $language_switcher_name            = 'icl_lang_sel_widget';
+		    $language_switcher_prefix          = $language_switcher_name . '-';
+		    $active_widgets                    = get_option( 'sidebars_widgets' );
+		    $posted_language_switcher_sidebars = $_POST[ 'icl_language_switcher_sidebars' ];
+		    $update_sidebars_widgets           = false;
+		    foreach ( $posted_language_switcher_sidebars as $target_sidebar_id => $add_widget ) {
+			    $widget_exists = false;
+			    if(isset($active_widgets[ $target_sidebar_id ])) {
+				    $active_sidebar_widgets = $active_widgets[ $target_sidebar_id ];
+				    foreach ( $active_sidebar_widgets as $index => $active_sidebar_widget ) {
+					    if ( strpos( $active_sidebar_widget, $language_switcher_prefix ) !== false ) {
+						    $widget_exists = true;
+						    break;
+					    }
+				    }
+			    }
+			    if($add_widget && !$widget_exists) {
+				    if(isset($active_widgets[ $target_sidebar_id ])) {
+					    $active_sidebar_widgets = $active_widgets[ $target_sidebar_id ];
+					    array_unshift( $active_sidebar_widgets, $language_switcher_prefix . $counter );
+				    } else {
+					    $active_sidebar_widgets = array();
+					    $active_sidebar_widgets[] = $language_switcher_prefix . $counter;
+				    }
+				    $language_switcher_content             = get_option( 'widget_' . $language_switcher_name );
+				    $language_switcher_content[ $counter ] = array( 'title_show' => 0 );
+				    if ( ! array_key_exists( '_multiwidget', $language_switcher_content ) ) {
+					    $language_switcher_content[ '_multiwidget' ] = 1;
+				    }
+				    update_option( 'widget_' . $language_switcher_name, $language_switcher_content );
+				    $counter ++;
+				    $active_widgets[ $target_sidebar_id ] = $active_sidebar_widgets;
+				    $update_sidebars_widgets              = true;
+			    }elseif(!$add_widget && $widget_exists) {
+				    foreach ( $active_sidebar_widgets as $index => $active_sidebar_widget ) {
+					    if ( strpos( $active_sidebar_widget, $language_switcher_prefix ) !== false ) {
+						    unset( $active_widgets[ $target_sidebar_id ][ $index ] );
+						    $update_sidebars_widgets = true;
+					    }
+				    }
+			    }
+		    }
+		    if ( $update_sidebars_widgets ) {
+			    wp_set_sidebars_widgets( $active_widgets );
+		    }
+	    }
+
+		$filtered_icl_lso_link_empty    = filter_input( INPUT_POST, 'icl_lso_link_empty', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+		$filtered_icl_lso_flags         = filter_input( INPUT_POST, 'icl_lso_flags', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+		$filtered_icl_lso_native_lang   = filter_input( INPUT_POST, 'icl_lso_native_lang', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+		$filtered_icl_lso_display_lang  = filter_input( INPUT_POST, 'icl_lso_display_lang', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+
+        $iclsettings['icl_lso_link_empty']      = intval( $filtered_icl_lso_link_empty );
+        $iclsettings['icl_lso_flags']           = $filtered_icl_lso_flags !== false ? $filtered_icl_lso_flags : 0;
+        $iclsettings['icl_lso_native_lang']     = $filtered_icl_lso_native_lang !== false ? $filtered_icl_lso_native_lang : 0;
+        $iclsettings['icl_lso_display_lang']    = $filtered_icl_lso_display_lang !== false ? $filtered_icl_lso_display_lang : 0;
+
+        if(!$this->get_setting('setup_complete')){
+            $iclsettings['setup_wizard_step'] = 4;
+            //$iclsettings['setup_complete'] = 1;
+            if(isset($iclsettings['setup_reset'])) unset($iclsettings['setup_reset']);
 
             $active_languages = $this->get_active_languages();
-            $default_language = $this->get_default_language();
             foreach($active_languages as $code=>$lng){
-                if($code != $default_language){
+                if($code != $default_language ){
                     if($this->_validate_language_per_directory($code)){
                         $iclsettings['language_negotiation_type'] = 1;
                     }
@@ -196,6 +294,7 @@ switch($_REQUEST['icl_ajx_action']){
             }
 
         }
+
 
         if(isset($_POST['icl_lang_sel_config'])){
             $iclsettings['icl_lang_sel_config'] = $_POST['icl_lang_sel_config'];
@@ -244,6 +343,58 @@ switch($_REQUEST['icl_ajx_action']){
             echo 1;
         }
         break;
+    
+    case 'registration_form_submit':
+        
+        $ret['error'] = '';
+        
+        if($_POST['button_action'] == 'later'){
+            
+            //success
+            $ret['success'] = sprintf(__('WPML will work on your site, but you will not receive updates. WPML updates are essential for keeping your site running smoothly and secure. To receive automated updates, you need to complete the registration, in the %splugins admin%s page.', 'sitepress'), 
+                '<a href="' . admin_url('plugin-install.php?tab=commercial') . '">', '</a>');
+            
+            
+        }elseif($_POST['button_action'] == 'finish'){
+            
+            $iclsettings['setup_complete'] = 1;        
+            
+        }else{
+        
+            if(empty($_POST['installer_site_key'])){
+                $ret['error'] = __('Missing site key.');
+            }else{
+                
+                $iclsettings['site_key'] = $_POST['installer_site_key'];
+                
+                if(class_exists('WP_Installer')){
+                    $args['repository_id'] = 'wpml';
+                    $args['nonce'] = wp_create_nonce('save_site_key_' . $args['repository_id']) ;
+                    $args['site_key'] = $_POST['installer_site_key'];
+                    $args['return']   = 1;
+                    $r = WP_Installer()->save_site_key($args);    
+                    if(!empty($r['error'])){
+                        $ret['error'] = $r['error'];
+                        
+                    }else{
+                        
+                        //success
+                        $ret['success'] = __('Thank you for registering WPML on this site. You will receive automatic updates when new versions are available.', 'sitepress');
+                    }
+                }
+                
+            }
+        }
+        
+        if(!empty($iclsettings)){
+            $this->save_settings($iclsettings);    
+        }
+        
+        
+        echo json_encode($ret);
+    
+        break;
+    
     case 'icl_admin_language_options':
         $iclsettings['admin_default_language'] = $_POST['icl_admin_default_language'];
         $this->save_settings($iclsettings);
@@ -275,13 +426,12 @@ switch($_REQUEST['icl_ajx_action']){
         break;
     case 'language_domains':
         $active_languages = $this->get_active_languages();
-        $default_language = $this->get_default_language();
-        $iclsettings = $this->get_settings();
+        
         $language_domains = isset($iclsettings['language_domains']) ? $iclsettings['language_domains'] : false;
         echo '<table class="language_domains">';
         foreach($active_languages as $lang){
-            $home = get_option('home');
-            if($lang['code']!=$default_language){
+            $home = get_site_url();
+            if($lang['code']!= $default_language ){
                 if(isset($language_domains[$lang['code']])){
                     $sugested_url = $language_domains[$lang['code']];
                 }else{
@@ -298,7 +448,7 @@ switch($_REQUEST['icl_ajx_action']){
 
             echo '<tr>';
             echo '<td>' . $lang['display_name'] . '</td>';
-            if($lang['code']==$default_language){
+            if($lang['code']== $default_language ){
                 echo '<td id="icl_ln_home">' . $home . '</td>';
                 echo '<td>&nbsp;</td>';
                 echo '<td>&nbsp;</td>';
@@ -315,7 +465,7 @@ switch($_REQUEST['icl_ajx_action']){
         $url = $_POST['url'] . $url_glue . '____icl_validate_domain=1';
         $client = new WP_Http();
         $response = $client->request($url, 'timeout=15');
-        if(!is_wp_error($response) && ($response['response']['code']=='200') && ($response['body'] == '<!--'.get_option('home').'-->')){
+        if(!is_wp_error($response) && ($response['response']['code']=='200') && ($response['body'] == '<!--'.get_home_url().'-->')){
             echo 1;
         }else{
             echo 0;
@@ -344,34 +494,32 @@ switch($_REQUEST['icl_ajx_action']){
                     $translator[$_lg] = preg_replace('#-'.$_POST['service'].'$#', '', $target_translators[$index]) ;
                 }
 
-                $data = array(
-                    'translate_from'    => $from_lang,
-                    'translate_to'      => array($to_lang=>1),
-                    'iclpost'           => array($post_id),
-                    'service'           => 'icanlocalize',
-                    'iclnonce'          => wp_create_nonce('pro-translation-icl'),
-                    'translator'        => $translator
-                );
+				if(isset($translator)) {
+					$data = array(
+						'translate_from'    => $from_lang,
+						'translate_to'      => array($to_lang=>1),
+						'iclpost'           => array($post_id),
+						'service'           => 'icanlocalize',
+						'iclnonce'          => wp_create_nonce('pro-translation-icl'),
+						'translator'        => $translator
+					);
 
-                $jd = $iclTranslationManagement->send_jobs($data);
-                $resp[] = array(
-                    'post_id' => $post_id,
-                    'status'  => !empty($jd)
-                );
+					$jd = $iclTranslationManagement->send_jobs($data);
+					$resp[] = array(
+						'post_id' => $post_id,
+						'status'  => !empty($jd)
+					);
+				} else {
+					$resp = false;
+				}
             }
-            /*
-            $resp[] = array(
-                'post_id'=>$post_id,
-                'status'=>$ICL_Pro_Translation->send_post($post_id, $target_languages, $translator_id)
-            );
-            */
         }
         echo json_encode($resp);
         break;
     case 'get_translator_status':
         if(!$this->icl_account_configured()) break;
 
-        $iclsettings = $this->get_settings();
+        
 
         if(isset($_POST['cache'])) {
             $last_call = @intval($iclsettings['last_get_translator_status_call']);
@@ -386,36 +534,30 @@ switch($_REQUEST['icl_ajx_action']){
 
         echo @json_encode($iclsettings['icl_lang_status']);
         break;
-
     case 'get_language_status_text':
 
         if(!$this->icl_account_configured()) break;
 
-        $iclsettings = $this->get_settings();
+        
 
         if(!isset($_POST['cache'])) {
-            $iclsettings = $this->get_settings();
+            
             $this->get_icl_translator_status($iclsettings);
             $this->save_settings($iclsettings);
         }
 
-        echo '1|' . intval($_POST['id']) . '|' . $this->get_language_status_text($_POST['from_lang'], $_POST['to_lang']);
+	    $filtered_id = filter_input( INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+	    $filtered_from_lang = filter_input( INPUT_POST, 'from_lang', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+	    $filtered_to_lang = filter_input( INPUT_POST, 'to_lang', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
+
+        echo '1|' . intval($filtered_id) . '|' . $this->get_language_status_text( $filtered_from_lang, $filtered_to_lang );
         break;
-    /*
-    case 'set_post_to_date':
-        $nid = (int) $_POST['post_id'];
-        $md5 = $wpdb->get_var("SELECT md5 FROM {$wpdb->prefix}icl_node WHERE nid={$nid}");
-        $wpdb->query("UPDATE {$wpdb->prefix}icl_content_status SET md5 = '{$md5}' WHERE nid='{$nid}'");
-        echo __('Needs update','sitepress');
-        echo '|';
-        echo __('Complete','sitepress');
-        break;
-    */
     case 'icl_theme_localization_type':
         $icl_tl_type = @intval($_POST['icl_theme_localization_type']);
         $iclsettings['theme_localization_type'] = $icl_tl_type;
         $iclsettings['theme_localization_load_textdomain'] = @intval($_POST['icl_theme_localization_load_td']);
-        $iclsettings['gettext_theme_domain_name'] = $_POST['textdomain_value'];
+	    $filtered_textdomain_value = filter_input( INPUT_POST, 'textdomain_value' );
+        $iclsettings['gettext_theme_domain_name'] = $filtered_textdomain_value;
         if($icl_tl_type==1){
             icl_st_scan_theme_files();
         }elseif($icl_tl_type==2){
@@ -435,7 +577,6 @@ switch($_REQUEST['icl_ajx_action']){
         $this->save_settings($iclsettings);
         echo '1|'.$icl_tl_type;
         break;
-
     case 'icl_ct_user_pref':
         $users = $wpdb->get_col("SELECT id FROM {$wpdb->users}");
         foreach($users as $uid){
@@ -452,27 +593,12 @@ switch($_REQUEST['icl_ajx_action']){
         }
         echo '1|';
         break;
-    case 'get_original_comment':
-        $comment_id = $_POST['comment_id'];
-        $trid = $this->get_element_trid($comment_id, 'comment');
-        $res = $wpdb->get_row($wpdb->prepare("SELECT element_id, language_code FROM {$wpdb->prefix}icl_translations WHERE trid=%d AND element_type='comment' AND element_id <> %d ", $trid, $comment_id));
-        $original_cid = $res->element_id;
-        $comment = $wpdb->get_row("SELECT * FROM {$wpdb->comments} WHERE comment_ID={$original_cid}");
-        $comment->language_code = $res->language_code;
-        if($res->language_code == $IclCommentsTranslation->user_language){
-            $comment->translated_version = 1;
-        }else{
-            $comment->translated_version = 0;
-            $comment->anchor_text = __('Back to translated version', 'sitepress');
-        }
-        echo json_encode($comment);
-        break;
     case 'dismiss_help':
         $iclsettings['dont_show_help_admin_notice'] = true;
         $this->save_settings($iclsettings);
         break;
     case 'dismiss_page_estimate_hint':
-        $iclsettings['dismiss_page_estimate_hint'] = !$this->settings['dismiss_page_estimate_hint'];
+        $iclsettings['dismiss_page_estimate_hint'] = !$this->get_setting('dismiss_page_estimate_hint');
         $this->save_settings($iclsettings);
         break;
     case 'toggle_pt_controls':
@@ -496,14 +622,13 @@ switch($_REQUEST['icl_ajx_action']){
         $this->save_settings($iclsettings);
         break;
     case 'toggle_show_translations':
-        $iclsettings = $this->get_settings();
+        
         $iclsettings['show_translations_flag'] = @intval(!$iclsettings['show_translations_flag']);
         $this->save_settings($iclsettings);
         break;
     case 'icl_messages':
-        $iclsettings = $this->get_settings();
-
-        if(!empty($this->settings['icl_disable_reminders'])) break;
+        
+        if(!$this->get_setting('icl_disable_reminders')) break;
 
         if(!empty($iclsettings['site_id']) && !empty($iclsettings['access_key']) && empty($iclsettings['icl_anonymous_user'])){
             $iclq = new ICanLocalizeQuery($iclsettings['site_id'], $iclsettings['access_key']);
@@ -530,7 +655,7 @@ switch($_REQUEST['icl_ajx_action']){
                 if(false !== strpos($url,'?')){
                     $url_glue = '&';
                 }else{
-                    $url_glue = '?accesskey='.$this->settings['access_key'] . '&compact=1';
+                    $url_glue = '?accesskey='.$this->get_setting('access_key') . '&compact=1';
                 }
                 $output .= $message . ' - ' . $this->create_icl_popup_link(ICL_API_ENDPOINT. $url . $url_glue . '&message_id=' . $r->id. '&TB_iframe=true') . __('View', 'sitepress') . '</a>';
 
@@ -564,9 +689,8 @@ switch($_REQUEST['icl_ajx_action']){
         }
         echo json_encode($resp);
         break;
-
     case 'icl_delete_message':
-        $iclsettings = $this->get_settings();
+        
         $iclq = new ICanLocalizeQuery($iclsettings['site_id'], $iclsettings['access_key']);
         $iclq->delete_message($_POST['message_id']);
         break;
@@ -586,9 +710,8 @@ switch($_REQUEST['icl_ajx_action']){
         $iclsettings['icl_show_reminders'] = $_POST['state']=='show'?1:0;
         $this->save_settings($iclsettings);
         break;
-
     case 'icl_help_links':
-        $iclsettings = $this->get_settings();
+        
         $iclq = new ICanLocalizeQuery($iclsettings['site_id'], $iclsettings['access_key']);
         $links = $iclq->get_help_links();
         $lang = $iclsettings['admin_default_language'];
@@ -632,18 +755,15 @@ switch($_REQUEST['icl_ajx_action']){
             echo '0|';
         }
         break;
-
     case 'icl_show_sidebar':
         $iclsettings['icl_sidebar_minimized'] = $_POST['state']=='hide'?1:0;
         $this->save_settings($iclsettings);
         break;
-
     case 'icl_promote_form':
         $iclsettings['promote_wpml'] = @intval($_POST['icl_promote']);
         $this->save_settings($iclsettings);
         echo '1|';
         break;
-
     case 'save_translator_note':
         update_post_meta($_POST['post_id'], '_icl_translator_note', $_POST['note']);
         break;
@@ -651,30 +771,29 @@ switch($_REQUEST['icl_ajx_action']){
         foreach($_POST['icl_st'] as $k=>$v){
             $iclsettings['st'][$k] = $v;
         }
-        $this->save_settings($iclsettings);
+		if(isset($iclsettings)) {
+        	$this->save_settings($iclsettings);
+		}
         echo 1;
         break;
     case 'icl_st_more_options':
         $iclsettings['st']['translated-users'] = !empty($_POST['users']) ? array_keys($_POST['users']) : array();
         $this->save_settings($iclsettings);
         if(!empty($iclsettings['st']['translated-users'])){
-            global $sitepress_settings;
             $sitepress_settings['st']['translated-users'] = $iclsettings['st']['translated-users'];
             icl_st_register_user_strings_all();
         }
         echo 1;
         break;
-
     case 'icl_st_ar_form':
         // Auto register string settings.
         $iclsettings['st']['icl_st_auto_reg'] = $_POST['icl_auto_reg_type'];
         $this->save_settings($iclsettings);
         echo 1;
         break;
-
     case 'affiliate_info_check':
         if( $this->icl_account_configured()
-            && ($iclq = new ICanLocalizeQuery($this->settings['site_id'], $this->settings['access_key']))
+            && ($iclq = new ICanLocalizeQuery($this->get_setting('site_id'), $this->get_setting('access_key')))
             && $iclq->test_affiliate_info($_POST['icl_affiliate_id'], $_POST['icl_affiliate_key'])){
             $error = array('error'=>0);
         }else{
@@ -682,10 +801,9 @@ switch($_REQUEST['icl_ajx_action']){
         }
         echo json_encode($error);
         break;
-
     case 'icl_hide_languages':
         $iclsettings['hidden_languages'] = empty($_POST['icl_hidden_languages']) ? array() : $_POST['icl_hidden_languages'];
-        $this->settings['hidden_languages'] = array(); //reset current value
+        $this->set_setting('hidden_languages', array()); //reset current value
         $active_languages = $this->get_active_languages();
         if(!empty($iclsettings['hidden_languages'])){
              if(1 == count($iclsettings['hidden_languages'])){
@@ -706,35 +824,35 @@ switch($_REQUEST['icl_ajx_action']){
         $this->save_settings($iclsettings);
         echo '1|'.$out;
         break;
-
     case 'icl_adjust_ids':
         $iclsettings['auto_adjust_ids'] = @intval($_POST['icl_adjust_ids']);
         $this->save_settings($iclsettings);
         echo '1|';
         break;
-
     case 'icl_automatic_redirect':
+		if (!isset($_POST['icl_remember_language']) || $_POST['icl_remember_language'] < 24) {
+			$_POST['icl_remember_language'] = 24;
+		}
         $iclsettings['automatic_redirect'] = @intval($_POST['icl_automatic_redirect']);
         $iclsettings['remember_language'] = @intval($_POST['icl_remember_language']);
         $this->save_settings($iclsettings);
         echo '1|';
         break;
-
     case 'icl_troubleshooting_more_options':
         $iclsettings['troubleshooting_options'] = $_POST['troubleshooting_options'];
         $this->save_settings($iclsettings);
         echo '1|';
         break;
-
-
     case 'reset_languages':
-        require_once(ICL_PLUGIN_PATH . '/inc/lang-data.php');
+		$langs_names = icl_get_languages_names();
+		$lang_codes = icl_get_languages_codes();
+        $lang_locales = icl_get_languages_locales();
 
         $active = $wpdb->get_col("SELECT code FROM {$wpdb->prefix}icl_languages WHERE active = 1");
 
-        mysql_query("TRUNCATE TABLE `{$wpdb->prefix}icl_languages`");
-        mysql_query("TRUNCATE TABLE `{$wpdb->prefix}icl_languages_translations`");
-        mysql_query("TRUNCATE TABLE `{$wpdb->prefix}icl_flags`");
+        $wpdb->query("TRUNCATE TABLE `{$wpdb->prefix}icl_languages`"); // @since 3.1.5 - mysql_* function deprecated in php 5.5+
+        $wpdb->query("TRUNCATE TABLE `{$wpdb->prefix}icl_languages_translations`");
+        $wpdb->query("TRUNCATE TABLE `{$wpdb->prefix}icl_flags`");
 
         foreach($langs_names as $key=>$val){
             if(strpos($key,'Norwegian Bokm')===0){ $key = 'Norwegian Bokmål'; $lang_codes[$key] = 'nb';} // exception for norwegian
@@ -743,14 +861,19 @@ switch($_REQUEST['icl_ajx_action']){
         }
 
         //restore active
-        $wpdb->query("UPDATE {$wpdb->prefix}icl_languages SET active=1 WHERE code IN('".join("','",$active)."')");
+        $wpdb->query("UPDATE {$wpdb->prefix}icl_languages SET active=1 WHERE code IN(" . wpml_prepare_in($active) . ")");
 
         foreach($langs_names as $lang=>$val){
             if(strpos($lang,'Norwegian Bokm')===0){ $lang = 'Norwegian Bokmål'; $lang_codes[$lang] = 'nb';}
             foreach($val['tr'] as $k=>$display){
                 if(strpos($k,'Norwegian Bokm')===0){ $k = 'Norwegian Bokmål';}
                 if(!trim($display)){$display = $lang;}
-                if(!($wpdb->get_var("SELECT id FROM {$wpdb->prefix}icl_languages_translations WHERE language_code='{$lang_codes[$lang]}' AND display_language_code='{$lang_codes[$k]}'"))){
+                if(!($wpdb->get_var(
+                    $wpdb->prepare("SELECT id FROM {$wpdb->prefix}icl_languages_translations
+                                    WHERE language_code=%s
+                                      AND display_language_code=%s",
+                                    $lang_codes[$lang], $lang_codes[$k] )))
+                ){
                     $wpdb->insert($wpdb->prefix . 'icl_languages_translations',
                     array('language_code'=>$lang_codes[$lang], 'display_language_code'=>$lang_codes[$k], 'name'=>$display));
                 }
@@ -760,7 +883,12 @@ switch($_REQUEST['icl_ajx_action']){
 
         $codes = $wpdb->get_col("SELECT code FROM {$wpdb->prefix}icl_languages");
         foreach($codes as $code){
-            if(!$code || $wpdb->get_var("SELECT lang_code FROM {$wpdb->prefix}icl_flags WHERE lang_code='{$code}'")) continue;
+            if ( !$code || $wpdb->get_var(
+                    $wpdb->prepare( "SELECT lang_code FROM {$wpdb->prefix}icl_flags WHERE lang_code = %s", $code )
+                )
+            ) {
+                continue;
+            }
             if(!file_exists(ICL_PLUGIN_PATH.'/res/flags/'.$code.'.png')){
                 $file = 'nil.png';
             }else{
@@ -793,7 +921,9 @@ switch($_REQUEST['icl_ajx_action']){
                     $this->verify_taxonomy_translations($k);
                 }
             }
-            $this->save_settings($iclsettings);
+			if ( isset( $iclsettings ) ) {
+				$this->save_settings($iclsettings);
+			}
         }
         echo '1|';
         break;
@@ -807,14 +937,13 @@ switch($_REQUEST['icl_ajx_action']){
                 }
             }
 
-            if($this->settings['posts_slug_translation']['on']){
+			$posts_slug_translation = $this->get_setting( 'posts_slug_translation' );
+			if(isset($posts_slug_translation['on']) && $posts_slug_translation['on']){
                 if(isset($_POST['translate_slugs']) && !empty($_POST['translate_slugs'])){
 
                     foreach($_POST['translate_slugs'] as $type => $data){
 
-                        if(empty($_POST['icl_sync_custom_posts'][$type])) continue;
-
-                        $iclsettings['posts_slug_translation']['types'][$type] = intval(!empty($data['on']));
+                        $iclsettings['posts_slug_translation']['types'][$type] = isset($data['on']) ? intval(!empty($data['on'])) : false;
 
                         if(empty($iclsettings['posts_slug_translation']['types'][$type])) continue;
 
@@ -825,53 +954,79 @@ switch($_REQUEST['icl_ajx_action']){
                         if(empty($string_id)){
                             $string_id = icl_register_string('WordPress', 'URL slug: ' . $slug, $slug);
                         }
-                        if($string_id){
-                            foreach($this->get_active_languages() as $lang){
-                                if($lang['code'] != $this->settings['st']['strings_language']){
-
-                                    // allow '/' in slugs
-                                    //$data['langs'][$lang['code']] = sanitize_title_with_dashes($data['langs'][$lang['code']]);
-                                    $data['langs'][$lang['code']] = join('/', array_map('sanitize_title_with_dashes', explode('/', $data['langs'][$lang['code']])));
-                                    $data['langs'][$lang['code']] = urldecode($data['langs'][$lang['code']]);
-                                    icl_add_string_translation($string_id, $lang['code'], $data['langs'][$lang['code']] , ICL_STRING_TRANSLATION_COMPLETE);
+                        if ( $string_id ) {
+                            foreach ( $this->get_active_languages() as $lang ) {
+                                $string_translation_settings = $this->get_setting( 'st' );
+                                if ( $lang[ 'code' ] != $string_translation_settings[ 'strings_language' ] ) {
+                                    $data[ 'langs' ][ $lang[ 'code' ] ] = join(
+                                        '/',
+                                        array_map(
+                                            'sanitize_title_with_dashes',
+                                            explode(
+                                                '/',
+                                                $data[ 'langs' ][ $lang[ 'code' ] ]
+                                            )
+                                        )
+                                    );
+                                    $data[ 'langs' ][ $lang[ 'code' ] ] = urldecode(
+                                        $data[ 'langs' ][ $lang[ 'code' ] ]
+                                    );
+                                    icl_add_string_translation(
+                                        $string_id,
+                                        $lang[ 'code' ],
+                                        $data[ 'langs' ][ $lang[ 'code' ] ],
+                                        ICL_STRING_TRANSLATION_COMPLETE
+                                    );
                                 }
                             }
-                            icl_update_string_status($string_id);
+                            icl_update_string_status( $string_id );
                         }
                     }
                 }
             }
 
-            $this->save_settings($iclsettings);
+			if ( isset( $iclsettings ) ) {
+				$this->save_settings($iclsettings);
+			}
         }
         echo '1|';
         break;
-
-    case 'copy_from_original':
-        $post_id = $wpdb->get_var($wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE trid=%d AND language_code=%s", $_POST['trid'], $_POST['lang']));
-        $post = get_post($post_id);
-
-        $error = false;
-        $json  = array();
-        if(!empty($post)){
-            if($_POST['editor_type'] == 'rich'){
-                $json['body'] = htmlspecialchars_decode(wp_richedit_pre($post->post_content));
-            }else{
-                $json['body'] = htmlspecialchars_decode(wp_htmledit_pre($post->post_content));
-            }
-
-        }else{
-            $json['error'] = __('Post not found', 'sitepress');
-        }
-        do_action('icl_copy_from_original', $post_id);
-        echo json_encode($json);
-        break;
-
+	case 'copy_from_original':
+		/*
+		 * apply filtering as to add further elements
+		 * filters will have to like as such
+		 * add_filter('wpml_copy_from_original_fields', 'my_copy_from_original_fields');
+		 *
+		 * function my_copy_from_original_fields( $elements ) {
+		 *  $custom_field = 'editor1';
+		 *  $elements[ 'customfields' ][ $custom_fields ] = array(
+		 *    'editor_name' => 'custom_editor_1',
+		 *    'editor_type' => 'editor',
+		 *    'value'       => 'test'
+		 *  );
+		 *
+		 *  $custom_field = 'editor2';
+		 *  $elements[ 'customfields' ][ $custom_fields ] = array(
+		 *    'editor_name' => 'textbox1',
+		 *    'editor_type' => 'text',
+		 *    'value'       => 'testtext'
+		 *  );
+		 *
+		 *  return $elements;
+		 * }
+		 * This filter would result in custom_editor_1 beeing populated with the value "test"
+		 * and the textfield with id #textbox1 to be populated with "testtext".
+		 * editor type is always either text when populating general fields or editor when populating
+		 * a wp editor. The editor id can be either judged from the arguments used in the wp_editor() call
+		 * or from looking at the tinyMCE.Editors object that the custom post type's editor sends to the browser.
+		 */
+		echo json_encode( wpml_copy_from_original_fields() );
+		break;
     case 'save_user_preferences':
-        $this->user_preferences = array_merge_recursive((array)$this->user_preferences, $_POST['user_preferences']);
+        $user_preferences = $this->get_user_preferences();
+		$this->set_user_preferences(array_merge_recursive( $user_preferences, $_POST['user_preferences']));
         $this->save_user_preferences();
         break;
-
     case 'wpml_cf_translation_preferences':
         if (empty($_POST['custom_field'])) {
             echo '<span style="color:#FF0000;">'
@@ -902,38 +1057,139 @@ switch($_REQUEST['icl_ajx_action']){
                     . '</span>';
         }
         break;
-
     case 'icl_seo_options':
         $iclsettings['seo']['head_langs'] = isset($_POST['icl_seo_head_langs']) ? intval($_POST['icl_seo_head_langs']) : 0;
         $iclsettings['seo']['canonicalization_duplicates'] = isset($_POST['icl_seo_canonicalization_duplicates']) ? intval($_POST['icl_seo_canonicalization_duplicates']) : 0;
         $this->save_settings($iclsettings);
         echo '1|';
         break;
-
     case 'dismiss_object_cache_warning':
         $iclsettings['dismiss_object_cache_warning'] = true;
         $this->save_settings($iclsettings);
         echo '1|';
         break;
-
-
     case 'update_option':
         $iclsettings[$_REQUEST['option']] = $_REQUEST['value'];
         $this->save_settings($iclsettings);
         break;
+	case 'connect_translations':
+		$new_trid = $_POST['new_trid'];
+		$post_type = $_POST['post_type'];
+		$post_id = $_POST['post_id'];
+		$set_as_source = $_POST['set_as_source'];
 
-    case 'get_browser_language':
-        $http_accept_language = $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ];
-		$accepted_languages = explode(';', $http_accept_language);
-		$default_accepted_language = $accepted_languages[0];
-		$default_accepted_language_codes = explode(',', $default_accepted_language);
-		echo strtolower($default_accepted_language_codes[0]);
-        break;
+		$language_details = $sitepress->get_element_language_details($post_id, 'post_' . $post_type);
 
+		if ( $set_as_source ) {
+			$wpdb->update( $wpdb->prefix . 'icl_translations', array( 'source_language_code' => $language_details->language_code ), array( 'trid' => $new_trid, 'element_type' => 'post_' . $post_type ) );
+			$wpdb->update( $wpdb->prefix . 'icl_translations', array( 'source_language_code' => null, 'trid' => $new_trid ), array( 'element_id' => $post_id, 'element_type' => 'post_' . $post_type ) );
+		} else {
+			$original_element_language = $sitepress->get_default_language();
+			$trid_elements             = $sitepress->get_element_translations( $new_trid, 'post_' . $post_type );
+			if($trid_elements) {
+				foreach ( $trid_elements as $trid_element ) {
+					if ( $trid_element->original ) {
+						$original_element_language = $trid_element->language_code;
+						break;
+					}
+				}
+			}
+			$wpdb->update( $wpdb->prefix . 'icl_translations', array( 'source_language_code' => $original_element_language, 'trid' => $new_trid ), array( 'element_id' => $post_id, 'element_type' => 'post_' . $post_type ) );
+		}
+		echo json_encode(true);
+		break;
+	case 'get_posts_from_trid':
+		$trid = $_POST['trid'];
+		$post_type = $_POST['post_type'];
+
+		$translations = $sitepress->get_element_translations($trid, 'post_' . $post_type);
+
+		$results = array();
+		foreach($translations as $language_code => $translation) {
+			$post = get_post($translation->element_id);
+			$title = $post->post_title ? $post->post_title : strip_shortcodes(wp_trim_words( $post->post_content, 50 ));
+			$source_language_code = $translation->source_language_code;
+			$results[] = (object) array('language' => $language_code, 'title' => $title, 'source_language' => $source_language_code);
+		}
+		echo json_encode($results);
+		break;
+	case 'get_orphan_posts':
+
+		$trid = $_POST['trid'];
+		$post_type = $_POST['post_type'];
+		$source_language = $_POST['source_language'];
+
+		$results = SitePress::get_orphan_translations($trid, $post_type, $source_language);
+
+		echo json_encode($results);
+
+		break;
     default:
-        do_action('icl_ajx_custom_call', $_REQUEST['icl_ajx_action'], $_REQUEST);
+        do_action('icl_ajx_custom_call', $request, $_REQUEST);
+}
+exit;
+
+/**
+ * wpml_copy_from_original_fields
+ * Gets the content of a post, its excerpt as well as its title and returns it as an array
+ *
+ * @param
+ *
+ * @return array containing all the fields information
+ */
+function wpml_copy_from_original_fields() {
+	global $wpdb;
+	$post_id = $wpdb->get_var( $wpdb->prepare( "SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE trid=%d AND language_code=%s", $_POST[ 'trid' ], $_POST[ 'lang' ] ) );
+	$post    = get_post( $post_id );
+
+	$fields_to_copy            = array( 'content' => 'post_content' );
+	$fields_to_copy[ 'title' ] = 'post_title';
+
+	$fields_contents = array();
+	if ( ! empty( $post ) ) {
+		foreach ( $fields_to_copy as $editor_key => $editor_field ) { //loops over the three fields to be inserted into the array
+			if ( $editor_key == 'content' || $editor_key == 'excerpt' ) { //
+				if ( $editor_key == 'content' ) {
+					$editor_var = $_POST[ 'content_type' ]; //these variables are supplied by a javascript call in scripts.js icl_copy_from_original(lang, trid)
+				} elseif ( $editor_key == 'excerpt' ) {
+					$editor_var = $_POST[ 'excerpt_type' ];
+				}
+				if (isset($editor_var) && isset($_POST[ $editor_var ]) && $_POST[ $editor_var ] == 'rich' ) {
+					$fields_contents[ $editor_key ] = htmlspecialchars_decode( wp_richedit_pre( $post->$editor_field ) );
+				} else {
+					$fields_contents[ $editor_key ] = htmlspecialchars_decode( wp_htmledit_pre( $post->$editor_field ) );
+				}
+			} elseif ( $editor_key == 'title' ) {
+				$fields_contents[ $editor_key ] = strip_tags( $post->$editor_field );
+			}
+		}
+		$fields_contents[ 'customfields' ] = apply_filters( 'wpml_copy_from_original_custom_fields', wpml_copy_from_original_custom_fields( $post ) );
+	} else {
+		$fields_contents[ 'error' ] = __( 'Post not found', 'sitepress' );
+	}
+	do_action( 'icl_copy_from_original', $post_id );
+
+	return $fields_contents;
 }
 
-if (!isset($_POST['unit-test'])) {
-    exit;
+/**
+ * wpml_copy_from_original_custom_fields
+ * Gets the content of a custom posts custom field , its excerpt as well as its title and returns it as an array
+ *
+ * @param  (type) about this param
+ *
+ * @return array (type)
+ */
+
+function wpml_copy_from_original_custom_fields( $post ) {
+
+	$elements                 = array();
+	$elements [ 'post_type' ] = $post->post_type;
+	$elements[ 'excerpt' ]    = array(
+		'editor_name' => 'excerpt',
+		'editor_type' => 'text',
+		'value'       => $post->post_excerpt
+	);
+
+	return $elements;
 }
