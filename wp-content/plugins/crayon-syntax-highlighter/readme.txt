@@ -4,15 +4,15 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99E
 License: GPLv2 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
 Requires at least: 3.0
-Tested up to: 4.1.0
+Tested up to: 4.2.0
 Stable tag: trunk
 
-Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, local file or post text.
+Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, or post text.
 
 == Description ==
 
 A Syntax Highlighter built in PHP and jQuery that supports customizable languages and themes.
-It can highlight from a URL, a local file or Wordpress post text. Crayon makes it easy to manage Language files and define
+It can highlight from a URL, or Wordpress post text. Crayon makes it easy to manage Language files and define
 custom language elements with regular expressions.
 It also supports some neat features like:
 
@@ -46,7 +46,6 @@ It also supports some neat features like:
 * Line marking (for important lines)
 * <a href="http://aramk.com/blog/2012/09/02/line-ranges-in-crayon‎" target="_blank">Line ranges (showing only parts of the code)</a>
 * Starting line number (default is 1)
-* Local directory to search for local files
 * File extension detection
 * Live Preview in settings
 * Dimensions, margins, alignment, font-size, line-height, float
@@ -85,6 +84,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * C
 * C#
 * C++
+* Clojure (thanks to <a href="https://github.com/mberndtgen" target="_blank"></a>)
 * CoffeeScript (thanks to <a href="http://firn.jp/crayon-coffeescript" target="_blank">Dai Akatsuka</a>)
 * CSS
 * Delphi/Pascal (thanks to <a href="http://squashbrain.com/" target="_blank">Chris McClenny</a>)
@@ -105,6 +105,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * Java
 * JavaScript
 * Objective-C
+* Papyrus
 * Perl
 * PHP
 * PL/SQL
@@ -197,11 +198,25 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+* Christian Martens, (http://insgesamt.net/), Germany
+* Nilesh Govindrajan, (http://nileshgr.com/), India
+* ZengChun Yang, China
+* Alan Kaplan, (http://www.akaplan.com/blog), US
+* Christopher Yarbrough, (http://chrisyarbrough.com/), Germany
+* Johann Weiher, (http://codequartett.de/), Germany
+* Samuel Deering, Australia
+* Billiard Greg, (http://billiardgreg.com/), USA
+* Performance Simulations, (http://www.performancesimulations.com/), USA
+* Lindsay Ross, (http://gravelrash.com), New Zealand
+* Ruperto Coronado Muñoz, Mexico
+* Stefan Onderka, (http://www.onderka.com), Germany
+* Peter Kellner, (http://peterkellner.net), USA
+* Open Hardware Design Group LLC, (http://opensourcehardwaregroup.com/), USA
 * Helen McManus, (http://invisiblepixels.org/InvisibleWords/), Netherlands
 * Thomas Fee, UK
 * Julie Knowles, (http://knowlesfamily.com/), USA
 * Peter Kriegel, (http://www.powershell-group.eu/), Germany
-* Geo My WP, (http://geomywp.com), US
+* Geo My WP, (http://geomywp.com), USA
 * Raffael Vogler, Germany
 * Erdal Cicek, Turkey
 * Cloud-VPS, Poland
@@ -283,6 +298,31 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.7.1 =
+* FIXED:
+    * Bug causing sample code to give an error due to new restriction on loading local files.
+
+= 2.7.0 =
+* ADDED:
+    * Onderka15 theme.
+    * Obsidian Light theme.
+* FIXED:
+    * Prevented using is_admin() as a security query (thanks to <a href="https://research.g0blin.co.uk/" target="_blank">g0blin Research</a>).
+    * Removed the ability to load files from the filesystem due to security vulnerabilities (thanks to <a href="http://kevinsubileau.fr" target="_blank">Kevin Subileau</a>). Ensure all URLs are publicly accessible.
+    * Fixed a bug causing tags to be removed in some cases.
+
+= 2.6.10 =
+* ADDED:
+    * Option to load crayon script in the footer to improve loading performance (thanks to <a href="https://github.com/sumhat" target="_blank">sumhat</a>).
+    * X3Info theme
+    * Papyrus language
+* FIXED:
+    * Support for nested multi-line strings in Swift language (thanks to <a href="https://github.com/nicolafiorillo" target="_blank">nicolafiorillo</a>).
+    * CrayonFormatter::print_error() called non-statically (thanks to <a href="https://github.com/ksubileau" target="_blank">https://github.com/ksubileau</a>)
+    * Admin CSS issue: https://github.com/aramk/crayon-syntax-highlighter/issues/250.
+    * Table style incompatibility with WP 2015 theme.
+    * Wrapped text now breaks per character.
 
 = 2.6.9 =
 * ADDED:

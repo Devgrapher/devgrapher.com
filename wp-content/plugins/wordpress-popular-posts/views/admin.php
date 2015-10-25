@@ -43,6 +43,7 @@ if ( isset($_POST['section']) ) {
 			$this->user_settings['tools']['thumbnail']['field'] = ( !empty( $_POST['thumb_field']) ) ? $_POST['thumb_field'] : "wpp_thumbnail";
 			$this->user_settings['tools']['thumbnail']['default'] = ( !empty( $_POST['upload_thumb_src']) ) ? $_POST['upload_thumb_src'] : "";
 			$this->user_settings['tools']['thumbnail']['resize'] = $_POST['thumb_field_resize'];
+			$this->user_settings['tools']['thumbnail']['responsive'] = $_POST['thumb_responsive'];
 			
 			update_site_option('wpp_settings_config', $this->user_settings);				
 			echo "<div class=\"updated\"><p><strong>" . __('Settings saved.', $this->plugin_slug ) . "</strong></p></div>";
@@ -77,7 +78,7 @@ if ( isset($_POST['section']) ) {
 }
 
 if ( $this->user_settings['tools']['css'] && !file_exists( get_stylesheet_directory() . '/wpp.css' ) ) {
-	echo '<div id="wpp-message" class="error fade"><p>'. __('Any changes made to WPP\'s default stylesheet will be lost after every plugin update. In order to prevent this from happening, please copy the wpp.css file (located at wp-content/plugins/wordpress-popular-posts/style) into your theme\'s directory', $this->plugin_slug) .'.</p></div>';
+	echo '<div id="wpp-message" class="update-nag">'. __('Any changes made to WPP\'s default stylesheet will be lost after every plugin update. In order to prevent this from happening, please copy the wpp.css file (located at wp-content/plugins/wordpress-popular-posts/style) into your theme\'s directory', $this->plugin_slug) .'.</div>';
 }
 
 $rand = md5(uniqid(rand(), true));	
@@ -247,6 +248,17 @@ if (empty($wpp_rand)) {
                             </select>
                         </td>
                     </tr>
+                    <tr valign="top">
+                        <th scope="row"><label for="thumb_responsive"><?php _e("Responsive support", $this->plugin_slug); ?>:</label></th>
+                        <td>
+                            <select name="thumb_responsive" id="thumb_responsive">
+                                <option <?php if ($this->user_settings['tools']['thumbnail']['responsive']) {?>selected="selected"<?php } ?> value="1"><?php _e("Enabled", $this->plugin_slug); ?></option>
+                                <option <?php if (!$this->user_settings['tools']['thumbnail']['responsive']) {?>selected="selected"<?php } ?> value="0"><?php _e("Disabled", $this->plugin_slug); ?></option>
+                            </select>
+                            <br />
+                            <p class="description"><?php _e("If enabled, WordPress Popular Posts will strip height and width attributes out of thumbnails' image tags", $this->plugin_slug); ?>.</p>
+                        </td>
+                    </tr>
                     <?php
 					$wp_upload_dir = wp_upload_dir();					
 					if ( is_dir( $wp_upload_dir['basedir'] . "/" . $this->plugin_slug ) ) :
@@ -301,7 +313,7 @@ if (empty($wpp_rand)) {
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><label for="cache"><?php _e("WPP Cache Expiry Policy", $this->plugin_slug); ?>:</label></th>
+                        <th scope="row"><label for="cache"><?php _e("WPP Cache Expiry Policy", $this->plugin_slug); ?>:</label> <small>[<a href="https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#caching" target="_blank" title="<?php _e('What is this?', 'wordpress-popular-posts'); ?>">?</a>]</small></th>
                         <td>
                             <select name="cache" id="cache">
                                 <option <?php if ( !$this->user_settings['tools']['cache']['active'] ) { ?>selected="selected"<?php } ?> value="0"><?php _e("Never cache", $this->plugin_slug); ?></option>
@@ -329,7 +341,7 @@ if (empty($wpp_rand)) {
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><label for="sampling"><?php _e("Data Sampling", $this->plugin_slug); ?>:</label></th>
+                        <th scope="row"><label for="sampling"><?php _e("Data Sampling", $this->plugin_slug); ?>:</label> <small>[<a href="https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#data-sampling" target="_blank" title="<?php _e('What is this?', 'wordpress-popular-posts'); ?>">?</a>]</small></th>
                         <td>
                             <select name="sampling" id="sampling">
                                 <option <?php if ( !$this->user_settings['tools']['sampling']['active'] ) { ?>selected="selected"<?php } ?> value="0"><?php _e("Disabled", $this->plugin_slug); ?></option>
@@ -337,7 +349,7 @@ if (empty($wpp_rand)) {
                             </select>
                     
                             <br />
-                            <p class="description"><?php echo sprintf( __('By default, WordPress Popular Posts stores in database every single visit your site receives. For small / medium sites this is generally OK, but on large / high traffic sites the constant writing to the database may have an impact on performance. With data sampling, WordPress Popular Posts will store only a subset of your traffic and report on the tendencies detected in that sample set (for more on <em>data sampling</em>, please <a href="%1$s" target="_blank">read here</a>)', $this->plugin_slug), 'http://en.wikipedia.org/wiki/Sample_%28statistics%29' ); ?>.</p>
+                            <p class="description"><?php echo sprintf( __('By default, WordPress Popular Posts stores in database every single visit your site receives. For small / medium sites this is generally OK, but on large / high traffic sites the constant writing to the database may have an impact on performance. With <a href="%1$s" target="_blank">data sampling</a>, WordPress Popular Posts will store only a subset of your traffic and report on the tendencies detected in that sample set (for more, <a href="%2$s" target="_blank">please read here</a>)', $this->plugin_slug), 'http://en.wikipedia.org/wiki/Sample_%28statistics%29', 'https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#data-sampling' ); ?>.</p>
                         </td>
                     </tr>
                     <tr valign="top" <?php if ( !$this->user_settings['tools']['sampling']['active'] ) { ?>style="display:none;"<?php } ?>>
@@ -428,7 +440,7 @@ if (empty($wpp_rand)) {
                         <td><strong>header</strong></td>
                         <td><?php _e('Sets a heading for the list', $this->plugin_slug); ?></td>
                         <td><?php _e('Text string', $this->plugin_slug); ?></td>
-                        <td><?php _e('Popular Posts', $this->plugin_slug); ?></td>
+                        <td><?php _e('None', $this->plugin_slug); ?></td>
                         <td>&lt;?php wpp_get_mostpopular( 'header="Popular Posts"' ); ?&gt;</td>
                     </tr>
                     <tr class="alternate">
@@ -540,14 +552,14 @@ if (empty($wpp_rand)) {
                         <td><strong>thumbnail_width</strong></td>
                         <td><?php _e('If set, and if your current server configuration allows it, you will be able to display thumbnails of your posts. This attribute sets the width for thumbnails', $this->plugin_slug); ?></td>
                         <td><?php _e('Positive integer', $this->plugin_slug); ?></td>
-                        <td>15</td>
+                        <td>0</td>
                         <td>&lt;?php wpp_get_mostpopular( 'thumbnail_width=30&amp;thumbnail_height=30' ); ?&gt;</td>
                     </tr>
                     <tr class="alternate">
                         <td><strong>thumbnail_height</strong></td>
                         <td><?php _e('If set, and if your current server configuration allows it, you will be able to display thumbnails of your posts. This attribute sets the height for thumbnails', $this->plugin_slug); ?></td>
                         <td><?php _e('Positive integer', $this->plugin_slug); ?></td>
-                        <td>15</td>
+                        <td>0</td>
                         <td>&lt;?php wpp_get_mostpopular( 'thumbnail_width=30&amp;thumbnail_height=30' ); ?&gt;</td>
                     </tr>
                     <tr>
@@ -616,7 +628,7 @@ if (empty($wpp_rand)) {
                     <tr class="alternate">
                         <td><strong>post_html</strong></td>
                         <td><?php _e('Sets the HTML structure of each post', $this->plugin_slug); ?></td>
-                        <td><?php _e('Text string, custom HTML', $this->plugin_slug); ?>.<br /><br /><strong><?php _e('Available Content Tags', $this->plugin_slug); ?>:</strong> <br /><br /><em>{thumb}</em> (<?php _e('displays thumbnail linked to post/page', $this->plugin_slug); ?>)<br /><br /> <em>{thumb_img}</em> (<?php _e('displays thumbnail image without linking to post/page', $this->plugin_slug); ?>)<br /><br /> <em>{title}</em> (<?php _e('displays linked post/page title', $this->plugin_slug); ?>)<br /><br /> <em>{summary}</em> (<?php _e('displays post/page excerpt, and requires excerpt_length to be greater than 0', $this->plugin_slug); ?>)<br /><br /> <em>{stats}</em> (<?php _e('displays the default stats tags', $this->plugin_slug); ?>)<br /><br /> <em>{rating}</em> (<?php _e('displays post/page current rating, requires WP-PostRatings installed and enabled', $this->plugin_slug); ?>)<br /><br /> <em>{score}</em> (<?php _e('displays post/page current rating as an integer, requires WP-PostRatings installed and enabled', $this->plugin_slug); ?>)<br /><br /> <em>{url}</em> (<?php _e('outputs the URL of the post/page', $this->plugin_slug); ?>)<br /><br /> <em>{text_title}</em> (<?php _e('displays post/page title, no link', $this->plugin_slug); ?>)<br /><br /> <em>{author}</em> (<?php _e('displays linked author name, requires stats_author=1', $this->plugin_slug); ?>)<br /><br /> <em>{category}</em> (<?php _e('displays linked category name, requires stats_category=1', $this->plugin_slug); ?>)<br /><br /> <em>{views}</em> (<?php _e('displays views count only, no text', $this->plugin_slug); ?>)<br /><br /> <em>{comments}</em> (<?php _e('displays comments count only, no text, requires stats_comments=1', $this->plugin_slug); ?>)<br /><br /> <em>{date}</em> (<?php _e('displays post/page date, requires stats_date=1', $this->plugin_slug); ?>)</td>
+                        <td><?php _e('Text string, custom HTML', $this->plugin_slug); ?>.<br /><br /><strong><?php _e('Available Content Tags', $this->plugin_slug); ?>:</strong> <br /><br /><em>{thumb}</em> (<?php _e('displays thumbnail linked to post/page, requires thumbnail_width & thumbnail_height', $this->plugin_slug); ?>)<br /><br /> <em>{thumb_img}</em> (<?php _e('displays thumbnail image without linking to post/page, requires thumbnail_width & thumbnail_height', $this->plugin_slug); ?>)<br /><br /> <em>{title}</em> (<?php _e('displays linked post/page title', $this->plugin_slug); ?>)<br /><br /> <em>{summary}</em> (<?php _e('displays post/page excerpt, and requires excerpt_length to be greater than 0', $this->plugin_slug); ?>)<br /><br /> <em>{stats}</em> (<?php _e('displays the default stats tags', $this->plugin_slug); ?>)<br /><br /> <em>{rating}</em> (<?php _e('displays post/page current rating, requires WP-PostRatings installed and enabled', $this->plugin_slug); ?>)<br /><br /> <em>{score}</em> (<?php _e('displays post/page current rating as an integer, requires WP-PostRatings installed and enabled', $this->plugin_slug); ?>)<br /><br /> <em>{url}</em> (<?php _e('outputs the URL of the post/page', $this->plugin_slug); ?>)<br /><br /> <em>{text_title}</em> (<?php _e('displays post/page title, no link', $this->plugin_slug); ?>)<br /><br /> <em>{author}</em> (<?php _e('displays linked author name, requires stats_author=1', $this->plugin_slug); ?>)<br /><br /> <em>{category}</em> (<?php _e('displays linked category name, requires stats_category=1', $this->plugin_slug); ?>)<br /><br /> <em>{views}</em> (<?php _e('displays views count only, no text', $this->plugin_slug); ?>)<br /><br /> <em>{comments}</em> (<?php _e('displays comments count only, no text, requires stats_comments=1', $this->plugin_slug); ?>)<br /><br /> <em>{date}</em> (<?php _e('displays post/page date, requires stats_date=1', $this->plugin_slug); ?>)</td>
                         <td>&lt;li&gt;{thumb} {title} {stats}&lt;/li&gt;</td>
                         <td>&lt;?php wpp_get_mostpopular( 'post_html="&lt;li&gt;{thumb} &lt;a href=\'{url}\'&gt;{text_title}&lt;/a&gt;&lt;/li&gt;"' ); ?&gt;</td>
                     </tr>
@@ -669,7 +681,7 @@ if (empty($wpp_rand)) {
             <p><?php _e('This filter allows you to decide which post types to show on the listing. By default, it will retrieve only posts and pages (which should be fine for most cases).', $this->plugin_slug); ?></p>
         </div>
         
-        <h4 id="filter_category">&raquo; <a href="#" rel="q-9"><?php _e('What is "Category(ies) ID(s)" for?', $this->plugin_slug); ?></a></h4>
+        <h4 id="filter-category">&raquo; <a href="#" rel="q-9"><?php _e('What is "Category(ies) ID(s)" for?', $this->plugin_slug); ?></a></h4>
         <div class="wpp-ans" id="q-9">
             <p><?php _e('This filter allows you to select which categories should be included or excluded from the listing. A negative sign in front of the category ID number will exclude posts belonging to it from the list, for example. You can specify more than one ID with a comma separated list.', $this->plugin_slug); ?></p>
         </div>
@@ -766,9 +778,15 @@ if (empty($wpp_rand)) {
         <h3><?php echo sprintf( __('About WordPress Popular Posts %s', $this->plugin_slug), $this->version); ?></h3>
         <p><?php _e( 'This version includes the following changes', $this->plugin_slug ); ?>:</p>
         
+        <p><strong>If you're using a caching plugin, flushing its cache after installing / upgrading to this version is strongly recommended.</strong></p>
+        
         <ul>
-            <li>Fixes missing HTML decoding for custom HTML in widget.</li>
-            <li>Puts LIMIT clause back to the outer query.</li>
+            <li>Fixes a potential bug that might affect other plugins & themes (thanks , @<a href="https://github.com/pippinsplugins">pippinsplugins</a>!)</li>
+            <li>Defines INNODB as default storage engine.</li>
+            <li>Adds the wpp-no-data CSS class to style the "Sorry, no data so far" message.</li>
+            <li>Adds a new index to summary table.</li>
+            <li>Updates plugin's documentation.</li>
+            <li>Other small bug fixes and improvements.</li>
         </ul>
                 
     </div>
@@ -783,12 +801,12 @@ if (empty($wpp_rand)) {
             <img alt="" border="0" src="//www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
         </form>
         <p><?php _e( 'Each donation motivates me to keep releasing free stuff for the WordPress community!', $this->plugin_slug ); ?></p>
-        <p><?php echo sprintf( __('You can <a href="%s" target="_blank">leave a review</a>, too!', $this->plugin_slug), 'http://wordpress.org/support/view/plugin-reviews/wordpress-popular-posts' ); ?></p>
+        <p><?php echo sprintf( __('You can <a href="%s" target="_blank">leave a review</a>, too!', $this->plugin_slug), 'https://wordpress.org/support/view/plugin-reviews/wordpress-popular-posts?rate=5#postform' ); ?></p>
     </div>
     
     <div id="wpp_support" class="wpp_box" style="">
         <h3 style="margin-top:0; text-align:center;"><?php _e('Need help?', $this->plugin_slug); ?></h3>
-        <p><?php echo sprintf( __('Visit <a href="%s" target="_blank">the forum</a> for support, questions and feedback.', $this->plugin_slug), 'http://wordpress.org/support/plugin/wordpress-popular-posts' ); ?></p>
+        <p><?php echo sprintf( __('Visit <a href="%s" target="_blank">the forum</a> for support, questions and feedback.', $this->plugin_slug), 'https://wordpress.org/support/plugin/wordpress-popular-posts' ); ?></p>
         <p><?php _e('Let\'s make this plugin even better!', $this->plugin_slug); ?></p>
     </div>
         

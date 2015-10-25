@@ -1,0 +1,27 @@
+=== harmonic ===
+=== changelog ===
+
+= 1.0.8 - June 20, 2015 =
+* Added proper escaping to all necessary inputs, URLs, etc.
+
+= 1.0.6 - January 30, 2015 =
+* Update variable
+
+= 1.0.5 - January 15, 2015 =
+* Update fixes for .org and bump version
+* Syncing with version on .com
+
+= 1.0.4 - November 25, 2014 =
+* Update screenshot.png
+
+= 1.0.3 - November 3, 2014 =
+* Update Site Logo template tags for Jetpack.
+
+= 1.0.2 - October 31, 2014 =
+* Fix custom header displaying on portfolio tag archives
+
+= 1.0.1 - October 27, 2014 =
+* Fix typos in content-front-portfolio.php
+
+= 1.0 - October 10, 2014 =
+* Initial release

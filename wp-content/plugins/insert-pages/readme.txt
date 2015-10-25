@@ -2,7 +2,7 @@
 Contributors: figureone, the_magician
 Tags: insert, pages, shortcode, embed
 Requires at least: 3.0.1
-Tested up to: 4.0
+Tested up to: 4.2.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -48,6 +48,20 @@ The possibilities are endless!
 
 == Frequently Asked Questions ==
 
+= How do I limit the list of pages in the dialog to certain post types? =
+
+You can hook into the 'insert_pages_available_post_types' filter to limit the post types displayed in the dialog. Here's an example filter that just shows Posts:
+
+`/**
+ * Filter the list of post types to show in the insert pages dialog.
+ *
+ * @param $post_types Array of post type names to include in the insert pages list.
+ */
+function only_insert_posts( $post_types ) {
+    return array( 'post' );
+}
+add_filter( 'insert_pages_available_post_types', 'only_insert_posts' );`
+
 = Do I have to use the toolbar button to Insert Pages? =
 
 No! You can type out the shortcode yourself if you'd like, it's easy. Here's the format:
@@ -71,6 +85,69 @@ Just one! The plugin prevents you from embedding a page in itself, but you can t
 3. Insert Pages shortcode example.
 
 == Changelog ==
+
+= 2.7.1 =
+* Add filter to show a message when an inserted page cannot be found. Example usage:
+`function theme_init() {
+    // Show a message in place of an inserted page if that page cannot be found.
+    add_filter( 'insert_pages_not_found_message', function ( $content ) { return 'Page could not be found.'; } );
+}
+add_action( 'init', 'theme_init' );`
+
+= 2.7 =
+* Fix: Prevent Insert Pages from breaking tinymce if wp_editor() is called outside of an admin context.
+
+= 2.6 =
+* Fix: Query data wasn't getting reset properly when viewing a category archive containing a post with an inserted page, causing date and author information in post footers in the twentyfifteen theme to show incorrect information. This has been resolved.
+
+= 2.5 =
+* Maintenance release: prevent infinite loops when using a custom template that doesn't call the_post().
+
+= 2.4 =
+* Add insert_pages_apply_nesting_check filter. Use it to disable the deep nesting check which prevents inserted pages from being embedded within other inserted pages. Example usage:
+`function theme_init() {
+    // Disable nesting check to allow inserted pages within inserted pages.
+    add_filter( 'insert_pages_apply_nesting_check', function ( $should_apply ) { return false; } );
+}
+add_action( 'init', 'theme_init' );`
+
+= 2.3 =
+* Remove insertPages_Content id from div wrapper to allow multiple pages to be embedded; replace with insert-page class. Example: `<div data-post-id='123' class='insert-page insert-page-123'>...</div>`
+* New shortcode attribute: class. You can now add custom classes to the div wrapper around your inserted page:
+`[insert page='123' display='all' class='my-class another-class']`
+This results in:
+`<div data-post-id='123' class='insert-page insert-page-123 my-class another-class'>...</div>`
+
+= 2.2 =
+* Revert previous fix for conflict with Jetpack's Sharing widget (affected other users negatively).
+* New fix for conflict with Jetpack's Sharing widget. Use it in your theme like so:
+`// If Jetpack Sharing widget is enabled, disable the_content filter for inserted pages.
+function theme_init() {
+    if ( has_filter( 'the_content', 'sharing_display' ) ) {
+        add_filter( 'insert_pages_apply_the_content_filter', function ( $should_apply ) { return false; } );
+    }
+}
+add_action( 'init', 'theme_init' );`
+
+= 2.1 =
+* Add quicktag button for Insert Pages to the Text Editor.
+* Fix conflict with Jetpack's Sharing widget.
+* Add stronger infinite loop protection (will stop expanding shortcodes nested within an embedded page).
+* Fix potential infinite loop if custom template can't be found.
+
+= 2.0 =
+* Add insert_pages_available_post_types filter to limit post types shown in insert pages dialog (see FAQ for example filter hook). Props @noahj for the feature request.
+* Add excerpt-only display to output the excerpt without the title above it. Props @kalico for the feature request.
+
+= 1.9 =
+* Add data-post-id attribute to div container for each inserted page, now you can reference via jQuery with .data( 'postId' ). Props to Robert Payne for the pull request, thanks!
+
+= 1.8 =
+* Fix for custom post types marked as exclude_from_search not inserting correctly.
+
+= 1.7 =
+* Tested and works on WordPress 4.1;
+* New display format: excerpt. Props to bitbucket user grzegorzdrozd for the pull request. https://bitbucket.org/figureone/insert-pages/commits/0f6402c98058858f76f3f865bb3f8c5aba4cda65
 
 = 1.6 =
 * Fix for long page template names causing Display field to wrap in the tinymce popup;
@@ -100,6 +177,9 @@ Just one! The plugin prevents you from embedding a page in itself, but you can t
 * Development release.
 
 == Upgrade Notice ==
+
+= 2.3 =
+Warning: If you apply CSS rules to #insertPages_Content, this update will require you to modify those styles. The element id "insertPages_Content" was removed so multiple pages can be embedded on a single page. You may apply styles instead to the "insert-page" class.
 
 = 1.2 =
 Added retina toolbar icon.

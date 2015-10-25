@@ -1,0 +1,288 @@
+/*
+Theme Name: Harmonic
+Description: Used to style the TinyMCE editor.
+*/
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+1.0 - Body
+2.0 - Headings
+3.0 - Text Elements
+4.0 - Links
+5.0 - Alignment
+6.0 - Tables
+7.0 - Images
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+1.0 - Body
+--------------------------------------------------------------*/
+html .mceContentBody {
+    font-size: 16px;
+    max-width: 680px;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    color: #111;
+    font-family: 'Hind', sans-serif;
+    font-size: 16px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/*--------------------------------------------------------------
+2.0 - Headings
+--------------------------------------------------------------*/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    clear: both;
+    font-family: 'Hind', sans-serif;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 48px;
+    font-size: 4.8rem;
+    font-weight: 700;
+    line-height: .91667;
+}
+
+h2 {
+    font-size: 32px;
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: 1.375;
+}
+
+h3,
+h4 {
+    font-size: 28px;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.57143;
+}
+
+h5,
+h6 {
+    font-size: 22px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 2;
+}
+
+/*--------------------------------------------------------------
+3.0 - Text Elements
+--------------------------------------------------------------*/
+p {
+    margin-bottom: 20px;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+dfn,
+cite,
+em,
+i {
+    font-style: italic;
+}
+
+blockquote {
+    border-left: 5px solid #ccc;
+    color: #999;
+    font-size: 18px;
+    font-size: 1.8rem;
+    font-weight: 400;
+    line-height: 1.33333;
+    margin: 20px 0;
+    padding: 20px 20px 0;
+    text-align: center;
+}
+
+address {
+    margin: 0 0 20px;
+}
+
+pre {
+    background: #eee;
+    font-family: 'Courier 10 Pitch', Courier, monospace;
+    font-size: 14px;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    overflow: auto;
+    max-width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+code,
+kbd,
+tt,
+var {
+    font-family: Monaco, Consolas, 'Andale Mono', 'DejaVu Sans Mono', monospace;
+    font-size: 14px;
+    font-size: 1.4rem;
+}
+
+abbr,
+acronym {
+    cursor: help;
+}
+
+mark,
+ins {
+    background: #2390bb;
+    color: #fff;
+    padding: 2.5px 5px;
+    text-decoration: none;
+}
+
+sup,
+sub {
+    font-size: 75%;
+    height: 0;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    bottom: 1ex;
+}
+
+sub {
+    top: .5ex;
+}
+
+small {
+    font-size: 75%;
+}
+
+big {
+    font-size: 125%;
+}
+
+cite {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 0;
+}
+hr {
+    border: 0;
+    height: 1px;
+    margin-bottom: 20px;
+}
+
+ul,
+ol {
+    margin: 0 0 20px 40px;
+}
+
+ul {
+    list-style: disc;
+}
+
+ol {
+    list-style: decimal;
+}
+
+li > ul,
+li > ol {
+    margin-bottom: 0;
+    margin-left: 20px;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    margin: 0 20px 20px;
+}
+
+/*--------------------------------------------------------------
+4.0 Links
+--------------------------------------------------------------*/
+a {
+    color: #2390bb;
+    text-decoration: none;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+a:hover {
+    color: #63bde1;
+    text-decoration: underline;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+    transition: all .2s ease;
+}
+
+/*--------------------------------------------------------------
+5.0 Alignment
+--------------------------------------------------------------*/
+.alignleft {
+    display: inline;
+    float: left;
+    margin: 20px 20px 20px 0;
+}
+
+.alignright {
+    display: inline;
+    float: right;
+    margin: 20px 0 20px 20px;
+}
+
+.aligncenter {
+    display: block;
+    clear: both;
+    margin: 20px auto;
+}
+
+/*--------------------------------------------------------------
+6.0 - Tables
+--------------------------------------------------------------*/
+table {
+    border-right: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin: 0 0 20px;
+    width: 100%;
+}
+
+th,
+td {
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #eee;
+    padding: 10px;
+}
+
+caption,
+th {
+    font-weight: bold;
+}
+
+/*--------------------------------------------------------------
+7.0 - Images
+--------------------------------------------------------------*/
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+img.size-full {
+    max-width: 100%;
+    height: auto !important;
+}

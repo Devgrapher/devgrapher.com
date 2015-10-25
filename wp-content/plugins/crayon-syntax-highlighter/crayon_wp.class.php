@@ -3,7 +3,7 @@
 Plugin Name: Crayon Syntax Highlighter
 Plugin URI: https://github.com/aramk/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.6.9
+Version: 2.7.1
 Author: Aram Kocharyan
 Author URI: http://aramk.com/
 Text Domain: crayon-syntax-highlighter
@@ -542,9 +542,10 @@ class CrayonWP {
 
             CrayonLog::debug('enqueue');
             global $CRAYON_VERSION;
+            CrayonSettingsWP::load_settings(TRUE);
             if (CRAYON_MINIFY) {
                 wp_enqueue_style('crayon', plugins_url(CRAYON_STYLE_MIN, __FILE__), array(), $CRAYON_VERSION);
-                wp_enqueue_script('crayon_js', plugins_url(CRAYON_JS_MIN, __FILE__), array('jquery'), $CRAYON_VERSION);
+                wp_enqueue_script('crayon_js', plugins_url(CRAYON_JS_MIN, __FILE__), array('jquery'), $CRAYON_VERSION, CrayonGlobalSettings::val(CrayonSettings::DELAY_LOAD_JS));
             } else {
                 wp_enqueue_style('crayon_style', plugins_url(CRAYON_STYLE, __FILE__), array(), $CRAYON_VERSION);
                 wp_enqueue_style('crayon_global_style', plugins_url(CRAYON_STYLE_GLOBAL, __FILE__), array(), $CRAYON_VERSION);
@@ -800,7 +801,7 @@ class CrayonWP {
             $post_class = preg_replace('#\bdata-url\s*=#mi', 'url=', $post_class);
         }
         if (!empty($pre_class)) {
-            $pre_class = preg_replace('#\bdata-url\s*=#mi', 'url=', $post_class);
+            $pre_class = preg_replace('#\bdata-url\s*=#mi', 'url=', $pre_class);
         }
 
         if (!empty($class)) {
@@ -978,7 +979,7 @@ class CrayonWP {
         add_action('wp_ajax_nopriv_crayon-tag-editor', 'CrayonTagEditorWP::content');
         add_action('wp_ajax_crayon-highlight', 'CrayonWP::ajax_highlight');
         add_action('wp_ajax_nopriv_crayon-highlight', 'CrayonWP::ajax_highlight');
-        if (is_admin()) {
+        if (current_user_can('manage_options')) {
             add_action('wp_ajax_crayon-ajax', 'CrayonWP::ajax');
             add_action('wp_ajax_crayon-theme-editor', 'CrayonThemeEditorWP::content');
             add_action('wp_ajax_crayon-theme-editor-save', 'CrayonThemeEditorWP::save');

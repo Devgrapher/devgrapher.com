@@ -2,13 +2,22 @@
 # This file is distributed under the same license as the Twenty Fifteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-12-18 21:38:44+0000\n"
+"PO-Revision-Date: 2015-07-19 02:24:04+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/1.0-alpha-1000\n"
+"X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Twenty Fifteen\n"
+
+#. translators: %s: post title
+#: inc/template-tags.php:123
+msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr "<span class=\"screen-reader-text\">%s</span>에 댓글 남기기"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.org/themes/twentyfifteen/"
+msgstr "https://wordpress.org/themes/twentyfifteen/"
 
 #: single.php:37
 msgid "Previous post:"
@@ -18,17 +27,38 @@ msgstr "이전 글:"
 msgid "Next post:"
 msgstr "다음 글:"
 
-#: inc/customizer.php:52 inc/customizer.php:68 inc/customizer.php:73
+#: inc/customizer.php:47 inc/customizer.php:63 inc/customizer.php:68
 msgid "Applied to the header on small screens and the sidebar on wide screens."
 msgstr "작은 화면에서는 헤더에, 큰 화면에서는 사이드바에 적용됩니다."
+
+#: single.php:36
+msgid "Previous"
+msgstr "이전"
 
 #: single.php:33
 msgid "Next"
 msgstr "다음"
 
-#: single.php:36
-msgid "Previous"
-msgstr "이전"
+#: inc/template-tags.php:91 inc/template-tags.php:99
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ", "
+
+#: image.php:24
+msgid "Previous Image"
+msgstr "이전 이미지"
+
+#: image.php:24
+msgid "Next Image"
+msgstr "다음 이미지"
+
+#: inc/template-tags.php:23
+msgid "Comment navigation"
+msgstr "댓글 내비게이션"
+
+#: search.php:18
+msgid "Search Results for: %s"
+msgstr "검색 결과: %s"
 
 #. Author of the plugin/theme
 msgid "the WordPress team"
@@ -38,34 +68,14 @@ msgstr "워드프레스 팀"
 msgid "Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer."
 msgstr "우리의 2015 기본 테마는 깨끗하고 블로그 중심이며 선명함을 목표로 디자인 됐습니다. Twenty Fifteen의 단순하고 직관적인 타이포그래피는 다양한 화면 크기에서 가독성이 높으며 다중 언어에 적합합니다. 모바일 우선 접근 방식을 사용해 디자인했으며 이것은 방문자가 스마트폰, 태블릿, 노트북, 또는 데스크탑 컴퓨터와 같은 다양한 기기로 접속해도 콘텐츠가 중앙에 위치한다는 것을 의미합니다."
 
-#. Theme URI of the plugin/theme
-msgid "https://wordpress.org/themes/twentyfifteen"
-msgstr "https://wordpress.org/themes/twentyfifteen"
-
 #. Theme Name of the plugin/theme
 msgid "Twenty Fifteen"
 msgstr "Twenty Fifteen"
-
-#: search.php:18
-msgid "Search Results for: %s"
-msgstr "검색 결과: %s"
-
-#: inc/template-tags.php:122
-msgid "% Comments"
-msgstr "% 댓글"
-
-#: inc/template-tags.php:122
-msgid "1 Comment"
-msgstr "1 댓글"
 
 #: inc/template-tags.php:113
 msgctxt "Used before full size attachment link."
 msgid "Full size"
 msgstr "전체 크기"
-
-#: inc/template-tags.php:122
-msgid "Leave a comment"
-msgstr "댓글 달기"
 
 #: inc/template-tags.php:102
 msgctxt "Used before tag names."
@@ -76,11 +86,6 @@ msgstr "태그"
 msgctxt "Used before category names."
 msgid "Categories"
 msgstr "카테고리"
-
-#: inc/template-tags.php:91 inc/template-tags.php:99
-msgctxt "Used between list items, there is a space after the comma."
-msgid ", "
-msgstr ", "
 
 #: inc/template-tags.php:85
 msgctxt "Used before post author name."
@@ -109,43 +114,39 @@ msgstr "다음 댓글"
 msgid "Featured"
 msgstr "특성"
 
-#: inc/template-tags.php:23
-msgid "Comment navigation"
-msgstr "댓글 내비게이션"
-
-#: inc/customizer.php:152
+#: inc/customizer.php:147
 msgid "Blue"
 msgstr "파랑"
 
-#: inc/customizer.php:141
+#: inc/customizer.php:136
 msgid "Purple"
 msgstr "보라"
 
-#: inc/customizer.php:130
+#: inc/customizer.php:125
 msgid "Pink"
 msgstr "분홍"
 
-#: inc/customizer.php:108
+#: inc/customizer.php:103
 msgid "Dark"
 msgstr "어두움"
 
-#: inc/customizer.php:119
+#: inc/customizer.php:114
 msgid "Yellow"
 msgstr "노랑"
 
-#: inc/customizer.php:97
+#: inc/customizer.php:92
 msgid "Default"
 msgstr "기본"
 
-#: inc/customizer.php:67
+#: inc/customizer.php:62
 msgid "Header and Sidebar Background Color"
 msgstr "헤더 및 사이드바 배경 색상"
 
-#: inc/customizer.php:36
+#: inc/customizer.php:31
 msgid "Base Color Scheme"
 msgstr "기본 색상 구조"
 
-#: inc/customizer.php:51
+#: inc/customizer.php:46
 msgid "Header and Sidebar Text Color"
 msgstr "헤더 및 사이드바 텍스트 색상"
 
@@ -153,63 +154,68 @@ msgstr "헤더 및 사이드바 텍스트 색상"
 msgid "Twenty Fifteen requires at least WordPress version 4.1. You are running version %s. Please upgrade and try again."
 msgstr "Twenty Fifteen은 최소한 워드프레스 4.1 버전이 필수입니다. 현재 %s 버전을 사용 중입니다. 업그레이드 하고 다시 해주세요."
 
-#: image.php:24
-msgid "Previous Image"
-msgstr "이전 이미지"
-
-#: image.php:24
-msgid "Next Image"
-msgstr "다음 이미지"
-
 #: image.php:84
 msgctxt "Parent post link"
 msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
 msgstr "<span class=\"meta-nav\">발행됨</span><span class=\"post-title\">%title</span>"
 
-#: header.php:44
+#: header.php:43
 msgid "Menu and widgets"
 msgstr "메뉴와 위젯"
 
-#: functions.php:231
-msgid "expand child menu"
-msgstr "하위 메뉴 확장"
+#: comments.php:53
+msgid "Comments are closed."
+msgstr "댓글이 마감 됐습니다."
 
-#: functions.php:232
-msgid "collapse child menu"
-msgstr "하위 메뉴 축소"
+#: content-link.php:36 content-page.php:25 content.php:38 image.php:59
+msgid "Pages:"
+msgstr "페이지:"
 
-#: header.php:27
+#: content-link.php:56 content-page.php:35 content-search.php:28
+#: content-search.php:33 content.php:57 image.php:71
+msgid "Edit"
+msgstr "편집"
+
+#: footer.php:25
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#: functions.php:85
+msgid "Primary Menu"
+msgstr "주 메뉴"
+
+#: header.php:26
 msgid "Skip to content"
 msgstr "콘텐츠로 바로가기"
 
-#. translators: To add an additional character subset specific to your
-#. language, translate this to 'greek', 'cyrillic', 'devanagari' or
-#. 'vietnamese'. Do not translate into your own language.
-#: functions.php:173
-msgctxt "Add new subset (greek, cyrillic, devanagari, vietnamese)"
-msgid "no-subset"
-msgstr "서브셋 없음"
+#: content-none.php:15
+msgid "Nothing Found"
+msgstr "찾을 수 없습니다"
 
-#. translators: If there are characters in your language that are not supported
-#. by Inconsolata, translate this to 'off'. Do not translate into your own
-#. language.
-#: functions.php:168
-msgctxt "Inconsolata font: on or off"
-msgid "on"
-msgstr "켜기"
+#: content-none.php:22
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "첫 번째 글을 발행할 준비가 됐나요? <a href=\"%1$s\">여기서 시작하세요</a>."
 
-#. translators: If there are characters in your language that are not supported
+#: content-none.php:26
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "죄송하지만 검색어와 일치하는 것이 없습니다. 다른 검색어로 다시 시도해보세요."
+
+#: content-none.php:31
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "찾고 있는 것을 찾을 수 없는 것 같습니다. 검색이 도움이 될 수도 있습니다."
+
+#. Translators: If there are characters in your language that are not supported
 #. by Noto Sans, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:158
+#: functions.php:161
 msgctxt "Noto Sans font: on or off"
 msgid "on"
 msgstr "켜기"
 
-#. translators: If there are characters in your language that are not supported
+#. Translators: If there are characters in your language that are not supported
 #. by Noto Serif, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:163
+#: functions.php:169
 msgctxt "Noto Serif font: on or off"
 msgid "on"
 msgstr "켜기"
@@ -222,63 +228,54 @@ msgstr "사이드바에 나타나도록 하려면 여기에 위젯을 추가하�
 msgid "Widget Area"
 msgstr "위젯 영역"
 
-#: functions.php:85
-msgid "Primary Menu"
-msgstr "주 메뉴"
-
 #: functions.php:86
 msgid "Social Links Menu"
 msgstr "소셜 링크 메뉴"
 
-#: footer.php:25
-msgid "Proudly powered by %s"
-msgstr "Proudly powered by %s"
-
-#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.0)  #-#-#-#-#
+#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.3)  #-#-#-#-#
 #. Author URI of the plugin/theme
 #: footer.php:25
 msgid "https://wordpress.org/"
 msgstr "https://wordpress.org/"
 
-#: content-none.php:31
-msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
-msgstr "찾고 있는 것을 찾을 수 없는 것 같습니다. 검색이 도움이 될 수도 있습니다."
-
-#: content-none.php:26
-msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
-msgstr "죄송하지만 검색어와 일치하는 것이 없습니다. 다른 검색어로 다시 시도해보세요."
-
-#: content-none.php:22
-msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
-msgstr "첫 번째 글을 발행할 준비가 됐나요? <a href=\"%1$s\">여기서 시작하세요</a>."
-
-#: content-none.php:15
-msgid "Nothing Found"
-msgstr "찾을 수 없습니다"
-
-#: content-link.php:56 content-page.php:35 content-search.php:28
-#: content-search.php:33 content.php:57 image.php:71
-msgid "Edit"
-msgstr "편집"
-
-#: content-link.php:36 content-page.php:25 content.php:38 image.php:59
-msgid "Pages:"
-msgstr "페이지:"
-
 #. translators: %s: Name of current post
-#: content-link.php:31 content.php:33 inc/template-tags.php:237
+#: content-link.php:31 content.php:33 inc/template-tags.php:238
 msgid "Continue reading %s"
 msgstr "%s 더보기"
-
-#: comments.php:53
-msgid "Comments are closed."
-msgstr "댓글이 마감 됐습니다."
 
 #: comments.php:28
 msgctxt "comments title"
 msgid "One thought on &ldquo;%2$s&rdquo;"
 msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
 msgstr[0] "&ldquo;%2$s&rdquo;의 %1$s개의 생각"
+
+#: functions.php:255
+msgid "expand child menu"
+msgstr "하위 메뉴 확장"
+
+#: functions.php:256
+msgid "collapse child menu"
+msgstr "하위 메뉴 축소"
+
+#. Translators: To add an additional character subset specific to your
+#. language, translate this to 'greek', 'cyrillic', 'devanagari' or
+#. 'vietnamese'. Do not translate into your own language.
+#: functions.php:185
+msgctxt "Add new subset (greek, cyrillic, devanagari, vietnamese)"
+msgid "no-subset"
+msgstr "서브셋 없음"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Inconsolata, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:177
+msgctxt "Inconsolata font: on or off"
+msgid "on"
+msgstr "켜기"
+
+#: 404.php:21
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "해당 위치에서 찾을 수 있는 것이 아무 것도 없는 것 같습니다. 검색을 해보시겠습니까?"
 
 #: author-bio.php:34
 msgid "View all posts by %s"
@@ -300,10 +297,6 @@ msgstr "다음 페이지"
 #: archive.php:49 index.php:46 search.php:38
 msgid "Previous page"
 msgstr "이전 페이지"
-
-#: 404.php:21
-msgid "It looks like nothing was found at this location. Maybe try a search?"
-msgstr "해당 위치에서 찾을 수 있는 것이 아무 것도 없는 것 같습니다. 검색을 해보시겠습니까?"
 
 #: 404.php:17
 msgid "Oops! That page can&rsquo;t be found."

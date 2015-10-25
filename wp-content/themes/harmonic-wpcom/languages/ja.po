@@ -1,0 +1,424 @@
+# Translation of Harmonic in Japanese
+# This file is distributed under the same license as the Harmonic package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-02-04 02:53:07+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Harmonic\n"
+
+#: templates/front-page.php:34
+msgid "Hey! Your content is hidden! Go to <a href=\"%1$s\">Customize &rarr; Theme &rarr; Visibility</a> to fix that."
+msgstr ""
+
+#. Template Name of the plugin/theme
+#: wp-content/themes/pub/harmonic/templates/fullwidth-page.php
+msgid "Full Width"
+msgstr "全幅"
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/harmonic/style.css
+msgid "Harmonic makes your content sing. No matter if you are a band looking to get a record deal, a travel blogger wanting to document your trip around the world or just someone that wants to make their home on WordPress."
+msgstr ""
+
+#. Template Name of the plugin/theme
+#: wp-content/themes/pub/harmonic/templates/front-page.php
+msgid "Front Page"
+msgstr "フロントページ"
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "検索結果: %s"
+
+#: inc/template-tags.php:154
+msgctxt "1: date, 2: time"
+msgid ", %1$s at %2$s"
+msgstr ""
+
+#: inc/template-tags.php:157
+msgid " (Edit)"
+msgstr " (編集)"
+
+#: inc/template-tags.php:194
+msgid "<span class=\"posted-on\">%1$s</span>"
+msgstr "<span class=\"posted-on\">%1$s</span>"
+
+#: page.php:48 single.php:42 templates/fullwidth-page.php:51
+#: templates/portfolio-page.php:44
+msgid "Read more"
+msgstr "続きを読む"
+
+#: inc/template-tags.php:150
+msgid "%s "
+msgstr "%s"
+
+#: inc/template-tags.php:147
+msgid "Your comment is awaiting moderation."
+msgstr "あなたのコメントは承認待ちです。"
+
+#: inc/template-tags.php:107
+msgctxt "Previous post link"
+msgid "Previous"
+msgstr "前へ"
+
+#: inc/template-tags.php:108
+msgctxt "Next post link"
+msgid "Next"
+msgstr "次へ"
+
+#: inc/template-tags.php:130
+msgid "Pingback:"
+msgstr "ピンバック:"
+
+#: inc/template-tags.php:31
+msgid "<span class=\"meta-nav\">Previous</span>"
+msgstr "<span class=\"meta-nav\">過去</span>"
+
+#: inc/template-tags.php:35
+msgid "<span class=\"meta-nav\">Next</span>"
+msgstr "<span class=\"meta-nav\">次</span>"
+
+#: inc/template-tags.php:57
+msgid "More Projects"
+msgstr "プロジェクトをもっと見る"
+
+#: inc/template-tags.php:104
+msgid "Post navigation"
+msgstr "投稿ナビゲーション"
+
+#: inc/extras.php:120
+msgid "Read more <span class=\"screen-reader-text\">%1$s</span>"
+msgstr ""
+
+#: inc/template-tags.php:27
+msgid "Posts navigation"
+msgstr "投稿ナビゲーション"
+
+#: inc/customizer.php:305
+msgid "Portfolio front"
+msgstr "ポートフォリオフロント"
+
+#: inc/extras.php:70
+msgid "Page %s"
+msgstr "ページ %s"
+
+#: inc/customizer.php:259
+msgid "Widgets"
+msgstr "ウィジェット"
+
+#: inc/customizer.php:142 inc/customizer.php:189 inc/customizer.php:236
+#: inc/customizer.php:283 inc/customizer.php:329
+msgid "Add background shade"
+msgstr "背景シェードを追加"
+
+#: inc/customizer.php:154
+msgid "Hide Tagline"
+msgstr "タグラインを表示しない"
+
+#: inc/customizer.php:165
+msgid "News"
+msgstr "ニュース"
+
+#: inc/customizer.php:200 inc/customizer.php:247 inc/customizer.php:294
+#: inc/customizer.php:340
+msgid "Footer Link Text"
+msgstr "フッターリンクテキスト"
+
+#: inc/customizer.php:212
+msgid "Page"
+msgstr "固定ページ"
+
+#: inc/customizer.php:131 inc/customizer.php:178 inc/customizer.php:225
+#: inc/customizer.php:272 inc/customizer.php:318
+msgid "Background"
+msgstr "背景"
+
+#: inc/customizer.php:44
+msgid "Landscape (4:3)"
+msgstr "横長 (4:3)"
+
+#: inc/customizer.php:45
+msgid "Portrait (3:4)"
+msgstr "縦長 (3:4)"
+
+#: inc/customizer.php:46
+msgid "Square (1:1)"
+msgstr "正方形 (1:1)"
+
+#: inc/customizer.php:51
+msgid "Visibility"
+msgstr "公開状態"
+
+#: inc/customizer.php:62
+msgid "Hide Title Section"
+msgstr "タイトルセクションを非表示"
+
+#: inc/customizer.php:72
+msgid "Hide News Section"
+msgstr "ニュースセクションを非表示"
+
+#: inc/customizer.php:84
+msgid "Hide Page Section"
+msgstr "ページセクションを非表示"
+
+#: inc/customizer.php:96
+msgid "Hide Widgets Section"
+msgstr "ウィジェットセクションを非表示"
+
+#: inc/customizer.php:108
+msgid "Hide Front Portfolio Section"
+msgstr "フロントポートフォリオセクションを非表示"
+
+#: inc/customizer.php:118
+msgid "Title"
+msgstr "タイトル"
+
+#: inc/customizer.php:24
+msgid "Harmonic Theme Options"
+msgstr "Harmonic テーマ設定"
+
+#: inc/customizer.php:39
+msgid "Portfolio Thumbnail Aspect Ratio"
+msgstr "ポートフォリオサムネイル縦横比"
+
+#: inc/customizer.php:23
+msgid "Theme"
+msgstr "テーマ名"
+
+#. translators: If there are characters in your language that are not supported
+#. by Arimo, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:123
+msgctxt "Hind sans-serif font: on or off"
+msgid "on"
+msgstr "on"
+
+#. translators: To add an additional Armio character subsets,
+#. * translate this to 'devangari'.
+#. * Do not translate these strings into your own langauge.
+#: functions.php:131
+msgctxt "Hind: add new subset (devanagari)"
+msgid "no-subset"
+msgstr "no-subset"
+
+#: header-featureimage.php:28 header-para.php:28 header-portfolio.php:28
+#: header-singleportfolio.php:28 header.php:28
+msgid "Menu"
+msgstr "メニュー"
+
+#: functions.php:100
+msgid "Front page"
+msgstr "フロントページ"
+
+#: functions.php:66
+msgid "Social Links Menu"
+msgstr "ソーシャルリンクメニュー"
+
+#: functions.php:92
+msgid "Sidebar"
+msgstr "サイドバー"
+
+#: functions.php:65
+msgid "Primary Menu"
+msgstr "メインメニュー"
+
+#: footer-para.php:14 header-featureimage.php:34 header-featureimage.php:56
+#: header-para.php:35 header-para.php:57 header-portfolio.php:34
+#: header-portfolio.php:56 header-singleportfolio.php:35
+#: header-singleportfolio.php:57 header.php:35 header.php:57
+msgid "Skip to content"
+msgstr "コンテンツへ移動"
+
+#: footer-featureimage.php:24 footer-para.php:50 footer-singleportfolio.php:21
+#: footer.php:20
+msgid "Theme: %1$s by %2$s."
+msgstr "Theme: %1$s by %2$s."
+
+#: footer-featureimage.php:22 footer-para.php:48 footer-singleportfolio.php:19
+#: footer.php:18
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#: content.php:61
+msgid "Permalink to %s"
+msgstr "%s へのパーマリンク"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:43
+msgid " "
+msgstr " "
+
+#: content-single.php:47
+msgid "%1$s"
+msgstr "%1$s"
+
+#: content-single.php:29 content.php:13
+msgid "All %s posts"
+msgstr "すべての%s投稿"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:19 content.php:28
+msgid ", "
+msgstr ", "
+
+#: content-portfolio-single.php:21
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ", "
+
+#: content-portfolio-single.php:33 content.php:79
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "続きを読む <span class=\"meta-nav\">&rarr;</span>"
+
+#: content-portfolio-single.php:18 content-single.php:36 content.php:38
+msgid "% Comments"
+msgstr "%件のコメント"
+
+#: content-portfolio-single.php:18 content-single.php:36 content.php:38
+msgid "1 Comment"
+msgstr "1件のコメント"
+
+#: content-portfolio-single.php:18 content-single.php:36 content.php:38
+msgid "Leave a comment"
+msgstr "コメントする"
+
+#: content-page.php:23 content-portfolio-single.php:23 content-single.php:51
+#: content.php:52 inc/template-tags.php:130 templates/portfolio-page.php:75
+msgid "Edit"
+msgstr "編集"
+
+#: content-page.php:18 content-portfolio-single.php:36 content-single.php:65
+#: content.php:82 templates/portfolio-page.php:68
+msgid "Pages:"
+msgstr "ページ:"
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "ご指定の検索条件に一致する投稿がありませんでした。他のキーワードでもう一度検索してみてください。"
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "最初の投稿をする準備ができましたか ?  <a href=\"%1$s\">ここからスタート</a>してください。"
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "見つかりません"
+
+#: content-front-portfolio.php:88 content-none.php:28
+#: templates/portfolio-page.php:126
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "お探しのコンテンツを見つけられませんでした。検索をお試しください。"
+
+#: content-front-portfolio.php:78 templates/portfolio-page.php:116
+msgid "No Project Found"
+msgstr "プロジェクトが見つかりません"
+
+#: content-front-portfolio.php:84 templates/portfolio-page.php:122
+msgid "Ready to publish your first project? <a href=\"%1$s\">Get started here</a>."
+msgstr "最初のプロジェクトを公開する準備ができたら、<a href=\"%1$s\">こちらからスタート</a>してください。"
+
+#: comments.php:63
+msgid "Comments are closed."
+msgstr "コメントは停止中です。"
+
+#: comments.php:39 comments.php:53
+msgid "Newer Comments &rarr;"
+msgstr "新しいコメント &rarr;"
+
+#: comments.php:38 comments.php:52
+msgid "&larr; Older Comments"
+msgstr "&larr; 古いコメント"
+
+#: comments.php:37 comments.php:51
+msgid "Comment navigation"
+msgstr "コメントナビゲーション"
+
+#: comments.php:30
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "「%2$s」への%1$s件のフィードバック"
+
+#: archive.php:66
+msgid "Archives"
+msgstr "アーカイブ"
+
+#: archive.php:63
+msgid "Chats"
+msgstr "チャット"
+
+#: archive.php:60
+msgid "Audios"
+msgstr "音声"
+
+#: archive.php:57
+msgid "Statuses"
+msgstr "状態"
+
+#: archive.php:54
+msgid "Links"
+msgstr "リンク"
+
+#: archive.php:51
+msgid "Quotes"
+msgstr "引用"
+
+#: archive.php:48
+msgid "Videos"
+msgstr "動画"
+
+#: archive.php:45
+msgid "Images"
+msgstr "画像"
+
+#: archive.php:42
+msgid "Galleries"
+msgstr "ギャラリー"
+
+#: archive.php:39
+msgid "Asides"
+msgstr "アサイド"
+
+#: archive.php:36
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y年"
+
+#: archive.php:36
+msgid "Year: %s"
+msgstr "年別アーカイブ: %s"
+
+#: archive.php:33
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "Y年n月"
+
+#: archive.php:30
+msgid "Day: %s"
+msgstr "日別アーカイブ: %s"
+
+#: archive.php:33
+msgid "Month: %s"
+msgstr "月別アーカイブ: %s"
+
+#. #-#-#-#-#  harmonic.pot (Harmonic 1.0.8-wpcom)  #-#-#-#-#
+#. Template Name of the plugin/theme
+#: archive-jetpack-portfolio.php:18 inc/customizer.php:28
+#: wp-content/themes/pub/harmonic/templates/portfolio-page.php
+msgid "Portfolio"
+msgstr "ポートフォリオ"
+
+#: archive.php:27
+msgid "Author: %s"
+msgstr "作成者: %s"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "こちらには何もありません。検索をお試しください。"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "お探しのページが見つかりません。"

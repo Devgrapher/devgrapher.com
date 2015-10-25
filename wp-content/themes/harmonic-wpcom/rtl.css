@@ -1,0 +1,514 @@
+/*
+RTL styles for Harmonic.
+
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+1.0 - Reset
+2.0 - Clearings
+3.0 - Alignments
+4.0 - Typography
+5.0 - Elements
+6.0 - Forms
+7.0 - Media
+8.0 - Navigation
+9.0 - Accessiblity
+10.0 - Structure
+11.0 - Content
+12.0 - Widgets
+13.0 - Infinite scroll
+14.0 - Portfolio CPT
+15.0 - Media
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+1.0 Reset
+--------------------------------------------------------------*/
+
+caption,
+th,
+td {
+    text-align: right;
+}
+
+/*--------------------------------------------------------------
+2.0 Clearings
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+3.0 Alignments
+--------------------------------------------------------------*/
+.alignright {
+    float: right;
+    margin: 20px 0 20px 20px;
+}
+
+.alignleft {
+    float: left;
+    margin: 20px 20px 20px 0;
+}
+
+/*--------------------------------------------------------------
+4.0 Typography
+--------------------------------------------------------------*/
+
+h1.site-title {
+    float: right;
+}
+
+blockquote {
+    border-right: 5px solid #ccc;
+    border-left: none;
+}
+
+/*--------------------------------------------------------------
+5.0 Elements
+--------------------------------------------------------------*/
+
+ul,
+ol {
+    margin: 0 40px 20px 0;
+}
+
+li > ul,
+li > ol {
+    margin-right: 20px;
+    margin-left: auto;
+}
+
+table {
+    border-left: 1px solid #eee;
+    border-right: none;
+}
+
+th,
+td {
+    border-right: 1px solid #eee;
+    border-left: none;
+}
+
+/*--------------------------------------------------------------
+6.0 Forms
+--------------------------------------------------------------*/
+
+textarea {
+    padding-right: 3px;
+    padding-left: 0;
+}
+
+/*--------------------------------------------------------------
+7.0 Media
+--------------------------------------------------------------*/
+
+.gallery-columns-2 .gallery-item:nth-of-type(2n-2),
+.gallery-columns-3 .gallery-item:nth-of-type(3n-3),
+.gallery-columns-4 .gallery-item:nth-of-type(2n-2),
+.gallery-columns-6 .gallery-item:nth-of-type(3n-3),
+.gallery-columns-8 .gallery-item:nth-of-type(2n-2),
+.gallery-columns-9 .gallery-item:nth-of-type(3n-3) {
+    clear: left;
+}
+
+.gallery-columns-2 .gallery-item:nth-of-type(2n-1),
+.gallery-columns-3 .gallery-item:nth-of-type(3n-2),
+.gallery-columns-4 .gallery-item:nth-of-type(2n-1),
+.gallery-columns-6 .gallery-item:nth-of-type(3n-2),
+.gallery-columns-8 .gallery-item:nth-of-type(2n-1),
+.gallery-columns-9 .gallery-item:nth-of-type(3n-2) {
+    clear: right;
+}
+
+/* Make sure embeds and iframes fit their containers */
+
+/*--------------------------------------------------------------
+8.0 Navigation
+--------------------------------------------------------------*/
+
+.main-navigation ul ul {
+    text-align: right;
+}
+
+.main-navigation ul ul ul {
+    right: 0;
+    left: auto;
+}
+
+.paging-navigation .nav-previous,
+.post-navigation .nav-previous {
+    float: right;
+}
+
+.paging-navigation .nav-next,
+.post-navigation .nav-next {
+    float: left;
+}
+
+#social-links-wrapper {
+    float: right;
+}
+
+.social-links ul:last-of-type {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#mobile-link {
+    float: left;
+}
+
+#mobile-link #menu-title {
+    padding-right: 10px;
+    padding-left: 0;
+}
+
+#site-navigation {
+    float: right;
+}
+
+#footer-navigation {
+    float: right;
+}
+
+.showsub-toggle {
+    left: 0;
+    right: auto;
+}
+
+.showsub-toggle:after {
+    left: 16px;
+    right: auto;
+}
+
+/*--------------------------------------------------------------
+9.0 Accessibility
+--------------------------------------------------------------*/
+/* Text meant only for screen readers */
+
+.screen-reader-text:hover,
+.screen-reader-text:active,
+.screen-reader-text:focus {
+    right: 5px;
+    left: auto;
+}
+
+/*--------------------------------------------------------------
+10.0 Structure
+--------------------------------------------------------------*/
+
+#mobile-panel .site-title {
+    float: right;
+    padding: 10px 10px 0 0;
+}
+
+#colophon {
+    text-align: left;
+}
+
+#site-branding {
+    float: right;
+}
+
+#single-titles #single-wrap,
+#header-branding {
+    text-align: right;
+}
+
+#footer-nav-wrapper .site-info {
+    float: left;
+}
+
+/*--------------------------------------------------------------
+11.0 Content
+--------------------------------------------------------------*/
+
+.entry-meta span.tags-links a {
+    margin: 0 0 5px 5px;
+}
+
+.entry-meta {
+    text-align: right;
+}
+
+.comment-list .comment-author img.avatar {
+    float: right;
+    margin: 0 0 5px 10px;
+}
+
+.comment-wrapper {
+    margin-right: 70px;
+    margin-left: auto;
+}
+
+.reply {
+    float: left;
+}
+
+.comment-list .comment-author img.avatar {
+    float: right;
+    margin: 0 0 5px 10px;
+}
+
+.comment-wrapper {
+    margin-right: 70px;
+    margin-left: auto;
+}
+
+.reply {
+    float: left;
+}
+
+/*--------------------------------------------------------------
+10.0 Widgets
+--------------------------------------------------------------*/
+
+.widget li {
+    padding: 20px 0 0 20px;
+}
+
+#slide-4 .widget {
+    text-align: right;
+}
+
+.tagcloud a,
+.tags-links a,
+.wp_widget_tag_cloud a {
+    margin-left: 5px;
+    margin-right: auto;
+}
+
+/*--------------------------------------------------------------
+12.0 Infinite Scroll
+--------------------------------------------------------------*/
+/* Globally hidden elements when Infinite Scroll is supported and in use. */
+
+/* When Infinite Scroll has reached its end we need to re-display elements that were hidden (via .neverending) before */
+
+#infinite-handle {
+    text-align: left;
+}
+
+span.infinite-loader .spinner {
+    right: 90% !important;
+    left: auto;
+}
+
+/*--------------------------------------------------------------
+13.0 Parallax
+--------------------------------------------------------------*/
+
+#single-titles,
+#page-section {
+    text-align: right;
+}
+
+#preload {
+    right: 0;
+    left: auto;
+}
+
+#news-section {
+    text-align: right;
+}
+
+#news-section .entry-header {
+    float: right;
+    text-align: right;
+}
+
+#news-section .entry-thumbnail img {
+    float: left;
+}
+
+@media only screen and (min-width: 768px) {
+
+}
+
+/*--------------------------------------------------------------
+14.0 Portfolio CPT
+--------------------------------------------------------------*/
+
+.project-navigation-wrapper ul,
+.project-navigation-wrapper li.previous,
+.project-navigation-wrapper li.current,
+.project-navigation-wrapper li.next {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.page-template-templatesportfolio-page-php .paging-navigation,
+body[class*='jetpack-portfolio'].archive #infinite-handle {
+    right: 0;
+    left: auto;
+}
+
+.portfolio-projects {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/*--------------------------------------------------------------
+15.0 Mediaqueries
+--------------------------------------------------------------*/
+/* Define mobile styles */
+/* max-width 640px, mobile-only styles, use when QAing mobile issues */
+@media only screen and (min-width: 40.063em) {
+
+#single-titles,
+#page-section {
+    text-align: right;
+}
+
+#preload {
+    right: 0;
+    left: auto;
+}
+
+#news-section {
+    text-align: right;
+}
+
+#news-section .entry-header {
+    float: right;
+    text-align: right;
+}
+
+#news-section .entry-thumbnail img {
+    float: left;
+}
+
+@media only screen and (min-width: 768px)
+/*--------------------------------------------------------------
+14.0 Portfolio CPT
+--------------------------------------------------------------*/
+
+.project-navigation-wrapper ul,
+.project-navigation-wrapper li.previous,
+.project-navigation-wrapper li.current,
+.project-navigation-wrapper li.next {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.page-template-templatesportfolio-page-php .paging-navigation,
+body[class*='jetpack-portfolio'].archive #infinite-handle {
+    right: 0;
+    left: auto;
+}
+
+.portfolio-projects {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+}
+
+/* min-width 641px, medium screens */
+/* min-width 641px and max-width 1024px, use when QAing tablet-only issues */
+@media only screen and (min-width: 64.063em) {
+
+#preload {
+    right: 0;
+    left: auto;
+}
+
+#news-section {
+    text-align: right;
+}
+
+#news-section .entry-header {
+    float: right;
+    text-align: right;
+}
+
+#news-section .entry-thumbnail img {
+    float: left;
+}
+
+@media only screen and (min-width: 768px)
+/*--------------------------------------------------------------
+14.0 Portfolio CPT
+--------------------------------------------------------------*/
+
+.project-navigation-wrapper ul,
+.project-navigation-wrapper li.previous,
+.project-navigation-wrapper li.current,
+.project-navigation-wrapper li.next {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.page-template-templatesportfolio-page-php .paging-navigation,
+body[class*='jetpack-portfolio'].archive #infinite-handle {
+    right: 0;
+    left: auto;
+}
+
+.portfolio-projects {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/*--------------------------------------------------------------
+15.0 Mediaqueries
+--------------------------------------------------------------*/
+/* Define mobile styles */
+/* max-width 640px, mobile-only styles, use when QAing mobile issues */
+@media only screen and (min-width: 40.063em) {
+
+#single-titles,
+#page-section {
+    text-align: right;
+}
+
+#preload {
+    right: 0;
+    left: auto;
+}
+
+#news-section {
+    text-align: right;
+}
+
+#news-section .entry-header {
+    float: right;
+    text-align: right;
+}
+
+#news-section .entry-thumbnail img {
+    float: left;
+}
+
+@media only screen and (min-width: 768px)
+/*--------------------------------------------------------------
+14.0 Portfolio CPT
+--------------------------------------------------------------*/
+
+.project-navigation-wrapper ul,
+.project-navigation-wrapper li.previous,
+.project-navigation-wrapper li.current,
+.project-navigation-wrapper li.next {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.page-template-templatesportfolio-page-php .paging-navigation,
+body[class*='jetpack-portfolio'].archive #infinite-handle {
+    right: 0;
+    left: auto;
+}
+
+.portfolio-projects {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+}
+
+}
+
+/* min-width 1025px, large screens */
+/* min-width 1025px and max-width 1440px, use when QAing large screen-only issues */
+@media only screen and (min-width: 90.063em) {
+
+}
+
+
+/* Generated by the RTLer - http://wordpress.org/extend/plugins/rtler/ */

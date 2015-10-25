@@ -3,8 +3,8 @@ Contributors: tatsuya, alexanderovsov
 Donate link: http://fukata.org/
 Tags: images,flickr
 Requires at least: 3.8
-Tested up to: 3.9
-Stable tag: 2.0.0
+Tested up to: 4.1
+Stable tag: 2.1.0
 
 Flickr integration for wordpress plugin.
 
@@ -21,6 +21,7 @@ Features
 3. Default settings at insert flickr media.
 4. Setting value a tag rel and class property.
 5. Support the php safe mode.
+6. Support post thumbnail.
 
 Dependencies
 
@@ -46,17 +47,18 @@ None
 
 == Screenshots ==
 
-1. Add flickr media 1
-2. Add flickr media 2
-3. Tag suggest
-4. Batch insert into post
-5. Quick Settings
-6. New UI Search
-7. New UI Insert Post
-8. Setting config
-9. FullScreen Writing
+1. Search
+2. Insert Post
+3. Setting config
+4. FullScreen Writing
+5. New UI 1
+6. New UI 2
 
 == Changelog ==
+
+= 2.1.0 =
+* Feature(beta): Use flickr image to post thumbnail.
+
 = 2.0.0 =
 * Feature: Add new UI.
 
