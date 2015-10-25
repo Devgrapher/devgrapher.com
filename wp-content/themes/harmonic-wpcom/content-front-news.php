@@ -49,6 +49,7 @@
 						'posts_per_page'  		=> 7,
 						'ignore_sticky_posts' 	=> 1,
 						'post__not_in'        	=> $sticky,
+						'category_name' => 'Featured',
 					);
 
 					$query = new WP_Query( $args );
