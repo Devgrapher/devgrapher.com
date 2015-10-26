@@ -24,6 +24,17 @@ class LcpParameters{
       'order' => $params['order'],
       'offset' => $params['offset']
     );
+
+    if( get_option('lcp_orderby') && $params['orderby'] === ''){
+      $orderby = array('orderby' => get_option('lcp_orderby'));
+      $args = array_merge($args, $orderby);
+    }
+
+    if( get_option('lcp_order') && $params['order'] === ''){
+      $order = array('order' => get_option('lcp_order'));
+      $args = array_merge($args, $order);
+    }
+
     $this->utils = new LcpUtils($params);
 
     // Check posts to exclude
@@ -79,13 +90,17 @@ class LcpParameters{
     }
 
     // Custom taxonomy support
-    if ( $this->utils->lcp_not_empty('taxonomy') && $this->utils->lcp_not_empty('tags') ){
+    // Why didn't I document this?!?
+    if ( $this->utils->lcp_not_empty('taxonomy') && $this->utils->lcp_not_empty('terms') ){
       $args['tax_query'] = array(array(
         'taxonomy' => $params['taxonomy'],
         'field' => 'slug',
-        'terms' => explode(",",$params['tags'])
+        'terms' => explode(",",$params['terms'])
       ));
-    } elseif ( !empty($params['tags']) ) {
+    }
+
+    // Tag support
+    if ( $this->utils->lcp_not_empty('tags') ) {
       $args['tag'] = $params['tags'];
     }
 
@@ -154,8 +169,8 @@ class LcpParameters{
     $tags = get_the_tags();
     $tag_ids = array();
     if( !empty($tags) ){
-      foreach ($tags as $tag_id => $tag) {
-        array_push($tag_ids, $tag_id);
+      foreach ($tags as $tag) {
+        array_push($tag_ids, $tag->term_id);
       }
     }
     return $tag_ids;

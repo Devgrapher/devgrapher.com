@@ -53,6 +53,10 @@ if ( isset($_POST['section']) ) {
 		$current = 'tools';
 		
 		$this->user_settings['tools']['log']['level'] = $_POST['log_option'];
+		$this->user_settings['tools']['log']['limit'] = $_POST['log_limit'];
+		$this->user_settings['tools']['log']['expires_after'] = ( $this->__is_numeric($_POST['log_expire_time']) && $_POST['log_expire_time'] > 0 ) 
+		  ? $_POST['log_expire_time'] 
+		  : $this->default_user_settings['tools']['log']['expires_after'];
 		$this->user_settings['tools']['ajax'] = $_POST['ajax'];
 		
 		// if any of the caching settings was updated, destroy all transients created by the plugin
@@ -174,7 +178,7 @@ if (empty($wpp_rand)) {
                     <input type="submit" class="button-secondary action" value="<?php _e("Apply", $this->plugin_slug); ?>" name="" />
                     
                     <div class="clear"></div>
-                    <label for="stats_freshness"><input type="checkbox" class="checkbox" <?php echo ($this->user_settings['stats']['freshness']) ? 'checked="checked"' : ''; ?> id="stats_freshness" name="stats_freshness" /> <?php _e('Display only posts published within the selected Time Range', 'wordpress-popular-posts'); ?></label>
+                    <label for="stats_freshness"><input type="checkbox" class="checkbox" <?php echo ($this->user_settings['stats']['freshness']) ? 'checked="checked"' : ''; ?> id="stats_freshness" name="stats_freshness" /> <?php _e('Display only posts published within the selected Time Range', $this->plugin_slug); ?></label>
                 </form>
             </div>
         </div>
@@ -301,6 +305,21 @@ if (empty($wpp_rand)) {
                         </td>
                     </tr>
                     <tr valign="top">
+                        <th scope="row"><label for="log_limit"><?php _e("Log limit", $this->plugin_slug); ?>:</label></th>
+                        <td>
+                            <select name="log_limit" id="log_limit">
+                                <option <?php if ($this->user_settings['tools']['log']['limit'] == 0) {?>selected="selected"<?php } ?> value="0"><?php _e("Disabled", $this->plugin_slug); ?></option>
+                                <option <?php if ($this->user_settings['tools']['log']['limit'] == 1) {?>selected="selected"<?php } ?> value="1"><?php _e("Keep data for", $this->plugin_slug); ?></option>
+                            </select>
+                            
+                            <label for="log_expire_time"<?php echo ($this->user_settings['tools']['log']['limit'] == 0) ? ' style="display:none;"' : ''; ?>><input type="text" id="log_expire_time" name="log_expire_time" value="<?php echo $this->user_settings['tools']['log']['expires_after']; ?>" size="3" /> <?php _e("day(s)", $this->plugin_slug); ?></label>
+                            
+                            <p class="description"<?php echo ($this->user_settings['tools']['log']['limit'] == 0) ? ' style="display:none;"' : ''; ?>><?php _e("Data from entries that haven't been viewed within the specified time frame will be automatically discarded", $this->plugin_slug); ?>.</p>
+                            
+                            <br<?php echo ($this->user_settings['tools']['log']['limit'] == 1) ? ' style="display:none;"' : ''; ?> />
+                        </td>
+                    </tr>
+                    <tr valign="top">
                         <th scope="row"><label for="ajax"><?php _e("Ajaxify widget", $this->plugin_slug); ?>:</label></th>
                         <td>
                             <select name="ajax" id="ajax">                                
@@ -313,7 +332,7 @@ if (empty($wpp_rand)) {
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><label for="cache"><?php _e("WPP Cache Expiry Policy", $this->plugin_slug); ?>:</label> <small>[<a href="https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#caching" target="_blank" title="<?php _e('What is this?', 'wordpress-popular-posts'); ?>">?</a>]</small></th>
+                        <th scope="row"><label for="cache"><?php _e("WPP Cache Expiry Policy", $this->plugin_slug); ?>:</label> <small>[<a href="https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#caching" target="_blank" title="<?php _e('What is this?', $this->plugin_slug); ?>">?</a>]</small></th>
                         <td>
                             <select name="cache" id="cache">
                                 <option <?php if ( !$this->user_settings['tools']['cache']['active'] ) { ?>selected="selected"<?php } ?> value="0"><?php _e("Never cache", $this->plugin_slug); ?></option>
@@ -341,7 +360,7 @@ if (empty($wpp_rand)) {
                         </td>
                     </tr>
                     <tr valign="top">
-                        <th scope="row"><label for="sampling"><?php _e("Data Sampling", $this->plugin_slug); ?>:</label> <small>[<a href="https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#data-sampling" target="_blank" title="<?php _e('What is this?', 'wordpress-popular-posts'); ?>">?</a>]</small></th>
+                        <th scope="row"><label for="sampling"><?php _e("Data Sampling", $this->plugin_slug); ?>:</label> <small>[<a href="https://github.com/cabrerahector/wordpress-popular-posts/wiki/7.-Performance#data-sampling" target="_blank" title="<?php _e('What is this?', $this->plugin_slug); ?>">?</a>]</small></th>
                         <td>
                             <select name="sampling" id="sampling">
                                 <option <?php if ( !$this->user_settings['tools']['sampling']['active'] ) { ?>selected="selected"<?php } ?> value="0"><?php _e("Disabled", $this->plugin_slug); ?></option>
@@ -420,7 +439,7 @@ if (empty($wpp_rand)) {
     <!-- Start params -->
     <div id="wpp_params" class="wpp_boxes"<?php if ( "params" == $current ) {?> style="display:block;"<?php } ?>>        
         <div>
-            <p><?php printf( __('With the following parameters you can customize the popular posts list when using either the <a href="%1$s">wpp_get_most_popular() template tag</a> or the <a href="%2$s">[wpp] shortcode</a>.', $this->plugin_slug),
+            <p><?php printf( __('With the following parameters you can customize the popular posts list when using either the <a href="%1$s">wpp_get_mostpopular() template tag</a> or the <a href="%2$s">[wpp] shortcode</a>.', $this->plugin_slug),
 				admin_url('options-general.php?page=wordpress-popular-posts&tab=faq#template-tags'),
 				admin_url('options-general.php?page=wordpress-popular-posts&tab=faq#shortcode')
 			); ?></p>
@@ -778,15 +797,9 @@ if (empty($wpp_rand)) {
         <h3><?php echo sprintf( __('About WordPress Popular Posts %s', $this->plugin_slug), $this->version); ?></h3>
         <p><?php _e( 'This version includes the following changes', $this->plugin_slug ); ?>:</p>
         
-        <p><strong>If you're using a caching plugin, flushing its cache after installing / upgrading to this version is strongly recommended.</strong></p>
-        
         <ul>
-            <li>Fixes a potential bug that might affect other plugins & themes (thanks , @<a href="https://github.com/pippinsplugins">pippinsplugins</a>!)</li>
-            <li>Defines INNODB as default storage engine.</li>
-            <li>Adds the wpp-no-data CSS class to style the "Sorry, no data so far" message.</li>
-            <li>Adds a new index to summary table.</li>
-            <li>Updates plugin's documentation.</li>
-            <li>Other small bug fixes and improvements.</li>
+            <li>Fixes undefined index notice.</li>
+            <li>Makes sure legacy tables are deleted on plugin upgrade.</li>
         </ul>
                 
     </div>
@@ -803,6 +816,8 @@ if (empty($wpp_rand)) {
         <p><?php _e( 'Each donation motivates me to keep releasing free stuff for the WordPress community!', $this->plugin_slug ); ?></p>
         <p><?php echo sprintf( __('You can <a href="%s" target="_blank">leave a review</a>, too!', $this->plugin_slug), 'https://wordpress.org/support/view/plugin-reviews/wordpress-popular-posts?rate=5#postform' ); ?></p>
     </div>
+    
+    <div id="wpp_advertisement" class="wpp_box" style=""></div>
     
     <div id="wpp_support" class="wpp_box" style="">
         <h3 style="margin-top:0; text-align:center;"><?php _e('Need help?', $this->plugin_slug); ?></h3>

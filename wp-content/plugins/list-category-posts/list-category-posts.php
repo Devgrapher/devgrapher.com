@@ -3,7 +3,7 @@
   Plugin Name: List category posts
   Plugin URI: https://github.com/picandocodigo/List-Category-Posts
   Description: List Category Posts allows you to list posts by category in a post/page using the [catlist] shortcode. This shortcode accepts a category name or id, the order in which you want the posts to display, the number of posts to display and many more parameters. You can use [catlist] as many times as needed with different arguments. Usage: [catlist argument1=value1 argument2=value2].
-  Version: 0.63.1
+  Version: 0.66
   Author: Fernando Briano
   Author URI: http://fernandobriano.com
 
@@ -42,8 +42,8 @@ class ListCategoryPosts{
     $atts = shortcode_atts(array(
                              'id' => '0',
                              'name' => '',
-                             'orderby' => 'date',
-                             'order' => 'desc',
+                             'orderby' => '',
+                             'order' => '',
                              'numberposts' => '',
                              'date' => 'no',
                              'date_tag' => '',
@@ -95,16 +95,24 @@ class ListCategoryPosts{
                              'post_suffix' => '',
                              'show_protected' => 'no',
                              'class' => 'lcp_catlist',
+                             'conditional_title' => '',
+                             'conditional_title_tag' => '',
+                             'conditional_title_class' => '',
                              'customfield_name' => '',
                              'customfield_value' =>'',
                              'customfield_display' =>'',
+                             'customfield_display_glue' => '',
                              'customfield_display_name' =>'',
+                             'customfield_display_name_glue' => ' : ',
+                             'customfield_display_separately' => 'no',
                              'customfield_orderby' =>'',
                              'customfield_tag' => '',
                              'customfield_class' => '',
                              'taxonomy' => '',
+                             'terms' => '',
                              'categorypage' => '',
                              'category_count' => '',
+                             'category_description' => 'no',
                              'morelink' => '',
                              'morelink_class' => '',
                              'morelink_tag' => '',
@@ -120,12 +128,15 @@ class ListCategoryPosts{
                              'no_posts_text' => "",
                              'instance' => '0',
                              'no_post_titles' => 'no',
-                             'link_titles' => true
+                             'link_titles' => true,
+                             'link_dates' => 'no',
                            ), $atts);
-    if( $atts['numberposts'] == ''){
+    if($atts['numberposts'] == ''){
       $atts['numberposts'] = get_option('numberposts');
     }
-    if( $atts['pagination'] == 'yes'){
+    if($atts['pagination'] == 'yes' ||
+       (get_option('lcp_pagination') === 'true' &&
+        $atts['pagination'] !== 'false') ){
       lcp_pagination_css();
     }
     $catlist_displayer = new CatListDisplayer($atts);
