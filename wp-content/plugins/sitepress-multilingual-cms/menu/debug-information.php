@@ -14,7 +14,7 @@ $debug_data = $debug_information->get_debug_info();
 <div class="wrap">
 <div id="icon-wpml" class="icon32"><br/></div>
 <h2><?php echo __( 'Debug information', 'sitepress' ) ?></h2>
-<?php 
+<?php
 
 $message = filter_input(INPUT_GET, 'message', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE);
 

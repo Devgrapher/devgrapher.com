@@ -46,8 +46,6 @@ if(is_admin() || defined('XMLRPC_REQUEST')):
                         'icl_admin_language_options',
                         'icl_page_sync_options',
                         'validate_language_domain',
-                        'get_translator_status',
-                        'get_language_status_text',
                         'icl_save_theme_localization_type',
                         'dismiss_help',
                         'dismiss_page_estimate_hint',
@@ -57,18 +55,12 @@ if(is_admin() || defined('XMLRPC_REQUEST')):
                         'setup_got_to_step1',
                         'setup_got_to_step2',
                         'toggle_show_translations',
-                        'icl_show_reminders',
                         'icl_show_sidebar',
                     );
-                    $request_get_icl_ajax_action = filter_input ( INPUT_GET, 'icl_ajax_action' );
-                    $request_post_icl_ajax_action = filter_input ( INPUT_POST, 'icl_ajax_action' );
-                    if ( ( !$request_get_icl_ajax_action && !$request_post_icl_ajax_action )
-                         || ( !in_array ( $request_post_icl_ajax_action, $ajx_request_exceptions )
-                              && !in_array ( $request_get_icl_ajax_action, $ajx_request_exceptions ) )
-                    ) {
-                        add_action ( 'icl_save_settings', array( $this, 'icl_save_settings_cb' ), 10, 1 );
-                    }
-
+                    if( !isset($_REQUEST['icl_ajx_action']) || !in_array($_REQUEST['icl_ajx_action'], $ajx_request_exceptions)){
+                        add_action('icl_save_settings', array($this, 'icl_save_settings_cb'), 10, 1);
+                    }                    
+                    
                     // when a post is sent from the translation server
                     global $HTTP_RAW_POST_DATA;
                     $hrow = icl_xml2array($HTTP_RAW_POST_DATA);

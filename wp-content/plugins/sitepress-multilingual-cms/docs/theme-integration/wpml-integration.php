@@ -64,7 +64,7 @@ function wpml_link_to_element($element_id, $element_type='post', $link_text='', 
             case 'category':
                 $ret = '<a href="'.get_tag_link($element_id).'">' . get_the_category_by_ID($element_id) . '</a>';
                 break;
-            default: $ret = '';           
+            default: $ret = '';
         }
         if($echoit){
             echo $ret;

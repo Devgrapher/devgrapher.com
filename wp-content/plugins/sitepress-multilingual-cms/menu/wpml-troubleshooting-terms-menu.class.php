@@ -24,7 +24,7 @@ class WPML_Troubleshooting_Terms_Menu {
 		}
 
 
-		//Todo: in WPML 3.2 the ICL_AdminNotifier class got improved and we should not call \ICL_AdminNotifier::displayMessages to display an admin notice
+		//TODO: [WPML 3.3] the ICL_AdminNotifier class got improved and we should not call \ICL_AdminNotifier::displayMessages to display an admin notice
 		ICL_AdminNotifier::displayMessages( 'terms-suffix' );
 	}
 
@@ -115,7 +115,7 @@ class WPML_Troubleshooting_Terms_Menu {
 			die( 'Wrong Nonce' );
 		}
 
-		$request_post_terms = filter_input ( INPUT_POST, 'terms' );
+		$request_post_terms = filter_input(INPUT_POST, 'terms');
 		if ( $request_post_terms ) {
 			$term_names = json_decode( stripcslashes( $request_post_terms ) );
 			if ( ! is_object( $term_names ) ) {
