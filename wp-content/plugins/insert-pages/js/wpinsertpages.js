@@ -2,7 +2,7 @@
 /* global ajaxurl, tinymce, wpLinkL10n, setUserSetting, wpActiveEditor */
 var wpInsertPages;
 
-(function($){
+(function ( $ ) {
 	var inputs = {}, rivers = {}, editor, searchTimer, RiverInsertPages, QueryInsertPages;
 
 	wpInsertPages = {
@@ -25,6 +25,9 @@ var wpInsertPages;
 			inputs.parentPageID = $( '#insertpage-parent-pageID' );
 			// Format field (title, link, content, all, choose a custom template ->)
 			inputs.format = $( '#insertpage-format-select' );
+			// Extra fields (wrapper classes, inline checkbox)
+			inputs.extraClasses = $( '#insertpage-extra-classes' );
+			inputs.extraInline = $( '#insertpage-extra-inline' );
 			// Custom template select field
 			inputs.template = $( '#insertpage-template-select' );
 			inputs.search = $( '#insertpage-search-field' );
@@ -58,6 +61,12 @@ var wpInsertPages;
 				}
 			});
 
+			// Set search type to plaintext if someone types in the search field.
+			// (Might have been set to 'slug' or 'id' if editing a current shortcode.)
+			inputs.search.keydown( function () {
+				inputs.search.data( 'type', 'text' );
+			});
+
 			inputs.search.keyup( function() {
 				var self = this;
 
@@ -80,7 +89,7 @@ var wpInsertPages;
 
 		open: function( editorId ) {
 			var ed, node, bookmark, cursorPosition = -1;
-			
+
 			wpInsertPages.range = null;
 
 			if ( editorId ) {
@@ -150,7 +159,7 @@ var wpInsertPages;
 		},
 
 		mceRefresh: function( cursorPosition ) {
-			var shortcode, bookmark, regexp, match, matches;
+			var shortcode, bookmark, regexp, match, matches, offset;
 
 			// Get the existing shortcode the cursor is in (or get the entire node if cursor not in one)
 			shortcode = '';
@@ -162,7 +171,7 @@ var wpInsertPages;
 				while ( ( match = regexp.exec( content ) ) != null ) {
 					startPos = match.index;
 					endPos = startPos + match[0].length;
-					if ( cursorPosition > startPos && cursorPosition < endPos ) {
+					if ( cursorPosition >= startPos && cursorPosition <= endPos ) {
 						shortcode = match[0];
 						break;
 					}
@@ -179,28 +188,38 @@ var wpInsertPages;
 				for ( i = 0; i < node.childNodes.length; i++ ) {
 					selectedChild = node.childNodes[i];
 					length = ( selectedChild.outerHTML ) ? selectedChild.outerHTML.length : selectedChild.textContent.length;
-					if ( cursorPosition < offset + length ) {
+					if ( cursorPosition <= offset + length ) {
 						break;
 					}
 					offset += length;
 				}
-				range.setStart( selectedChild, startPos - offset );
-				range.setEnd( selectedChild, endPos - offset );
-				editor.selection.setRng( range );
+				if ( selectedChild.length >= offset ) {
+					range.setStart( selectedChild, startPos - offset );
+					range.setEnd( selectedChild, endPos - offset );
+					editor.selection.setRng( range );
+				}
 
 				// Set slug/id (also set the slug as the search term)
 				regexp = /page=['"]([^['"]*)['"]/;
 				matches = regexp.exec( shortcode );
-				if ( matches.length > 1 ) {
+				if ( matches && matches.length > 1 ) {
+					// Indicate that this search term is a slug or id.
+					if ( isNaN( parseInt( matches[1] ) ) ) {
+						inputs.search.data( 'type', 'slug' );
+					} else {
+						inputs.search.data( 'type', 'post_id' );
+					}
+
 					inputs.slug.val( matches[1] );
 					inputs.search.val( matches[1] );
 					inputs.search.keyup();
 				}
 
+				// Update display dropdown to match the selected shortcode.
 				regexp = /display=['"]([^['"]*)['"]/;
 				matches = regexp.exec( shortcode );
-				if ( matches.length > 1 ) {
-					if ( matches[1] == 'title' || matches[1] == 'link' || matches[1] == 'content' || matches[1] == 'all' ) {
+				if ( matches && matches.length > 1 ) {
+					if ( ['title', 'link', 'excerpt', 'excerpt-only', 'content', 'all', ].indexOf( matches[1] ) >= 0 ) {
 						inputs.format.val( matches[1] );
 						inputs.template.val( 'all' );
 					} else {
@@ -208,6 +227,24 @@ var wpInsertPages;
 						inputs.template.val( matches[1] );
 					}
 					inputs.format.change();
+				}
+
+				// Update extra classes.
+				regexp = /class=['"]([^['"]*)['"]/;
+				matches = regexp.exec( shortcode );
+				if ( matches && matches.length > 1 ) {
+					inputs.extraClasses.val( matches[1] );
+				} else {
+					inputs.extraClasses.val( '' );
+				}
+
+				// Update extra inline (i.e., use span instead of div for wrapper).
+				regexp = /inline/;
+				matches = regexp.exec( shortcode );
+				if ( matches && matches.length > 0 ) {
+					inputs.extraInline.attr( 'checked', true );
+				} else {
+					inputs.extraInline.attr( 'checked', false );
 				}
 
 				// Update save prompt.
@@ -227,7 +264,10 @@ var wpInsertPages;
 			inputs.format.val('title');
 			inputs.format.change();
 			inputs.template.val('all');
+			inputs.extraClasses.val('');
+			inputs.extraInline.attr( 'checked', false );
 			inputs.search.val( '' );
+			inputs.search.data( 'type', 'text' );
 			inputs.search.keyup();
 		},
 
@@ -252,6 +292,8 @@ var wpInsertPages;
 				page: inputs.slug.val(),
 				pageID: inputs.pageID.val(),
 				display: inputs.format.val()=='template' ? inputs.template.val() : inputs.format.val(),
+				class: inputs.extraClasses.val(),
+				inline: inputs.extraInline.is( ':checked' ),
 			};
 		},
 
@@ -281,12 +323,18 @@ var wpInsertPages;
 			editor.selection.setContent("[insert " +
 				"page='" + attrs.page +"' " +
 				"display='" + attrs.display + "'" +
+				( attrs['class'].length > 0 ? " class='" + attrs['class'] + "'" : "" ) +
+				( attrs.inline ? " inline" : "" ) +
 				"]");
 			editor.execCommand("mceEndUndoLevel");
 		},
 
 		updateFields : function( e, li, originalEvent ) {
-			inputs.slug.val( li.children('.item-slug').val() );
+			if ( wpInsertPagesL10n.format === 'post_id' ) {
+				inputs.slug.val( li.children('.item-id').val() );
+			} else {
+				inputs.slug.val( li.children('.item-slug').val() );
+			}
 			inputs.pageID.val( li.children('.item-id').val() );
 			if ( originalEvent && originalEvent.type == "click" )
 				inputs.slug.focus();
@@ -294,9 +342,10 @@ var wpInsertPages;
 
 		searchInternalLinks : function() {
 			var t = $(this), waiting,
-				search = t.val();
+				search = t.val(),
+				type = t.data( 'type' );
 
-			if ( search.length > 2 ) {
+			if ( search.length > 2 || ( type === 'post_id' && search.length > 0 ) ) {
 				rivers.recent.hide();
 				rivers.search.show();
 
@@ -307,7 +356,7 @@ var wpInsertPages;
 				wpInsertPages.lastSearch = search;
 				waiting = t.parent().find( '.spinner' ).show();
 
-				rivers.search.change( search );
+				rivers.search.change( search, type );
 				rivers.search.ajax( function() {
 					waiting.hide();
 				});
@@ -394,12 +443,13 @@ var wpInsertPages;
 
 	RiverInsertPages = function( element, search ) {
 		var self = this;
+		var type = 'text';
 		this.element = element;
 		this.ul = element.children( 'ul' );
 		this.contentHeight = element.children( '#link-selector-height' );
 		this.waiting = element.find('.river-waiting');
 
-		this.change( search );
+		this.change( search, type );
 		this.refresh();
 
 		$( '#wp-insertpage .query-results, #wp-insertpage #link-selector' ).scroll( function() {
@@ -441,10 +491,11 @@ var wpInsertPages;
 			liTop = li.position().top;
 			elTop = this.element.scrollTop();
 
-			if ( liTop < 0 ) // Make first visible element
+			if ( liTop < 0 ) { // Make first visible element
 				this.element.scrollTop( elTop + liTop );
-			else if ( liTop + liHeight > elHeight ) // Make last visible element
+			} else if ( liTop + liHeight > elHeight ) { // Make last visible element
 				this.element.scrollTop( elTop + liTop - elHeight + liHeight );
+			}
 
 			// Trigger the river-select event
 			this.element.trigger('river-select', [ li, event, this ]);
@@ -484,12 +535,12 @@ var wpInsertPages;
 
 			this.query.ajax( response );
 		},
-		change: function( search ) {
+		change: function( search, type ) {
 			if ( this.query && this._search == search )
 				return;
 
 			this._search = search;
-			this.query = new QueryInsertPages( search );
+			this.query = new QueryInsertPages( search, type );
 			this.element.scrollTop(0);
 		},
 		process: function( results, params ) {
@@ -505,14 +556,14 @@ var wpInsertPages;
 			} else {
 				$.each( results, function() {
 					classes = alt ? 'alternate' : '';
-					classes += this['title'] ? '' : ' no-title';
+					classes += this.title ? '' : ' no-title';
 					list += classes ? '<li class="' + classes + '">' : '<li>';
-					list += '<input type="hidden" class="item-permalink" value="' + this['permalink'] + '" />';
-					list += '<input type="hidden" class="item-slug" value="' + this['slug'] + '" />';
-					list += '<input type="hidden" class="item-id" value="' + this['ID'] + '" />';
+					list += '<input type="hidden" class="item-permalink" value="' + this.permalink + '" />';
+					list += '<input type="hidden" class="item-slug" value="' + this.slug + '" />';
+					list += '<input type="hidden" class="item-id" value="' + this.ID + '" />';
 					list += '<span class="item-title">';
-					list += this['title'] ? this['title'] : wpInsertPagesL10n.noTitle;
-					list += '</span><span class="item-info">' + this['info'] + '</span></li>';
+					list += this.title ? this.title : wpInsertPagesL10n.noTitle;
+					list += '</span><span class="item-info">' + this.info + '</span></li>';
 					alt = ! alt;
 				});
 			}
@@ -544,11 +595,12 @@ var wpInsertPages;
 		}
 	});
 
-	QueryInsertPages = function( search ) {
+	QueryInsertPages = function( search, type ) {
 		this.page = 1;
 		this.allLoaded = false;
 		this.querying = false;
 		this.search = search;
+		this.type = type;
 	};
 
 	$.extend( QueryInsertPages.prototype, {
@@ -558,16 +610,16 @@ var wpInsertPages;
 		ajax: function( callback ) {
 			var self = this,
 				query = {
-					//action : 'wp-insertpage-ajax',
 					action : 'insertpage',
 					page : this.page,
+					type : this.type,
 					'_ajax_inserting_nonce' : $('#_ajax_inserting_nonce').val()
 				};
 
 			if ( this.search )
 				query.search = this.search;
-		
-		  query.pageID = inputs.pageID.val();
+
+			query.pageID = inputs.pageID.val();
 
 			this.querying = true;
 			$.post( ajaxurl, query, function(r) {
@@ -579,5 +631,6 @@ var wpInsertPages;
 		}
 	});
 
-	$(document).ready( wpInsertPages.init );
-})(jQuery);
+	$( document ).ready( wpInsertPages.init );
+
+})( jQuery );

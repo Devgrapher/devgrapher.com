@@ -3,8 +3,8 @@ Contributors: fernandobt
 Donate Link: http://picandocodigo.net/programacion/wordpress/list-category-posts-wordpress-plugin-english/#support
 Tags: list, categories, posts, cms
 Requires at least: 3.3
-Tested up to: 4.3.1
-Stable tag: 0.66
+Tested up to: 4.4.2
+Stable tag: 0.68
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,8 @@ When using List Category Posts whithout a category id, name or slug, it will pos
 
 ==Other ways of selecting what posts to show==
 
+* **child_categories** - Exclude/include posts from the child categories. By default they are included. If you have a "Parent Category" and you use: `[catlist name="Parent Category"]`, you'll see posts from it's child categories as if they were posts from the same category. You can use this parameter to exclude these posts: `[catlist name="Parent Category" child_categories=false]`.
+
 * **author_posts** - Get posts by author. Use 'user_nicename' (NOT
     name). Example: `[catlist author_posts="fernando"]`
 
@@ -198,6 +200,14 @@ copy the `lcp_paginator.css` file from the plugin's directory to your
 theme's directory and customize it. Do not customize the file on the
 plugin's directory since this file will be overwritten every time you
 update the plugin.
+
+The current page in pagination has its own CSS class:
+
+`
+<li class='lcp_currentpage'>current_page</li>
+`
+
+So you can style the current page number differently if you want to.
 
 ==OTHER PARAMETERS==
 
@@ -302,6 +312,8 @@ Show the full content of the post regardless of whether there is a &lt;!--more--
 * **comments** - Show comments count for each post. Default is 'no'. Ex: `[catlist comments=yes]`.
 
 * **thumbnail** - Show post thumbnail (http://markjaquith.wordpress.com/2009/12/23/new-in-wordpress-2-9-post-thumbnail-images/). Default is 'no'. Ex: `[catlist thumbnail=yes]`.
+
+* **force_thumbnail** - If the previous parameter is set to 'yes', and there's no featured image, setting this to 'yes' or 'true' will make the plugin look for the first image in the post and use it as a thumbnail. Ex: `[catlist thumbnail=yes force_thumbnail=yes]`.
 
 * **thumbnail_size** - Either a string keyword (thumbnail, medium, large or full) or 2 values representing width and height in pixels. Ex: `[catlist thumbnail_size=32,32]` or `[catlist thumbnail_size=thumbnail]`
 
@@ -519,6 +531,21 @@ Widget built for WordPress 2.8's Widget API, so you need at least WP 2.8 to use 
 Template system has changed. Custom templates should be stored in WordPress theme folder.
 
 == Changelog ==
+
+= 0.68 =
+Thanks @mmatthews1981, @ottadvantage and @mhoeher for their contributions on this version:
+* Adds Alt Tag to thumbnail
+* Handle child_categories flag correctly - https://github.com/picandocodigo/List-Category-Posts/pull/185
+* Adds a default value to numberposts on plugin activation - https://github.com/picandocodigo/List-Category-Posts/pull/193
+
+
+= 0.67.1 =
+* Bugfix release, this should fix the issues with Parent Categories listings.
+
+= 0.67 =
+* Adds custom css class to current page in pagination `lcp_currentpage`.
+* Adds child_categories parameter to being able to exclude child categories' posts from a list.
+* New feature to look for the first image in a post when requesting a thumbnail and the post has no featured image. Thanks Michael J. Gibbs for writing this code :)
 
 = 0.66 =
 * Full release notes: https://github.com/picandocodigo/List-Category-Posts/releases/tag/0.66

@@ -2,22 +2,22 @@
 Contributors: figureone, the_magician
 Tags: insert, pages, shortcode, embed
 Requires at least: 3.0.1
-Tested up to: 4.3.1
+Tested up to: 4.5.1
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Insert Pages lets you embed any WordPress content (e.g., pages, posts, custom post types) into other WordPress content using the Shortcode API.
+Insert Pages lets you embed any WordPress content (e.g., pages, posts, custom post types) into other WordPress content using the Shortcode API. It also includes a widget for inserting pages into any widget area.
 
 == Description ==
 
-Insert Pages lets you embed any WordPress content (e.g., pages, posts, custom post types) into other WordPress content using the Shortcode API.
+Insert Pages lets you embed any WordPress content (e.g., pages, posts, custom post types) into other WordPress content using the Shortcode API. It also includes a widget for inserting pages into any widget area.
 
 The real power of Insert Pages comes when you start creating custom post types, either [programmatically in your theme](http://codex.wordpress.org/Post_Types), or using another plugin like [Custom Post Type UI](http://wordpress.org/plugins/custom-post-type-ui/). You can then abstract away common data types (like videos, quizzes, due dates) into their own custom post types, and then show those pieces of content within your normal pages and posts by Inserting them as a shortcode.
 
 Here are two quick example use cases:
 
-### Novice Use Case
+### Normal Use
 Say you teach a course and you're constantly referring to an assignment due date in your course website. The next semester the due date changes, and you have to go change all of the locations you referred to it. Instead, you'd rather just change the date once! With Insert Pages, you can do the following:
 
 1. Create a custom post type called **Due Date**.
@@ -25,7 +25,7 @@ Say you teach a course and you're constantly referring to an assignment due date
 1. Edit all the pages where the due date occurs and use the *Insert Pages* toolbar button to insert a reference to the *Due Date* you just created. Be sure to set the *Display* to **Content** so *Fri Nov 22, 2013* shows wherever you insert it. The shortcode you just created should look something like this: `[insert page='assignment-1-due-date' display='content']`
 1. That's it! Now, when you want to change the due date, just edit the *Assignment 1 Due Date* custom post you created, and it will automatically be updated on all the pages you inserted it on.
 
-### Expert Use Case
+### Advanced Use
 Say your site has a lot of video content, and you want to include video transcripts and video lengths along with the videos wherever you show them. You could just paste the transcripts into the page content under the video, but then you'd have to do this on every page the video showed on. (It's also just a bad idea, architecturally!) With Insert Pages, you can use a custom post type and create a custom theme template to display your videos+transcripts+lengths just the way you want!
 
 1. Create a custom post type called **Video**.
@@ -85,6 +85,83 @@ Just one! The plugin prevents you from embedding a page in itself, but you can t
 3. Insert Pages shortcode example.
 
 == Changelog ==
+
+= 3.1.2 =
+* Fix for custom template dropdown not enabling when configuring the widget on the theme customizer page (customize.php). Props @aassouad for finding this!
+
+= 3.1.1 =
+* Fix: Add compatibility for PHP 5.2 in the widget registration code. See https://codex.wordpress.org/Widgets_API
+
+= 3.1 =
+* Feature: Insert Page widget. Go to Appearance > Widgets to add the Insert Page widget to any of your widget areas. Specify a page slug or ID in the widget, and that page will get displayed in the widget area.
+
+= 3.0.2 =
+* Hotfix: Inserting posts with custom paths using legacy insert method.
+
+= 3.0.1 =
+* Hotfix: Version 3 broke some plugin compatibility (most notably with Beaver Builder and Page Builder by SiteOrigin). This update should restore functionality.
+* Hotfix: Version 3 broke some page displays (e.g., content, all). This update should restore functionality.
+
+= 3.0 =
+* Hotfix: 2.9.1 broke extra classes added to the inserted page wrapper. Props @philipsacht!
+* Feature: Expose extra classes and inline status in tinymce dialog.
+* One more API change to insert_pages_wrap_content_filter (2nd parameter is a WP_Post now instead of an array of WP_Posts, since we only ever insert one page).
+Example 1:
+`/**
+ * Enable nested shortcodes by hooking into insert_pages_wrap_content.
+ *
+ * @param string $content The post content of the inserted page.
+ * @param array $inserted_page The post object returned from querying the inserted page.
+ * @param array $attributes Extra parameters modifying the inserted page.
+ *   page: Page ID or slug of page to be inserted.
+ *   display: Content to display from inserted page.
+ *   class: Extra classes to add to inserted page wrapper element.
+ *   inline: Boolean indicating wrapper element should be a span.
+ *   should_apply_nesting_check: Whether to disable nested inserted pages.
+ *   should_apply_the_content_filter: Whether to apply the_content filter to post contents and excerpts.
+ *   wrapper_tag: Tag to use for the wrapper element (e.g., div, span).
+ */
+function your_custom_wrapper_function( $content, $inserted_page, $attributes ) {
+    return do_shortcode( $content );
+}
+add_filter( 'insert_pages_wrap_content', 'your_custom_wrapper_function', 9, 3 );`
+Example 2:
+`/**
+ * Completely modify markup generated by Insert Pages by hooking into insert_pages_wrap_content.
+ *
+ * @param string $content The post content of the inserted page.
+ * @param array $inserted_page The post object returned from querying the inserted page.
+ * @param array $attributes Extra parameters modifying the inserted page.
+ *   page: Page ID or slug of page to be inserted.
+ *   display: Content to display from inserted page.
+ *   class: Extra classes to add to inserted page wrapper element.
+ *   inline: Boolean indicating wrapper element should be a span.
+ *   should_apply_nesting_check: Whether to disable nested inserted pages.
+ *   should_apply_the_content_filter: Whether to apply the_content filter to post contents and excerpts.
+ *   wrapper_tag: Tag to use for the wrapper element (e.g., div, span).
+ */
+function your_custom_wrapper_function( $content, $inserted_page, $attributes ) {
+    // Remove the default filter that wraps the content in a div or span.
+    remove_all_filters( 'insert_pages_wrap_content', 10 );
+    // Return your custom wrapper around the content.
+    return "<section class='my-section {$attributes['class']}'>$content</section>";
+}
+add_filter( 'insert_pages_wrap_content', 'your_custom_wrapper_function', 9, 3 );`
+
+= 2.9.1 =
+* API Change: modify insert_pages_wrap_content filter. Props @heiglandreas.
+
+= 2.9 =
+* Add filter for altering the markup generated by Insert Pages. This filter is used internally at priority 10, so if you want to modify $content, do it earlier (priority 1-9); if you want to reconstruct the generated markup using the supplied parameters, do it after (priority 11+). Props @heiglandreas!
+
+= 2.8 =
+* Feature: Add options page with option to insert page IDs instead of page slugs (users of WPML will need this feature if translated pages all share the same page slug).
+* Feature: Inserted pages with Beaver Builder enabled now embed correctly.
+* Fix: TinyMCE toolbar button states (active, disabled) have been fixed.
+* Fix: TinyMCE cursor detection inside an existing shortcode has been fixed.
+* Fix: Expanded options in Insert Pages popup now correctly remembers last choice.
+* Fix: Restore missing spinners in search dialog.
+* Fix: prevent PHP warning when rendering wp_editor() outside of edit context. Props Jerry Benton.
 
 = 2.7.2 =
 * Add shortcode attribute to wrap inserted content in an inline element (span) instead of a block level element (div). Example usage:
@@ -157,7 +234,7 @@ add_action( 'init', 'theme_init' );`
 
 = 1.7 =
 * Tested and works on WordPress 4.1;
-* New display format: excerpt. Props to bitbucket user grzegorzdrozd for the pull request. https://bitbucket.org/figureone/insert-pages/commits/0f6402c98058858f76f3f865bb3f8c5aba4cda65
+* New display format: excerpt. Props to bitbucket user grzegorzdrozd for the pull request. https://github.com/uhm-coe/insert-pages/commit/0f6402c98058858f76f3f865bb3f8c5aba4cda65
 
 = 1.6 =
 * Fix for long page template names causing Display field to wrap in the tinymce popup;

@@ -3,8 +3,8 @@ Contributors: tatsuya, alexanderovsov
 Donate link: http://fukata.org/
 Tags: images,flickr
 Requires at least: 3.8
-Tested up to: 4.1
-Stable tag: 2.1.0
+Tested up to: 4.5.2
+Stable tag: 2.3.2
 
 Flickr integration for wordpress plugin.
 
@@ -55,6 +55,18 @@ None
 6. New UI 2
 
 == Changelog ==
+
+= 2.3.2 =
+* Fix: Plugin, Author URL.
+
+= 2.3.1 =
+* Bugfix: Doesn't work on firefox.
+
+= 2.3.0 =
+* Feature: Add template variable `description`.
+
+= 2.2.0 =
+* Feature: Add Embed Option(Header, Footer, Slideshow).
 
 = 2.1.0 =
 * Feature(beta): Use flickr image to post thumbnail.

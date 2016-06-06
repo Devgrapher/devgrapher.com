@@ -54,7 +54,7 @@ function icl_get_setting( $key, $default = false ) {
  * @use \SitePress::api_hooks
  */
 function wpml_get_setting_filter( $default, $key, $deprecated = null ) {
-    $default = $deprecated !== null  && !$default ? $deprecated : $default;
+    $default = $deprecated !== null && !$default ? $deprecated : $default;
 
     return icl_get_setting($key, $default);
 }
@@ -93,7 +93,7 @@ function icl_get_sub_setting( $key, $sub_key, $default = false ) {
 function wpml_get_sub_setting_filter( $default, $key, $sub_key, $deprecated = null ) {
 	$default = $deprecated !== null  && !$default ? $deprecated : $default;
 
-	$parent = wpml_get_setting_filter( $key, array() );
+	$parent = wpml_get_setting_filter(array(), $key );
 
 	return isset( $parent[ $sub_key ] ) ? $parent[ $sub_key ] : $default;
 }
@@ -160,17 +160,6 @@ if ( ! function_exists( 'icl_js_escape' ) ) {
 	}
 }
 
-function icl_nobreak( $str ) {
-	return preg_replace( "# #", '&nbsp;', $str );
-}
-
-function icl_strip_control_chars( $string ) {
-	// strip out control characters (all but LF, NL and TAB)
-	$string = preg_replace( '/[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F]/', '', $string );
-
-	return $string;
-}
-
 function _icl_tax_has_objects_recursive( $id, $term_id = - 1, $rec = 0 ) {
 	// based on the case where two categories were one the parent of another
 	// eliminating the chance of infinite loops by letting this function calling itself too many times
@@ -208,40 +197,6 @@ function _icl_tax_has_objects_recursive( $id, $term_id = - 1, $rec = 0 ) {
 	}
 
 	return false;
-}
-
-function icl_get_post_children_recursive( $post, $type = 'page' ) {
-	global $wpdb;
-
-	$post = (array) $post;
-
-	$children = $wpdb->get_col( $wpdb->prepare( "SELECT ID
-                                               FROM {$wpdb->posts}
-                                               WHERE post_type=%s
-                                                AND post_parent IN (" . wpml_prepare_in( $post, '%d' ) . ")", $type ) );
-
-	if ( ! empty( $children ) ) {
-		$children = array_merge( $children, icl_get_post_children_recursive( $children ) );
-	}
-
-	return $children;
-}
-
-function icl_get_tax_children_recursive( $id, $taxonomy = 'category' ) {
-	global $wpdb;
-
-	$id = (array) $id;
-
-	$children = $wpdb->get_col( $wpdb->prepare( "SELECT term_id
-                                               FROM {$wpdb->term_taxonomy} x
-                                               WHERE x.taxonomy=%s
-                                                AND parent IN (" . wpml_prepare_in( $id, '%d' ) . ")", $taxonomy ) );
-
-	if ( ! empty( $children ) ) {
-		$children = array_merge( $children, icl_get_tax_children_recursive( $children ) );
-	}
-
-	return $children;
 }
 
 function _icl_trash_restore_prompt() {
@@ -365,7 +320,7 @@ function wpml_make_post_duplicates_action( $master_post_id ) {
 
 	$master_post = get_post( $master_post_id );
 
-	if ( $master_post->post_status == 'auto-draft' || $master_post->post_type == 'revision' ) {
+	if ( 'auto-draft' === $master_post->post_status || 'revision' === $master_post->post_type ) {
 		return;
 	}
 
@@ -380,30 +335,7 @@ function wpml_make_post_duplicates_action( $master_post_id ) {
 			continue;
 		}
 
-		$post_array[ 'post_author' ]   = $master_post->post_author;
-		$post_array[ 'post_date' ]     = $master_post->post_date;
-		$post_array[ 'post_date_gmt' ] = $master_post->post_date_gmt;
-		$post_array[ 'post_content' ]  = addslashes_gpc( apply_filters( 'icl_duplicate_generic_string', $master_post->post_content, $lang_to, array( 'context' => 'post', 'attribute' => 'content', 'key' => $master_post->ID ) ) );
-		$post_array[ 'post_title' ]    = addslashes_gpc( apply_filters( 'icl_duplicate_generic_string', $master_post->post_title, $lang_to, array( 'context' => 'post', 'attribute' => 'title', 'key' => $master_post->ID ) ) );
-		$post_array[ 'post_excerpt' ]  = addslashes_gpc( apply_filters( 'icl_duplicate_generic_string', $master_post->post_excerpt, $lang_to, array( 'context' => 'post', 'attribute' => 'excerpt', 'key' => $master_post->ID ) ) );
-		$post_array[ 'post_status' ]   = $master_post->post_status;
-		//TODO [WPML 3.3.] wp_insert_post() does accept 'post_category': even though is not part of the WP_Post object, it deals with it. But as far as I know $master_post doesn't have this property, when set with get_post(), so probably we need to fix that, shouldn't we?
-		$post_array[ 'post_category' ]  = $master_post->post_category;
-		$post_array[ 'comment_status' ] = $master_post->comment_status;
-		$post_array[ 'ping_status' ]    = $master_post->ping_status;
-		$post_array[ 'post_name' ]      = $master_post->post_name;
-		$post_array[ 'menu_order' ]     = $master_post->menu_order;
-		$post_array[ 'post_type' ]      = $master_post->post_type;
-		$post_array[ 'post_mime_type' ] = $master_post->post_mime_type;
-
-		if ( $master_post->post_parent ) {
-			$parent                      = icl_object_id( $master_post->post_parent, $master_post->post_type, false, $lang_to );
-			$post_array[ 'post_parent' ] = $parent;
-		}
-
-		$id = wp_insert_post( $post_array );
-
-		$sitepress->set_element_language_details( $id, 'post_' . $post_array[ 'post_type' ], $trid, $lang_to, $lang_from, false );
+		$sitepress->make_duplicate( $master_post_id, $lang_to );
 	}
 }
 
@@ -576,14 +508,6 @@ function wpml_mb_strpos( $haystack, $needle, $offset = 0 ) {
 	return strpos( $haystack, $needle, $offset );
 }
 
-function wpml_mb_strlen( $str ) {
-	if ( function_exists( 'mb_strlen' ) ) {
-		return mb_strlen( $str );
-	}
-
-	return strlen( $str );
-}
-
 function wpml_set_plugin_as_inactive() {
 	global $icl_plugin_inactive;
 	if ( ! defined( 'ICL_PLUGIN_INACTIVE' ) ) {
@@ -707,3 +631,4 @@ function repair_el_type_collate() {
 		throw new Exception( $wpdb->last_error );
 	}
 }
+

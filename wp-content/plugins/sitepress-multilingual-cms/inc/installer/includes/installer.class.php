@@ -29,6 +29,8 @@ final class WP_Installer{
     const SITE_KEY_VALIDATION_SOURCE_REVALIDATION       = 4;
     const SITE_KEY_VALIDATION_SOURCE_UPDATES_CHECK      = 5;
 
+    public $dependencies;
+
     public static function instance() {
         
         if ( is_null( self::$_instance ) ) {
@@ -93,6 +95,8 @@ final class WP_Installer{
     
     public function init(){
         global $pagenow;
+
+        $this->dependencies = new Installer_Dependencies;
 
         if(empty($this->settings['_pre_1_0_clean_up'])) {
             $this->_pre_1_0_clean_up();
@@ -179,9 +183,11 @@ final class WP_Installer{
 
     public function show_admin_messages(){
         if(!empty($this->admin_messages)){
+            $types = array( 'error', 'updated', 'notice' );
             foreach($this->admin_messages as $message){
+                $class = in_array( $message['type'], $types ) ? $message['type'] : 'updated';
                 ?>
-                <div class="<?php echo esc_attr($message['type']) ?>">
+                <div class="<?php echo $class ?>">
                     <p>
                         <?php echo $message['text'] ?>
                     </p>
@@ -274,46 +280,23 @@ final class WP_Installer{
 
         $repositories_plugins = array();
 
-        foreach($this->settings['repositories'] as $repository_id => $repository){
+        if( !empty($this->settings['repositories']) ) {
 
-            foreach($repository['data']['packages'] as $package){
-                
-                foreach($package['products'] as $product){
-                    
-                    foreach($product['plugins'] as $plugin_slug){
+            foreach ( $this->settings['repositories'] as $repository_id => $repository ) {
 
-                        $download = $this->settings['repositories'][$repository_id]['data']['downloads']['plugins'][$plugin_slug];
+                foreach ( $repository['data']['packages'] as $package ) {
 
-                        if(!isset($repositories_plugins[$repository_id][$download['slug']])){
-                            $repositories_plugins[$repository_id][$download['slug']] = array(
-                                'name'          => $download['name'],
-                                'registered'    => $this->plugin_is_registered( $repository_id, $download['slug'] ) ? 1 : 0
-                            );
-                        }
-                        
-                    }
-                    
-                }
-                
-            }
+                    foreach ( $package['products'] as $product ) {
 
-            foreach($plugins as $plugin_id => $plugin) {
+                        foreach ( $product['plugins'] as $plugin_slug ) {
 
-                $wp_plugin_slug = dirname($plugin_id);
-                if(empty($wp_plugin_slug)){
-                    $wp_plugin_slug = basename($plugin_id, '.php');
-                }
+                            $download = $this->settings['repositories'][$repository_id]['data']['downloads']['plugins'][$plugin_slug];
 
-                foreach($repositories_plugins as $repository_id => $r_plugins) {
-
-                    foreach($r_plugins as $slug => $r_plugin){
-
-                        if($wp_plugin_slug == $slug || $r_plugin['name'] == $plugin['Name']  || $r_plugin['name'] == $plugin['Title']) { //match order: slug, name, title
-
-                            if($r_plugin['registered']){
-                                add_filter( 'plugin_action_links_' . $plugin_id, array($this, 'plugins_action_links_registered'));
-                            }else{
-                                add_filter( 'plugin_action_links_' . $plugin_id, array($this, 'plugins_action_links_not_registered'));
+                            if ( !isset($repositories_plugins[$repository_id][$download['slug']]) ) {
+                                $repositories_plugins[$repository_id][$download['slug']] = array(
+                                    'name' => $download['name'],
+                                    'registered' => $this->plugin_is_registered( $repository_id, $download['slug'] ) ? 1 : 0
+                                );
                             }
 
                         }
@@ -322,9 +305,35 @@ final class WP_Installer{
 
                 }
 
+                foreach ( $plugins as $plugin_id => $plugin ) {
+
+                    $wp_plugin_slug = dirname( $plugin_id );
+                    if ( empty($wp_plugin_slug) ) {
+                        $wp_plugin_slug = basename( $plugin_id, '.php' );
+                    }
+
+                    foreach ( $repositories_plugins as $repository_id => $r_plugins ) {
+
+                        foreach ( $r_plugins as $slug => $r_plugin ) {
+
+                            if ( $wp_plugin_slug == $slug || $r_plugin['name'] == $plugin['Name'] || $r_plugin['name'] == $plugin['Title'] ) { //match order: slug, name, title
+
+                                if ( $r_plugin['registered'] ) {
+                                    add_filter( 'plugin_action_links_' . $plugin_id, array($this, 'plugins_action_links_registered') );
+                                } else {
+                                    add_filter( 'plugin_action_links_' . $plugin_id, array($this, 'plugins_action_links_not_registered') );
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+
+                }
 
             }
-
         }
         
     }
@@ -455,7 +464,7 @@ final class WP_Installer{
                 $this->settings = unserialize($_settings);
             }
 
-            if (is_multisite() && isset($settings['repositories'])) {
+            if (is_multisite() && isset($this->settings['repositories'])) {
                 $network_settings = maybe_unserialize(get_site_option('wp_installer_network'));
                 if ($network_settings) {
                     foreach ($this->settings['repositories'] as $rep_id => $repository) {
@@ -500,7 +509,7 @@ final class WP_Installer{
     //backward compatibility - support old products list format (downloads under products instead of global downloads list)
     private function _old_products_format_backwards_compatibility($settings){
 
-        if( version_compare($this->version(), '1.8', '<') && !empty($settings['repositories']) ) {
+        if( version_compare($this->version(), '1.8', '<') && !empty($settings['repositories']) && empty($this->_old_products_format_backwards_compatibility) ) {
 
             foreach ($settings['repositories'] as $repository_id => $repository) {
 
@@ -552,6 +561,8 @@ final class WP_Installer{
 
             }
 
+            $this->_old_products_format_backwards_compatibility = true;
+
         }
 
         return $settings;
@@ -559,14 +570,17 @@ final class WP_Installer{
     }
 
     public function get_installer_site_url( $repository_id = false ){
+        global $current_site;
+
         $site_url = get_site_url();
 
         if( $repository_id && is_multisite() && isset( $this->settings['repositories'] ) ){
             $network_settings = maybe_unserialize( get_site_option('wp_installer_network') );
 
             if ( isset( $network_settings[$repository_id] ) ) {
-                $site_url = network_site_url();
+                $site_url = get_site_url( $current_site->blog_id );
             }
+
         }
 
         return $site_url;
@@ -947,7 +961,7 @@ final class WP_Installer{
 
     public function append_parameters_to_buy_url($url, $repository_id, $args = array()){
 
-        $url = add_query_arg( array('icl_site_url' => $this->get_installer_site_url() ), $url );
+        $url = add_query_arg( array('icl_site_url' => $this->get_installer_site_url( $repository_id ) ), $url );
         
         $affiliate_id   = false;
         $affiliate_key  = false;
@@ -1017,23 +1031,25 @@ final class WP_Installer{
         $site_key = preg_replace("/[^A-Za-z0-9]/", '', $site_key);
         
         if($repository_id && $nonce && wp_create_nonce('save_site_key_' . $repository_id) == $nonce){
-            
-            $subscription_data = $this->fetch_subscription_data($repository_id, $site_key, self::SITE_KEY_VALIDATION_SOURCE_REGISTRATION);
-            
-            if(is_wp_error($subscription_data)){
-                $error = $subscription_data->get_error_message();
-                if(preg_match('#Could not resolve host: (.*)#', $error, $matches)){
-                    $error = sprintf(__("%s cannot access %s to register. Try again to see if it's a temporary problem. If the problem continues, make sure that this site has access to the Internet. You can still use the plugin without registration, but you will not receive automated updates.", 'installer'), 
-                        '<strong><i>' . $this->get_generic_product_name($repository_id) . '</i></strong>', 
+
+            try {
+                $subscription_data = $this->fetch_subscription_data( $repository_id, $site_key, self::SITE_KEY_VALIDATION_SOURCE_REGISTRATION );
+
+                if ( $subscription_data ) {
+                    $this->settings['repositories'][$repository_id]['subscription'] = array('key' => $site_key, 'data' => $subscription_data);
+                    $this->save_settings();
+                } else {
+                    $error = __( 'Invalid site key for the current site.', 'installer' );
+                }
+
+            } catch (Exception $e ){
+                $error = $e->getMessage();
+                if( preg_match('#Could not resolve host: (.*)#', $error, $matches) || preg_match('#Couldn\'t resolve host \'(.*)\'#', $error, $matches) ){
+                    $error = sprintf(__("%s cannot access %s to register. Try again to see if it's a temporary problem. If the problem continues, make sure that this site has access to the Internet. You can still use the plugin without registration, but you will not receive automated updates.", 'installer'),
+                        '<strong><i>' . $this->get_generic_product_name($repository_id) . '</i></strong>',
                         '<strong><i>' . $matches[1]. '</i></strong>'
                     ) ;
                 }
-                
-            }elseif($subscription_data){
-                $this->settings['repositories'][$repository_id]['subscription'] = array('key' => $site_key, 'data' => $subscription_data);
-                $this->save_settings();
-            }else{
-                $error = __('Invalid site key for the current site.', 'installer');
             }
             
         }
@@ -1105,20 +1121,32 @@ final class WP_Installer{
             $site_key = $this->get_site_key($_POST['repository_id']);
             
             if($site_key){
-                $subscription_data = $this->fetch_subscription_data( $repository_id, $site_key, self::SITE_KEY_VALIDATION_SOURCE_UPDATES_CHECK );
-                
-                if($subscription_data){
-                    $this->settings['repositories'][$repository_id]['subscription'] = array('key' => $site_key, 'data' => $subscription_data);
+                try {
+                    $subscription_data = $this->fetch_subscription_data( $repository_id, $site_key, self::SITE_KEY_VALIDATION_SOURCE_UPDATES_CHECK );
 
-                    //also refresh products information
-                    $this->refresh_repositories_data();
+                    if ( $subscription_data ) {
+                        $this->settings['repositories'][$repository_id]['subscription'] = array('key' => $site_key, 'data' => $subscription_data);
 
-                }else{
-                    unset($this->settings['repositories'][$repository_id]['subscription']);
-                    $error = __('Invalid site key for the current site.', 'installer');
+                        //also refresh products information
+                        $this->refresh_repositories_data();
+
+                        $this->save_settings();
+
+                    } else {
+                        unset($this->settings['repositories'][$repository_id]['subscription']);
+                        $error = __( 'Invalid site key for the current site. If the error persists, try to unregister first and then register again with the same site key.', 'installer' );
+                    }
+
+
+                } catch (Exception $e ){
+                    $error = $e->getMessage();
+                    if( preg_match('#Could not resolve host: (.*)#', $error, $matches) || preg_match('#Couldn\'t resolve host \'(.*)\'#', $error, $matches) ){
+                        $error = sprintf(__("%s cannot access %s to register. Try again to see if it's a temporary problem. If the problem continues, make sure that this site has access to the Internet. You can still use the plugin without registration, but you will not receive automated updates.", 'installer'),
+                            '<strong><i>' . $this->get_generic_product_name($repository_id) . '</i></strong>',
+                            '<strong><i>' . $matches[1]. '</i></strong>'
+                        ) ;
+                    }
                 }
-                
-                $this->save_settings();
                 
             }
             
@@ -1150,7 +1178,7 @@ final class WP_Installer{
         $args['body'] = array(
                 'action'    => 'site_key_validation',
                 'site_key'  => $site_key,
-                'site_url'  => $this->get_installer_site_url($repository_id),
+                'site_url'  => $this->get_installer_site_url( $repository_id ),
                 'source'    => $source
         );
 
@@ -1179,13 +1207,13 @@ final class WP_Installer{
         }
 
         $response = wp_remote_post($this->repositories[$repository_id]['api-url'], $args);
-        
+
         $this->api_debug_log("POST {$this->repositories[$repository_id]['api-url']}");
         $this->api_debug_log($args);
 
         $this->log("POST {$this->repositories[$repository_id]['api-url']} - fetch subscription data");
 
-        if(!is_wp_error($response)){
+        if( !is_wp_error($response) ){
             $datas = wp_remote_retrieve_body($response);
             
             if(is_serialized($datas)){
@@ -1204,7 +1232,7 @@ final class WP_Installer{
         }else{
             
             $this->api_debug_log($response);
-            $subscription_data = $response;    
+            throw new Exception( $response->get_error_message() );
         }
 
         return $subscription_data;
@@ -1567,7 +1595,7 @@ final class WP_Installer{
     public function append_site_key_to_download_url($url, $key, $repository_id){
 
         $url_params['site_key'] = $key;
-        $url_params['site_url'] = $this->get_installer_site_url($repository_id);
+        $url_params['site_url'] = $this->get_installer_site_url( $repository_id );
 
 
         // Add extra parameters for custom Installer packages
@@ -1693,26 +1721,8 @@ final class WP_Installer{
 
     public function is_uploading_allowed(){
 
-        if(!isset($this->uploading_allowed)){
-            require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-            require_once WP_Installer()->plugin_path() . '/includes/installer-upgrader-skins.php';
-
-            $upgrader_skins = new Installer_Upgrader_Skins(); //use our custom (mute) Skin
-            $upgrader = new Plugin_Upgrader($upgrader_skins);
-
-            ob_start();
-            $res = $upgrader->fs_connect( array(WP_CONTENT_DIR, WP_PLUGIN_DIR) );
-            ob_end_clean();
-
-            if ( ! $res || is_wp_error( $res ) ) {
-                $this->uploading_allowed = false;
-            }else{
-                $this->uploading_allowed = true;
-            }
-        }
-
-
-        return $this->uploading_allowed;
+        //_deprecated_function ( __FUNCTION__, '1.7.3', 'Installer_Dependencies::' . __FUNCTION__ );
+        return $this->dependencies->is_uploading_allowed();
 
     }
 

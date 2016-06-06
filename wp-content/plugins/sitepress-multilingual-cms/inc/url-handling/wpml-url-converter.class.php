@@ -19,18 +19,15 @@ abstract class WPML_URL_Converter {
 	protected $absolute_home;
 	/** @var  string[] $cache */
 	protected $cache;
-	protected $hidden_languages;
 
 	/**
-	 * @param string   $default_language
-	 * @param string[] $hidden_languages
+	 * @param string $default_language
+	 * @param array  $active_languages
 	 */
-	public function __construct($default_language, $hidden_languages){
-		global $wpml_language_resolution;
+	public function __construct( $default_language, $active_languages ) {
 		add_filter( 'term_link', array( $this, 'tax_permalink_filter' ), 1, 3 );
 		$this->default_language = $default_language;
-		$this->hidden_languages = (array)$hidden_languages;
-		$this->active_languages = $wpml_language_resolution->get_active_language_codes();
+		$this->active_languages = $active_languages;
 	}
 
 	/**
@@ -108,15 +105,16 @@ abstract class WPML_URL_Converter {
 	}
 
 	public function convert_url( $url, $lang_code = false ) {
-		global $sitepress;
-
-		$lang_code = $lang_code ? $lang_code : $sitepress->get_current_language();
-
 		if ( ! $url ) {
 			return $url;
 		}
 
-		$cache_key_args = array( $url, $lang_code );
+		global $sitepress;
+
+		$lang_code = $lang_code ? $lang_code : $sitepress->get_current_language();
+		$negotiation_type = $sitepress->get_setting( 'language_negotiation_type' );
+
+		$cache_key_args = array( $url, $lang_code, $negotiation_type );
 		$cache_key      = md5( wp_json_encode( $cache_key_args ) );
 		$cache_group    = 'convert_url';
 		$cache_found    = false;
@@ -153,7 +151,7 @@ abstract class WPML_URL_Converter {
 			$language = $this->get_lang_from_url_string($url);
 		}
 
-		$lang                = $this->validate_language ( $language, $url );
+		$lang                = $this->validate_language( $language, $url );
 		$this->cache[ $url ] = $lang;
 
 		return $lang;

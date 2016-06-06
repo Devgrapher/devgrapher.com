@@ -117,6 +117,11 @@ class CatList{
     if ( is_array($this->lcp_category_id) ){
       return array('category__and' => $this->lcp_category_id);
     } else {
+      if($this->utils->lcp_not_empty('child_categories') && 
+         (($this->params['child_categories'] === 'no' ) ||
+          ($this->params['child_categories'] === 'false') )){
+        return array('category__in'=> $this->lcp_category_id);
+      }
       return array('cat'=> $this->lcp_category_id);
     }
   }
@@ -404,10 +409,16 @@ class CatList{
   }
 
   public function get_thumbnail($single, $lcp_thumb_class = null){
+    if ($this->utils->lcp_not_empty('force_thumbnail')){
+      $force_thumbnail = $this->params['force_thumbnail'];
+    } else {
+      $force_thumbnail = 'no';
+    }
     return LcpThumbnail::get_instance()->get_thumbnail(
       $single,
       $this->params['thumbnail'],
       $this->params['thumbnail_size'],
+      $force_thumbnail,
       $lcp_thumb_class);
   }
 

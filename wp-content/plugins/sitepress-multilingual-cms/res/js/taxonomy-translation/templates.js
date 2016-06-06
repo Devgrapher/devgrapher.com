@@ -14,7 +14,7 @@ TaxonomyTranslation.data.syncData = {};
 
 
 (function () {
-    TaxonomyTranslation.data.Templates = {
+    var templates = {
         main: [
             "<label for=\"icl_tt_tax_switch\">",
                 "<%=labels.taxToTranslate%>",
@@ -28,15 +28,15 @@ TaxonomyTranslation.data.syncData = {};
                 "</select>",
             "</label>",
             "<div style=\"display:none;\"><span class=\"spinner loading-taxonomy\" style=\"float:left;\"></span><%=labels.preparingTermsData%></div>",
-            "<div style=\"margin-top: 10px;\" id=\"taxonomy-translation\">",
+            "<div style=\"margin-top: 10px; clear: both;\" id=\"taxonomy-translation\">",
             "</div>"],
         tabs: [
-                "<span id=\"term-table-tab-controls\" class=\"wpml-tab-controls\" style=\"white-space: nowrap\">",
+                "<div id=\"term-table-tab-controls\" class=\"wpml-tab-controls\" style=\"white-space: nowrap; clear: both;\">",
                     "<button class=\"nav-tab <%=(mode ==='translate' && taxonomy.hierarchical ? 'nav-tab-active' : '')%>\" id=\"term-table-header\"><%=headerTerms%></button>",
                     "<% if(taxonomy.hierarchical) {%>",
                             "<button class=\"nav-tab <%=(mode ==='sync' && taxonomy.hierarchical ? 'nav-tab-active' : '')%>\" id=\"term-table-sync-header\"><%=syncLabel%></button>",
                     "<% } %>",
-                "</span>"
+                "</div>"
             ],
         taxonomyMainWrap: [
             "<div class=\"icl_tm_wrap\">",
@@ -250,15 +250,11 @@ TaxonomyTranslation.data.syncData = {};
                 "</div>"]
 
     };
+    TaxonomyTranslation.templateCompiler = new WpmlTemplateCompiler(_, templates);
 
     TaxonomyTranslation.getTemplate = function (temp) {
 
-        if (TaxonomyTranslation.data.Templates.hasOwnProperty(temp)) {
-            if (TaxonomyTranslation.data.compiledTemplates[temp] === undefined) {
-                TaxonomyTranslation.data.compiledTemplates[temp] = _.template(TaxonomyTranslation.data.Templates[temp].join("\n"))
-            }
-            return TaxonomyTranslation.data.compiledTemplates[temp];
-        }
+        return TaxonomyTranslation.templateCompiler.getTemplate(temp);
     };
 
 })(TaxonomyTranslation);

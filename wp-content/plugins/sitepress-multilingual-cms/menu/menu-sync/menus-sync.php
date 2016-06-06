@@ -16,7 +16,6 @@ foreach ( $active_languages as $code => $lang ) {
 ?>
 <!--suppress HtmlFormInputWithoutLabel --><!--suppress HtmlUnknownAttribute -->
 <div class="wrap">
-<div id="icon-wpml" class="icon32"><br/></div>
 <h2><?php echo __( 'WP Menus Sync', 'sitepress' ) ?></h2>
 <p><?php echo sprintf( __( 'Menu synchronization will sync the menu structure from the default language of %s to the secondary languages.', 'sitepress' ), $def_lang[ 'display_name' ] ); ?></p>
 
@@ -31,7 +30,7 @@ if ( $icl_menus_sync->is_preview ) {
 	<table id="icl_msync_confirm" class="widefat icl_msync">
 	<thead>
 	<tr>
-		<th scope="row" class="check-column"><input type="checkbox"/></th>
+		<th scope="row" class="menu-check-all"><input type="checkbox"/></th>
 		<th><?php _e( 'Language', 'sitepress' ) ?></th>
 		<th><?php _e( 'Action', 'sitepress' ) ?></th>
 	</tr>

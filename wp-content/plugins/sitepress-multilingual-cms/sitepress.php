@@ -5,7 +5,7 @@ Plugin URI: https://wpml.org/
 Description: WPML Multilingual CMS | <a href="https://wpml.org">Documentation</a> | <a href="https://wpml.org/version/wpml-3-3/">WPML 3.3 release notes</a>
 Author: OnTheGoSystems
 Author URI: http://www.onthegosystems.com/
-Version: 3.3.1
+Version: 3.3.8
 Plugin Slug: sitepress-multilingual-cms
 */
 
@@ -14,11 +14,11 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 if ( defined( 'ICL_SITEPRESS_VERSION' ) || (bool) get_option( '_wpml_inactive' ) === true ) {
 	return;
 }
-define( 'ICL_SITEPRESS_VERSION', '3.3.1' );
+define( 'ICL_SITEPRESS_VERSION', '3.3.8' );
 
 // Do not uncomment the following line!
 // If you need to use this constant, use it in the wp-config.php file
-//define('ICL_SITEPRESS_DEV_VERSION', '3.2.3-dev');
+//define('ICL_SITEPRESS_DEV_VERSION', '3.4-dev');
 
 define( 'ICL_PLUGIN_PATH', dirname( __FILE__ ) );
 define( 'ICL_PLUGIN_FILE', basename( __FILE__ ) );
@@ -31,13 +31,17 @@ if ( ! defined( 'FILTER_SANITIZE_FULL_SPECIAL_CHARS' ) ) {
 }
 require ICL_PLUGIN_PATH . '/inc/functions-helpers.php';
 
+if ( ! class_exists( 'Twig_Autoloader' ) ) {
+	require_once 'lib/Twig/Autoloader.php';
+	Twig_Autoloader::register();
+}
 
-require_once "lib/wpml-autoloader.class.php";
-$wpml_twig = new WPML_Twig();
+require_once 'embedded/wpml/commons/autoloader.php';
+$wpml_auto_loader_instance = WPML_Auto_Loader::get_instance();
+$wpml_auto_loader_instance->register( ICL_PLUGIN_PATH . '/' );
 
 require ICL_PLUGIN_PATH . '/inc/wpml-dependencies-check/wpml-bundle-check.class.php';
 require ICL_PLUGIN_PATH . '/inc/wpml-private-actions.php';
-require ICL_PLUGIN_PATH . '/inc/locale/wpml-locale.class.php';
 require ICL_PLUGIN_PATH . '/inc/functions.php';
 require ICL_PLUGIN_PATH . '/inc/functions-security.php';
 require ICL_PLUGIN_PATH . '/inc/wpml-post-comments.class.php';
@@ -68,7 +72,7 @@ if ( ( ! defined( 'WPML_BYPASS_ICL_CHECK' ) || ! WPML_BYPASS_ICL_CHECK ) && wpml
 }
 
 require ICL_PLUGIN_PATH . '/inc/template-functions.php';
-
+require ICL_PLUGIN_PATH . '/inc/js-scripts.php';
 require ICL_PLUGIN_PATH . '/inc/lang-data.php';
 require ICL_PLUGIN_PATH . '/inc/setup/sitepress-setup.class.php';
 
@@ -91,7 +95,6 @@ require ICL_PLUGIN_PATH . '/inc/post-translation/wpml-admin-post-actions.class.p
 require ICL_PLUGIN_PATH . '/inc/post-translation/wpml-frontend-post-actions.class.php';
 
 require ICL_PLUGIN_PATH . '/inc/url-handling/wpml-url-filters.class.php';
-require ICL_PLUGIN_PATH . '/inc/request-handling/wpml-language-resolution.class.php';
 require ICL_PLUGIN_PATH . '/inc/url-handling/wpml-url-converter.class.php';
 require ICL_PLUGIN_PATH . '/inc/utilities/wpml-languages.class.php';
 require ICL_PLUGIN_PATH . '/inc/utilities/wpml-wp-api.class.php';
@@ -102,7 +105,6 @@ load_essential_globals();
 require ICL_PLUGIN_PATH . '/inc/query-filtering/wpml-query-utils.class.php';
 require ICL_PLUGIN_PATH . '/sitepress.class.php';
 require ICL_PLUGIN_PATH . '/inc/query-filtering/wpml-query-filter.class.php';
-require ICL_PLUGIN_PATH . '/inc/query-filtering/wpml-query-parser.class.php';
 require ICL_PLUGIN_PATH . '/inc/hacks.php';
 require ICL_PLUGIN_PATH . '/inc/upgrade.php';
 require ICL_PLUGIN_PATH . '/inc/language-switcher.php';
@@ -113,9 +115,8 @@ if(defined('WPML_UPGRADE_NOT_POSSIBLE') && WPML_UPGRADE_NOT_POSSIBLE) return;
 
 if(is_admin() || defined('XMLRPC_REQUEST')){
     require ICL_PLUGIN_PATH . '/lib/icl_api.php';
-    require ICL_PLUGIN_PATH . '/lib/xml2array.php';
+    require ICL_PLUGIN_PATH . '/inc/utilities/xml2array.php';
     require ICL_PLUGIN_PATH . '/lib/Snoopy.class.php';
-    require ICL_PLUGIN_PATH . '/inc/url-handling/wpml-language-domains.class.php';
     if ( !defined ( 'DOING_AJAX' ) ) {
         require ICL_PLUGIN_PATH . '/menu/wpml-admin-scripts-setup.class.php';
     }
@@ -157,6 +158,7 @@ wpml_load_request_handler( is_admin(),
                            $sitepress->get_default_language() );
 require ICL_PLUGIN_PATH . '/inc/url-handling/wpml-slug-filter.class.php';
 $wpml_slug_filter = new WPML_Slug_Filter( $wpdb, $sitepress, $wpml_post_translations );
+/** @var array $sitepress_settings */
 $sitepress_settings = $sitepress->get_settings();
 wpml_load_term_filters();
 wpml_maybe_setup_post_edit();
@@ -173,7 +175,8 @@ if ( is_admin() ) {
 }
 
 if(!empty($sitepress_settings['automatic_redirect'])){
-    require ICL_PLUGIN_PATH . '/inc/browser-redirect.php';
+	$wpml_browser_redirect = new WPML_Browser_Redirect( $sitepress );
+	$wpml_browser_redirect->init_hooks();
 }
 
 // activation hook
