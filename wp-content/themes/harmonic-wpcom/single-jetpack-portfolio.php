@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Archive pages for portfolio custom post type.
+ * The template for displaying single pages for the portfolio custom post type.
  *
  * Learn more: http://codex.wordpress.org/Template_Hierarchy
  *

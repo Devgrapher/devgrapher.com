@@ -171,6 +171,7 @@ class WPML_Post_Synchronization extends WPML_SP_And_PT_User {
 				}
 				$data[ 'post_status' ] = $post_status;
 				$wpdb->update ( $wpdb->posts, $data, array( 'ID' => $translated_pid ) );
+				wp_schedule_single_event( strtotime( $post_date_gmt . '+1 second' ), 'publish_future_post', array( $translated_pid ) );
 			}
 			if ( $post_password !== null ) {
 				$wpdb->update ( $wpdb->posts, array( 'post_password' => $post_password ), array( 'ID' => $translated_pid ) );
@@ -253,10 +254,15 @@ class WPML_Post_Synchronization extends WPML_SP_And_PT_User {
 			if ( $new_source_lang_code ) {
 				global $wpdb;
 
-				$wpdb->update( $wpdb->prefix . 'icl_translations',
+				$rows_updated = $wpdb->update( $wpdb->prefix . 'icl_translations',
 				               array( 'source_language_code' => $new_source_lang_code ),
 				               array( 'trid' => $trid, 'source_language_code' => $removed_lang_code )
 				);
+
+				if( 0 < $rows_updated ) {
+					do_action( 'wpml_translation_update', array( 'trid' => $trid ) );
+				}
+
 				$wpdb->query( "	UPDATE {$wpdb->prefix}icl_translations
 								SET source_language_code = NULL
 								WHERE language_code = source_language_code" );

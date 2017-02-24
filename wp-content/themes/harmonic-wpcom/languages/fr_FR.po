@@ -1,0 +1,409 @@
+# Translation of WordPress.com - Themes - Harmonic in French (France)
+# This file is distributed under the same license as the WordPress.com - Themes - Harmonic package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2016-06-13 09:17:59+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
+"Language: fr\n"
+"Project-Id-Version: WordPress.com - Themes - Harmonic\n"
+
+#: inc/jetpack.php:136
+msgid "Older projects"
+msgstr "Projets suivants"
+
+#: inc/customizer.php:23
+msgid "Theme Options"
+msgstr "Options du thème"
+
+#: templates/front-page.php:29
+msgid "Hey! Your content is hidden! Go to <a href=\"%1$s\">Customize &rarr; Theme Options &rarr; Visibility</a> to fix that."
+msgstr "Votre contenu est caché&nbsp;! Rendez-vous sur <a href=\"%1$s\">Personnaliser &rarr; Options du thème &rarr; Visibilité</a> pour régler le problème."
+
+#. Template Name of the plugin/theme
+#: wp-content/themes/pub/harmonic/templates/fullwidth-page.php
+msgid "Full Width"
+msgstr "Plein écran"
+
+#. Template Name of the plugin/theme
+#: wp-content/themes/pub/harmonic/templates/front-page.php
+msgid "Front Page"
+msgstr "Page d'Accueil"
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/harmonic/style.css
+msgid "Harmonic makes your content sing. No matter if you are a band looking to get a record deal, a travel blogger wanting to document your trip around the world or just someone that wants to make their home on WordPress."
+msgstr "Harmonic fait chanter votre blog. Et peu importe que vous soyez un groupe cherchant à enregistrer votre album, un globetrotteur qui raconte son voyage autour monde, ou juste quelqu'un qui cherche à créer son propre site sur WordPress, ce thème est fait pour vous."
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "Résultats de recherche pour : %s"
+
+#: page.php:48 single.php:42 templates/fullwidth-page.php:46
+#: templates/portfolio-page.php:44
+msgid "Read more"
+msgstr "Lire la Suite"
+
+#: inc/template-tags.php:194
+msgid "<span class=\"posted-on\">%1$s</span>"
+msgstr "<span class=\"posted-on\">%1$s</span>"
+
+#: inc/template-tags.php:157
+msgid " (Edit)"
+msgstr "(modifier)"
+
+#: inc/template-tags.php:150
+msgid "%s "
+msgstr "%s"
+
+#: inc/template-tags.php:147
+msgid "Your comment is awaiting moderation."
+msgstr "Votre commentaire est en attente de modération"
+
+#: inc/template-tags.php:130
+msgid "Pingback:"
+msgstr "Pingback: "
+
+#: inc/template-tags.php:108
+msgctxt "Next post link"
+msgid "Next"
+msgstr "Suivant"
+
+#: inc/template-tags.php:107
+msgctxt "Previous post link"
+msgid "Previous"
+msgstr "Précédent"
+
+#: inc/template-tags.php:104
+msgid "Post navigation"
+msgstr "Navigation des articles"
+
+#: inc/template-tags.php:57
+msgid "More Projects"
+msgstr "Plus de projets"
+
+#: inc/template-tags.php:35
+msgid "<span class=\"meta-nav\">Next</span>"
+msgstr "<span class=\"meta-nav\">Suivant</span>"
+
+#: inc/template-tags.php:31
+msgid "<span class=\"meta-nav\">Previous</span>"
+msgstr "<span class=\"meta-nav\">Précédent</span>"
+
+#: inc/template-tags.php:27
+msgid "Posts navigation"
+msgstr "Navigation des articles"
+
+#: inc/extras.php:120
+msgid "Read more <span class=\"screen-reader-text\">%1$s</span>"
+msgstr "Lire la suite <span class=\"screen-reader-text\">%1$s</span>"
+
+#: inc/extras.php:70
+msgid "Page %s"
+msgstr "Page %s"
+
+#: inc/customizer.php:305
+msgid "Portfolio front"
+msgstr "Affichage du portfolio"
+
+#: inc/customizer.php:259
+msgid "Widgets"
+msgstr "Widgets"
+
+#: inc/customizer.php:212
+msgid "Page"
+msgstr "Page"
+
+#: inc/customizer.php:200 inc/customizer.php:247 inc/customizer.php:294
+#: inc/customizer.php:340
+msgid "Footer Link Text"
+msgstr "Lien du texte du pied de page"
+
+#: inc/customizer.php:165
+msgid "News"
+msgstr "Nouvelles"
+
+#: inc/customizer.php:154
+msgid "Hide Tagline"
+msgstr "Masquer le slogan"
+
+#: inc/customizer.php:142 inc/customizer.php:189 inc/customizer.php:236
+#: inc/customizer.php:283 inc/customizer.php:329
+msgid "Add background shade"
+msgstr "Ajouter un effet d&rsquo;ombre au fond d&rsquo;écran"
+
+#: inc/customizer.php:131 inc/customizer.php:178 inc/customizer.php:225
+#: inc/customizer.php:272 inc/customizer.php:318
+msgid "Background"
+msgstr "Arrière-plan"
+
+#: inc/customizer.php:118
+msgid "Title"
+msgstr "Titre"
+
+#: inc/customizer.php:108
+msgid "Hide Front Portfolio Section"
+msgstr "Cacher la section d&rsquo;affichage du portfolio"
+
+#: inc/customizer.php:96
+msgid "Hide Widgets Section"
+msgstr "Cacher la section Widgets"
+
+#: inc/customizer.php:84
+msgid "Hide Page Section"
+msgstr "Cacher la section Page"
+
+#: inc/customizer.php:72
+msgid "Hide News Section"
+msgstr "Cacher la section Actualité"
+
+#: inc/customizer.php:62
+msgid "Hide Title Section"
+msgstr "Cacher la section du titre"
+
+#: inc/customizer.php:51
+msgid "Visibility"
+msgstr "Visibilit&eacute;"
+
+#: inc/customizer.php:46
+msgid "Square (1:1)"
+msgstr "Carré (1:1)"
+
+#: inc/customizer.php:45
+msgid "Portrait (3:4)"
+msgstr "Portrait (3:4)"
+
+#: inc/customizer.php:44
+msgid "Landscape (4:3)"
+msgstr "Paysage (4:3)"
+
+#: inc/customizer.php:39
+msgid "Portfolio Thumbnail Aspect Ratio"
+msgstr "Aspect des vignettes de portfolio"
+
+#: inc/customizer.php:24
+msgid "Harmonic Theme Options"
+msgstr "Options du thème Harmonic"
+
+#: header-featureimage.php:28 header-para.php:28 header-portfolio.php:28
+#: header-singleportfolio.php:28 header.php:28
+msgid "Menu"
+msgstr "Menu"
+
+#: functions.php:101
+msgid "Front page"
+msgstr "Page d'Accueil"
+
+#: functions.php:93
+msgid "Sidebar"
+msgstr "Colonne latérale"
+
+#: functions.php:67
+msgid "Social Links Menu"
+msgstr "Menu des Liens Sociaux"
+
+#: functions.php:66
+msgid "Primary Menu"
+msgstr "Menu principal"
+
+#: footer-para.php:14 header-featureimage.php:34 header-featureimage.php:56
+#: header-para.php:35 header-para.php:57 header-portfolio.php:34
+#: header-portfolio.php:56 header-singleportfolio.php:35
+#: header-singleportfolio.php:57 header.php:35 header.php:57
+msgid "Skip to content"
+msgstr "Aller au contenu principal"
+
+#: footer-featureimage.php:24 footer-para.php:50 footer-singleportfolio.php:21
+#: footer.php:20
+msgid "Theme: %1$s by %2$s."
+msgstr "Thème %1$s par %2$s."
+
+#: footer-featureimage.php:22 footer-para.php:48 footer-singleportfolio.php:19
+#: footer.php:18
+msgid "Proudly powered by %s"
+msgstr "Fièrement propulsé par %s"
+
+#: content.php:61
+msgid "Permalink to %s"
+msgstr "Permalien vers %s"
+
+#: content-single.php:47
+msgid "%1$s"
+msgstr "%1$s"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:43
+msgid " "
+msgstr ""
+
+#: content-single.php:29 content.php:13
+msgid "All %s posts"
+msgstr "Tous les articles de %s"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:19 content.php:28
+msgid ", "
+msgstr ", "
+
+#: content-portfolio-single.php:33 content.php:79
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Lire la suite <span class=\"meta-nav\">&rarr;</span>"
+
+#: content-portfolio-single.php:21
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ", "
+
+#: content-portfolio-single.php:18 content-single.php:36 content.php:38
+msgid "% Comments"
+msgstr "% commentaires"
+
+#: content-portfolio-single.php:18 content-single.php:36 content.php:38
+msgid "1 Comment"
+msgstr "Un commentaire"
+
+#: content-portfolio-single.php:18 content-single.php:36 content.php:38
+msgid "Leave a comment"
+msgstr "Laisser un commentaire"
+
+#: content-page.php:23 content-portfolio-single.php:23 content-single.php:51
+#: content.php:52 inc/template-tags.php:130 templates/portfolio-page.php:75
+msgid "Edit"
+msgstr "Modifier"
+
+#: content-page.php:18 content-portfolio-single.php:36 content-single.php:65
+#: content.php:82 templates/portfolio-page.php:68
+msgid "Pages:"
+msgstr "Pages&nbsp;:"
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Contenu Introuvable. Réessayez en modifiant les termes de recherche."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Pr&ecirc;t &agrave; publier votre premier article ? <a href=\"%1$s\">Allons-y !</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "Aucun Résultat"
+
+#: content-front-portfolio.php:88 content-none.php:28
+#: templates/portfolio-page.php:126
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Contenu Introuvable. Voulez-vous lancer une recherche?"
+
+#: content-front-portfolio.php:84 templates/portfolio-page.php:122
+msgid "Ready to publish your first project? <a href=\"%1$s\">Get started here</a>."
+msgstr "Prêt à publier votre premier projet ? <a href=\"%1$s\">Commencez ici</a>."
+
+#: content-front-portfolio.php:78 templates/portfolio-page.php:116
+msgid "No Project Found"
+msgstr "Pas de projet trouvé"
+
+#: comments.php:63
+msgid "Comments are closed."
+msgstr "Les commentaires sont fermés."
+
+#: comments.php:39 comments.php:53
+msgid "Newer Comments &rarr;"
+msgstr "Commentaires Plus Récents &rarr;"
+
+#: comments.php:38 comments.php:52
+msgid "&larr; Older Comments"
+msgstr "&larr; Commentaires Pr&eacute;c&eacute;dents"
+
+#: comments.php:37 comments.php:51
+msgid "Comment navigation"
+msgstr "Navigation des commentaires"
+
+#: comments.php:30
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "Une r&eacute;flexion sur &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s r&eacute;flexions sur &ldquo;%2$s&rdquo;"
+
+#: archive.php:66
+msgid "Archives"
+msgstr "Archives"
+
+#: archive.php:63
+msgid "Chats"
+msgstr "Chats"
+
+#: archive.php:60
+msgid "Audios"
+msgstr "Audios"
+
+#: archive.php:57
+msgid "Statuses"
+msgstr "États"
+
+#: archive.php:54
+msgid "Links"
+msgstr "Liens"
+
+#: archive.php:51
+msgid "Quotes"
+msgstr "Citations"
+
+#: archive.php:48
+msgid "Videos"
+msgstr "Vidéos"
+
+#: archive.php:45
+msgid "Images"
+msgstr "Images"
+
+#: archive.php:42
+msgid "Galleries"
+msgstr "Galeries"
+
+#: archive.php:39
+msgid "Asides"
+msgstr "Apart&eacute;s"
+
+#: archive.php:36
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#: archive.php:36
+msgid "Year: %s"
+msgstr "Ann&eacute;e: %s"
+
+#: archive.php:33
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#: archive.php:33
+msgid "Month: %s"
+msgstr "Mois: %s"
+
+#: archive.php:30
+msgid "Day: %s"
+msgstr "Jour: %s"
+
+#: archive.php:27
+msgid "Author: %s"
+msgstr "Auteur : %s"
+
+#. #-#-#-#-#  harmonic.pot (Harmonic 1.1.0-wpcom)  #-#-#-#-#
+#. Template Name of the plugin/theme
+#: inc/customizer.php:28
+#: wp-content/themes/pub/harmonic/templates/portfolio-page.php
+msgid "Portfolio"
+msgstr "Portfolio"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "Apparemment, rien n&rsquo;a été trouvé à cette adresse. Essayez avec recherche&nbsp;?"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Oups ! Cette page est introuvable."

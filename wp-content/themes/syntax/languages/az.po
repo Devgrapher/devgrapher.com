@@ -1,0 +1,324 @@
+# Translation of Syntax in Azerbaijani
+# This file is distributed under the same license as the Syntax package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-05-15 17:39:23+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Syntax\n"
+
+#. Author URI of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "https://wordpress.com/themes/"
+msgstr "https://wordpress.com/themes/"
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "Syntax is a theme designed with writing--and reading--in mind. With large, easy-to-read type, a fixed navigation menu, and a responsive design that looks beautiful on all screen sizes, it's perfect for writers or bloggers who want a clean, sophisticated look and feel for their site."
+msgstr ""
+
+#: searchform.php:11
+msgctxt "submit button"
+msgid "Search"
+msgstr "Axtar"
+
+#: searchform.php:10
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "Axtar &hellip;"
+
+#: searchform.php:9
+msgctxt "assistive text"
+msgid "Search"
+msgstr "Axtar"
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr " %s üçün Axtarışın Nəticələri:"
+
+#: inc/template-tags.php:129
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr "<span class=\"entry-date\"><a href=\"%1$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%2$s\">%3$s</time></a></span> <span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+
+#: inc/template-tags.php:120
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Featured</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Özəl</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+
+#: inc/template-tags.php:124 inc/template-tags.php:135
+msgid "View all posts by %s"
+msgstr "%s tərəfindən yazılmış bütün yazılara bax"
+
+#: inc/template-tags.php:95
+msgid "Your comment is awaiting moderation."
+msgstr "Şərhiniz yoxlama gözləyir."
+
+#: inc/template-tags.php:88
+msgctxt "1: date, 2: time"
+msgid "%1$s at %2$s"
+msgstr "%1$s %2$s"
+
+#: inc/template-tags.php:82
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "%s <span class=\"says\">dedi ki:</span>"
+
+#: inc/template-tags.php:72
+msgid "Pingback:"
+msgstr "Geri bildiriş: "
+
+#: inc/template-tags.php:48
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Yeni yazılar <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/template-tags.php:44
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Əski yazılar"
+
+#: inc/template-tags.php:39
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:38
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:34
+msgid "Post navigation"
+msgstr "Yazı naviqasiyaları"
+
+#: inc/extras.php:66
+msgid "Page %s"
+msgstr "Səhifə %s"
+
+#: image.php:106
+msgid "Both comments and trackbacks are currently closed."
+msgstr "Şərhlər və geri izləmələr indilik bağlıdır."
+
+#: image.php:104
+msgid "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">post a comment</a>."
+msgstr "Geri izləmələr bağlıdır, amma <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">bir şərh</a> yaza bilərsiniz."
+
+#: image.php:102
+msgid "Comments are closed, but you can leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "Şərhlər bağlıdır, amma geri izləmə qoya bilərsiniz: <a class=\"trackback-link\" href=\"%s\" title=\"Yazınızdan Geri İzləmə Bağlantısı\" rel=\"trackback\">Geri İzləmə Bağlantısı</a>."
+
+#: image.php:100
+msgid "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Bir şərh yazın</a> və ya bir geri izləmə qoyun: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Geri İzləmə Ünvanı</a>. "
+
+#: image.php:87
+msgid "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>"
+msgstr "<span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> tarixində <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> üzərində <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a> içində dərc edildi."
+
+#: image.php:21
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Sonrakı <span class=\"meta-nav\">&rarr;</span>"
+
+#: image.php:20
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> Öncəki"
+
+#: header.php:82
+msgid "Skip to content"
+msgstr "Mühtəviyyata keç"
+
+#: header.php:80
+msgid "Menu"
+msgstr "Menyu"
+
+#: header.php:72
+msgid "Tumblr"
+msgstr "Tumblr"
+
+#: header.php:67
+msgid "Twitter"
+msgstr "Twitter"
+
+#: header.php:62
+msgid "Path"
+msgstr "Yol"
+
+#: header.php:57
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: header.php:52
+msgid "Google+"
+msgstr "Google+"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:136
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr "açıq"
+
+#: header.php:47
+msgid "Facebook"
+msgstr "Facebook"
+
+#: functions.php:86
+msgid "Footer Sidebar 2"
+msgstr "Zirzəmi yan menyu çubuğu 2"
+
+#: functions.php:94
+msgid "Footer Sidebar 3"
+msgstr "Zirzəmi yan menyu çubuğu 3"
+
+#: functions.php:78
+msgid "Footer Sidebar 1"
+msgstr "Zirzəmi yan menyu çubuğu 1"
+
+#: functions.php:53
+msgid "Footer Menu"
+msgstr "Zirzəmi Menyusu"
+
+#: functions.php:52
+msgid "Primary Menu"
+msgstr "Əsas menyu"
+
+#: footer.php:22
+msgid "Theme: %1$s by %2$s."
+msgstr "Mövzu: %1$s tərəfindən %2$s."
+
+#: footer.php:20
+msgid "Proudly powered by %s"
+msgstr "%s qürurla təqdim edər"
+
+#: footer.php:20
+msgid "A Semantic Personal Publishing Platform"
+msgstr "Müasir Fərdi Yayın Platforması"
+
+#: content.php:55
+msgid "% Comments"
+msgstr "% Şərh"
+
+#: content.php:55
+msgid "1 Comment"
+msgstr "1 Şərh"
+
+#: content.php:55
+msgid "Leave a comment"
+msgstr "Bir şərh yazın"
+
+#: content.php:30
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Oxumağa davam et <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:31 content.php:45
+msgid ", "
+msgstr ","
+
+#: content-single.php:12 content.php:19
+msgid "All %s posts"
+msgstr "bütün %s  yazıları"
+
+#: content-page.php:23 content-single.php:38 content.php:58 image.php:108
+#: inc/template-tags.php:72 inc/template-tags.php:91
+msgid "Edit"
+msgstr "Redaktə et"
+
+#: content-page.php:18 content-single.php:21 content.php:33 image.php:77
+msgid "Pages:"
+msgstr "Səhifələr:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Axtardığınız səhifə tapılmadı. Bəlkə axtarış qutusu axtardığınızı tapmaqda sizə kömək edər."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Bağışlayın, axtarış kriteriyalarınıza uyğun heç bir şey tapılmadı. Bəzi fərqli açar kəlmələrdən istifadə edərək təkrar yoxlayın."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "İlk yazınızı dərc etməyə hazırsınızmı? <a href=\"%1$s\">Buradan başlayın</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "Tapılmadı"
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr "Şərh üçün bağlıdır."
+
+#: comments.php:38 comments.php:58
+msgid "Newer Comments &rarr;"
+msgstr "Yeni şərhlər &rarr;"
+
+#: comments.php:37 comments.php:57
+msgid "&larr; Older Comments"
+msgstr "&larr; Əski şərhlər"
+
+#: comments.php:36 comments.php:56
+msgid "Comment navigation"
+msgstr "Şərh naviqasiyası"
+
+#: comments.php:29
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "&ldquo;%2$s&rdquo; üzərinə bir şərh"
+msgstr[1] "&ldquo;%2$s&rdquo; üzərinə %1$s şərh"
+
+#: archive.php:63
+msgid "Archives"
+msgstr "Arxivlər"
+
+#: archive.php:60
+msgid "Links"
+msgstr "Bağlantılar"
+
+#: archive.php:57
+msgid "Quotes"
+msgstr "Sitatlar"
+
+#: archive.php:54
+msgid "Videos"
+msgstr "Videolar"
+
+#: archive.php:51
+msgid "Images"
+msgstr "Təsvirlər"
+
+#: archive.php:48
+msgid "Asides"
+msgstr "Kənarlar"
+
+#: archive.php:45
+msgid "Yearly Archives: %s"
+msgstr "İllik Arxivlər: %s"
+
+#: archive.php:42
+msgid "Monthly Archives: %s"
+msgstr "Aylıq Arxivlər: %s"
+
+#: archive.php:39
+msgid "Daily Archives: %s"
+msgstr "Günlük Arxivlər: %s"
+
+#: archive.php:31
+msgid "Author Archives: %s"
+msgstr "Müəllifin arxivləri: %s"
+
+#: archive.php:24
+msgid "Tag Archives: %s"
+msgstr "%s Etiket Arxivləri: "
+
+#: archive.php:21
+msgid "Category Archives: %s"
+msgstr "Kateqoriya Arxivləri: %s"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "Burada heç bir şeyin tapılmadığı görünür. Bəlkə aşağıdakı bağlantılardan birini yoxlayasan və ya bir axtarış edəsən?"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Bağışlayın! Bu səhifə tapılmır."

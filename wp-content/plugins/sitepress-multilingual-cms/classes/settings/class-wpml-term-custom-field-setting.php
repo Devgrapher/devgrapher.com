@@ -19,6 +19,41 @@ class WPML_Term_Custom_Field_Setting extends WPML_Custom_Field_Setting {
 	}
 
 	/**
+	 * @return string
+	 */
+	protected function get_editor_style_array_setting_index() {
+
+		return 'custom_term_fields_editor_style';
+	}
+
+	protected function get_translate_link_target_array_setting_index() {
+		
+		return 'custom_term_fields_translate_link_target';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_editor_label_array_setting_index() {
+		
+		return 'custom_term_fields_editor_label';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_editor_group_array_setting_index() {
+		
+		return 'custom_term_fields_editor_group';
+	}
+
+
+	protected function get_convert_to_sticky_array_setting_index() {
+		
+		return 'custom_term_fields_convert_to_sticky';
+	}
+
+	/**
 	 * @return  string[]
 	 */
 	protected function get_excluded_keys() {

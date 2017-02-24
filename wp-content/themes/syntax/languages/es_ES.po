@@ -1,0 +1,324 @@
+# Translation of Syntax in Spanish (Spain)
+# This file is distributed under the same license as the Syntax package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2014-06-30 17:26:17+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Syntax\n"
+
+#. Author URI of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "https://wordpress.com/themes/"
+msgstr ""
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "Syntax is a theme designed with writing--and reading--in mind. With large, easy-to-read type, a fixed navigation menu, and a responsive design that looks beautiful on all screen sizes, it's perfect for writers or bloggers who want a clean, sophisticated look and feel for their site."
+msgstr "Syntax es un tema diseñado con la mente puesta en la escritura y la lectura. Gracias a su letra grande y fácil de leer, un menú de navegación fijo y un diseño adaptativo que se muestra atractivo en todos los tamaños de pantallas. Es perfecto para escritores o blogueros que quieran una apariencia nítida y sofisticada para su sitio."
+
+#: searchform.php:11
+msgctxt "submit button"
+msgid "Search"
+msgstr "Buscar"
+
+#: searchform.php:10
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "Buscar &hellip;"
+
+#: searchform.php:9
+msgctxt "assistive text"
+msgid "Search"
+msgstr "Buscar"
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "Resultados de la búsqueda para: %s"
+
+#: inc/template-tags.php:129
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr ""
+
+#: inc/template-tags.php:120
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Featured</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+msgstr ""
+
+#: inc/template-tags.php:124 inc/template-tags.php:135
+msgid "View all posts by %s"
+msgstr "Ver todas las entradas de %s"
+
+#: inc/template-tags.php:95
+msgid "Your comment is awaiting moderation."
+msgstr "Tu comentario está pendiente de moderación."
+
+#: inc/template-tags.php:88
+msgctxt "1: date, 2: time"
+msgid "%1$s at %2$s"
+msgstr "%1$s a las %2$s"
+
+#: inc/template-tags.php:82
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "%s <span class=\"says\">dijo:</span>"
+
+#: inc/template-tags.php:72
+msgid "Pingback:"
+msgstr "Pingback:"
+
+#: inc/template-tags.php:48
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Entradas más nuevas <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/template-tags.php:44
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Entradas más antiguas"
+
+#: inc/template-tags.php:39
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:38
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:34
+msgid "Post navigation"
+msgstr "Navegador de artículos"
+
+#: inc/extras.php:66
+msgid "Page %s"
+msgstr "Página %s"
+
+#: image.php:106
+msgid "Both comments and trackbacks are currently closed."
+msgstr "Tanto los comentarios como las referencias están actualmente cerrados."
+
+#: image.php:104
+msgid "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">post a comment</a>."
+msgstr "Las referencias están cerradas pero puedes <a class=\"comment-link\" href=\"#respond\" title=\"Publicar un comentario\">publicar un comentario</a>."
+
+#: image.php:102
+msgid "Comments are closed, but you can leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "Los comentarios están cerrados pero puedes hacer una referencia: <a class=\"trackback-link\" href=\"%s\" title=\"URL de la referencia a tu entrada\" rel=\"trackback\">URL de referencia</a>."
+
+#: image.php:100
+msgid "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "<a class=\"comment-link\" href=\"#respond\" title=\"Publica un comentario\">Publica un comentario</a> o deja una referencia: <a class=\"trackback-link\" href=\"%s\" title=\"URL de la referencia a tu entrada\" rel=\"trackback\">URL de la referencia</a>."
+
+#: image.php:87
+msgid "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>"
+msgstr "Publicado <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> en <a href=\"%3$s\" title=\"Enlace a la imagen en tamaño real\">%4$s &times; %5$s</a> en <a href=\"%6$s\" title=\"Regresar a %7$s\" rel=\"galería\">%8$s</a>"
+
+#: image.php:21
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Siguiente <span class=\"meta-nav\">&rarr;</span>"
+
+#: image.php:20
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> Anterior"
+
+#: header.php:82
+msgid "Skip to content"
+msgstr "Saltar al contenido."
+
+#: header.php:80
+msgid "Menu"
+msgstr "Menú"
+
+#: header.php:72
+msgid "Tumblr"
+msgstr "Tumblr"
+
+#: header.php:67
+msgid "Twitter"
+msgstr "Twitter"
+
+#: header.php:62
+msgid "Path"
+msgstr "Ruta"
+
+#: header.php:57
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: header.php:52
+msgid "Google+"
+msgstr "Google+"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:136
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr "activado"
+
+#: header.php:47
+msgid "Facebook"
+msgstr "Facebook"
+
+#: functions.php:86
+msgid "Footer Sidebar 2"
+msgstr "Barra lateral a pie de página 2"
+
+#: functions.php:94
+msgid "Footer Sidebar 3"
+msgstr "Barra lateral a pie de página 3"
+
+#: functions.php:78
+msgid "Footer Sidebar 1"
+msgstr "Barra lateral a pie de página 1"
+
+#: functions.php:53
+msgid "Footer Menu"
+msgstr "Menú a pie de página"
+
+#: functions.php:52
+msgid "Primary Menu"
+msgstr "Menú Principal"
+
+#: footer.php:22
+msgid "Theme: %1$s by %2$s."
+msgstr "Tema: %1$s por %2$s."
+
+#: footer.php:20
+msgid "Proudly powered by %s"
+msgstr "Funciona con %s"
+
+#: footer.php:20
+msgid "A Semantic Personal Publishing Platform"
+msgstr "Una Plataforma de Publicación Semántica Personal"
+
+#: content.php:55
+msgid "% Comments"
+msgstr "% comentarios"
+
+#: content.php:55
+msgid "1 Comment"
+msgstr "1 comentario"
+
+#: content.php:55
+msgid "Leave a comment"
+msgstr "Deja un comentario"
+
+#: content.php:30
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Sigue leyendo <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:31 content.php:45
+msgid ", "
+msgstr ", "
+
+#: content-single.php:12 content.php:19
+msgid "All %s posts"
+msgstr "Las %s entradas"
+
+#: content-page.php:23 content-single.php:38 content.php:58 image.php:108
+#: inc/template-tags.php:72 inc/template-tags.php:91
+msgid "Edit"
+msgstr "Editar"
+
+#: content-page.php:18 content-single.php:21 content.php:33 image.php:77
+msgid "Pages:"
+msgstr "Páginas:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Parece que no podemos encontrar lo que estás buscando. Tal vez la búsqueda le pueda ayudar."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Lo sentimos, pero nada coincidió con su búsqueda. Por favor inténtelo de nuevo con otras palabras clave."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "¿Preparado para publicar tu primera entrada? <a href=\"%1$s\">Empieza aquí</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "No se ha encontrado nada"
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr "Los comentarios están cerrados."
+
+#: comments.php:38 comments.php:58
+msgid "Newer Comments &rarr;"
+msgstr "Comentarios recientes &rarr;"
+
+#: comments.php:37 comments.php:57
+msgid "&larr; Older Comments"
+msgstr "&larr; Comentarios antiguos"
+
+#: comments.php:36 comments.php:56
+msgid "Comment navigation"
+msgstr "Navegación de comentarios"
+
+#: comments.php:29
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "Un comentario en &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s comentarios en &ldquo;%2$s&rdquo;"
+
+#: archive.php:63
+msgid "Archives"
+msgstr "Archivos"
+
+#: archive.php:60
+msgid "Links"
+msgstr "Enlaces"
+
+#: archive.php:57
+msgid "Quotes"
+msgstr "Citas"
+
+#: archive.php:54
+msgid "Videos"
+msgstr "Vídeos"
+
+#: archive.php:51
+msgid "Images"
+msgstr "Imágenes"
+
+#: archive.php:48
+msgid "Asides"
+msgstr "Apartados"
+
+#: archive.php:45
+msgid "Yearly Archives: %s"
+msgstr "Archivo Anual: %s"
+
+#: archive.php:42
+msgid "Monthly Archives: %s"
+msgstr "Archivos Mensuales: %s"
+
+#: archive.php:39
+msgid "Daily Archives: %s"
+msgstr "Archivos diarios: %s"
+
+#: archive.php:31
+msgid "Author Archives: %s"
+msgstr "Archivo del Autor: %s"
+
+#: archive.php:24
+msgid "Tag Archives: %s"
+msgstr "Archivo de la etiqueta: %s"
+
+#: archive.php:21
+msgid "Category Archives: %s"
+msgstr "Archivo de la categoría: %s"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "Parece que no se encontró nada en esta ubicación. ¿Quizás pruebes con uno de los enlaces de abajo o una búsqueda?"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "¡Vaya! Esa página no se puede encontrar."

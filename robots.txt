@@ -1,0 +1,5 @@
+# robots.txt for https://devgrapher.com/
+
+User-agent: *
+Disallow: /static/ 
+

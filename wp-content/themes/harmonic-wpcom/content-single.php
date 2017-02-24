@@ -33,7 +33,7 @@ $formats = get_theme_support( 'post-formats' );
 		<?php endif; ?>
 
 		<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-			<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'harmonic' ), __( '1 Comment', 'harmonic' ), __( '% Comments', 'harmonic' ) ); ?></span>
+			<span class="comments-link"><a href="#respond"><?php comments_number( __( 'Leave a comment', 'harmonic' ), __( '1 Comment', 'harmonic' ), __( '% Comments', 'harmonic' ) ); ?></a></span>
 		<?php endif; ?>
 
 		<?php if ( 'post' == get_post_type() ) : // Hide category and tag text for pages on Search ?>

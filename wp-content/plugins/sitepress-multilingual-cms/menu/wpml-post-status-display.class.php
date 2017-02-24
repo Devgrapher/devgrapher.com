@@ -79,6 +79,7 @@ class WPML_Post_Status_Display {
 		global $wpml_post_translations;
 
 		$lang_code = $wpml_post_translations->get_element_lang_code ( $post_id );
+		$post_type = $wpml_post_translations->get_type( $post_id );
 		$icon      = $update ? 'needs-update.png' : 'edit_translation.png';
 
 		$text = sprintf (
@@ -91,7 +92,7 @@ class WPML_Post_Status_Display {
 		$link = 'post.php?' . http_build_query (
 				array( 'lang'      => $lang_code,
 				       'action'    => 'edit',
-				       'post_type' => get_post_type ( $post_id ),
+				       'post_type' => $post_type,
 				       'post'      => $post_id
 				)
 			);

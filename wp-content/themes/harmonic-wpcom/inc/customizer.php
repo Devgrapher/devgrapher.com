@@ -20,7 +20,7 @@ function harmonic_customize_register( $wp_customize ) {
     	'priority'       => 130,
     	'capability'     => 'edit_theme_options',
     	'theme_supports' => '',
-    	'title'          => __( 'Theme', 'harmonic' ),
+    	'title'          => __( 'Theme Options', 'harmonic' ),
     	'description'    => __( 'Harmonic Theme Options', 'harmonic' ),
 	) );
 

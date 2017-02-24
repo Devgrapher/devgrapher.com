@@ -14,9 +14,20 @@ class WPML_Root_Page_Actions {
 		$root_id = $this->get_root_page_id ();
 
 		if ( $root_id ) {
+
+			$update_args = array(
+				'element_id' => $root_id,
+				'element_type' => 'post_page',
+				'context' => 'post'
+			);
+
+			do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'before_delete' ) ) );
+
 			$wpdb->delete (
 				$wpdb->prefix . 'icl_translations', array( 'element_id' => $root_id, 'element_type' => 'post_page' ), array( '%d', '%s' )
 			);
+
+			do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'after_delete' ) ) );
 		}
 	}
 
@@ -30,8 +41,13 @@ class WPML_Root_Page_Actions {
 	 * @uses \WPML_Root_Page::is_root_page
 	 */
 	public function is_url_root_page( $url ) {
+		$ret = false;
 
-		return WPML_Root_Page::is_root_page( $url );
+		if ( $this->get_root_page_id() ) {
+			$ret = WPML_Root_Page::is_root_page( $url );
+		}
+
+		return $ret;
 	}
 
 	/**
@@ -47,6 +63,7 @@ class WPML_Root_Page_Actions {
 		       && ! empty( $urls['directory_for_default_language'] )
 		       && isset( $urls['show_on_root'] )
 		       && $urls['show_on_root'] === 'page'
+		       && $urls['root_page']
 				? $urls['root_page'] : false;
 	}
 
@@ -172,12 +189,22 @@ class WPML_Root_Page_Actions {
 				remove_action ( 'save_post', array( $iclTranslationManagement, 'save_post_actions' ), 11, 2 );
 			}
 
+			$update_args = array(
+				'element_id' => $post->ID,
+				'element_type' => 'post_page',
+				'context' => 'post'
+			);
+
+			do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'before_delete' ) ) );
+
 			$wpdb->query (
 				$wpdb->prepare (
 					"DELETE FROM {$wpdb->prefix}icl_translations WHERE element_type='post_page' AND element_id=%d",
 					$post->ID
 				)
 			);
+
+			do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'after_delete' ) ) );
 		}
 	}
 
@@ -247,6 +274,7 @@ class WPML_Root_Page_Actions {
 		$q->query_vars['error']   = '';
 		$q->is_404                = false;
 		$q->query['error']        = null;
+		$q->is_home               = false;
 
 		return $q;
 	}

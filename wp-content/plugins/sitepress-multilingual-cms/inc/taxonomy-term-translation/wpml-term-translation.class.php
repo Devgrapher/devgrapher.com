@@ -115,6 +115,10 @@ class WPML_Term_Translation extends WPML_Element_Translation {
 						AND t.element_type = CONCAT('tax_', tax.taxonomy)";
 	}
 
+	protected function get_type_prefix() {
+		return 'tax_';
+	}
+
 	private function maybe_warm_term_id_cache() {
 
 		if ( ! isset( $this->ttids ) || ! isset( $this->term_ids ) ) {

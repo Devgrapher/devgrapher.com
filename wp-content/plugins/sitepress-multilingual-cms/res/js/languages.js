@@ -216,11 +216,41 @@ jQuery(document).ready(function(){
     jQuery(document).on('click', '#installer_registration_form :submit', function(){
         jQuery('#installer_registration_form').find('input[name=button_action]').val(jQuery(this).attr('name'));
     });
+
+    manageWizardButtonStatesSpinner();
 	
 	// Initialize the language switcher preview on document ready
 	updateSwitcherPreview();
-});
 
+	jQuery(document).on('click', '#sso_information', function (e) {
+		e.preventDefault();
+		jQuery('#language_per_domain_sso_description').dialog({
+			modal: true,
+			width: 'auto',
+			height: 'auto'
+		});
+	});
+})
+
+function manageWizardButtonStatesSpinner(){
+    var buttons = jQuery( '#icl_setup_back_1, #icl_setup_next_1, #icl_setup_back_2' );
+    var submit_buttons = jQuery( '#icl_initial_language .buttons-wrap .button-primary, #icl_setup_back_2, #icl_setup_nav_3 .button-primary, #installer_registration_form div .button-primary' );
+    var forms = jQuery( '#icl_initial_language, #icl_save_language_switcher_options, #installer_registration_form' );
+    var spinner = jQuery( '<span class="spinner"></span>' );
+    var spinner_location = '#icl_initial_language .buttons-wrap input, #icl_setup_back_1, #icl_setup_back_2, #icl_save_language_switcher_options, #installer_registration_form div .button-primary';
+
+    spinner.insertBefore( spinner_location );
+
+    jQuery( forms ).submit(function(){
+        spinner.addClass( 'is-active' );
+        jQuery( submit_buttons ).attr( 'disabled', 'disabled' );
+    });
+
+    jQuery( buttons ).click(function(){
+        spinner.addClass( 'is-active' );
+        buttons.attr( 'disabled', 'disabled');
+    });
+}
 
 function updateSwitcherPreview(){
 
@@ -579,6 +609,8 @@ function iclUseDirectoryToggle() {
 		var form = jQuery('#icl_save_language_negotiation_type');
 		var formName = jQuery(form).attr('name');
 		var ajxResponse = jQuery(form).find('.icl_ajx_response').attr('id');
+		var sso_enabled = jQuery('#sso_enabled').is(':checked');
+		var sso_notice  = jQuery('#sso_enabled_notice');
 
 		if (form.find('input[name=use_directory]').is(':checked')) {
 			useDirectory = 1;
@@ -604,7 +636,8 @@ function iclUseDirectoryToggle() {
 			show_on_root:                  form.find('input[name=show_on_root]:checked').val(),
 			root_html_file_path:           form.find('input[name=root_html_file_path]').val(),
 			hide_language_switchers:       hideSwitcher,
-			xdomain:                       xdomain
+			xdomain:                       xdomain,
+			sso_enabled:                   sso_enabled
 		};
 
 		jQuery.ajax({
@@ -616,6 +649,11 @@ function iclUseDirectoryToggle() {
 				var formErrors, rootHtmlFile, rootPage, spl;
 				if (response.success) {
 					fadeInAjxResp('#' + ajxResponse, icl_ajx_saved);
+					if ( sso_enabled ) {
+						sso_notice.addClass('updated').fadeIn();
+					} else {
+						sso_notice.removeClass('updated').fadeOut();
+					}
 
                     if(response.data) {
                         var formMessage = jQuery('form[name="' + formName + '"]').find('.wpml-form-message');
@@ -945,10 +983,11 @@ function iclRenderLangPreviewFooter() {
 
 function iclUpdateLangSelColorSchemeFooter() {
     /*jshint validthis: true*/
-    var element = jQuery(this);
+	var element = jQuery(this);
     var scheme = element.val();
     if (scheme && confirm(element.next().html())) {
         jQuery('#icl_lang_preview_config_footer').find('input[type="text"]').each(function () {
+			var element = jQuery(this);
             var this_n = element.attr('name').replace('icl_lang_sel_footer_config[', '').replace(']', '');
             var value = jQuery('#icl_lang_sel_footer_config_alt_' + scheme + '_' + this_n).val();
             element.wpColorPicker('color', value);

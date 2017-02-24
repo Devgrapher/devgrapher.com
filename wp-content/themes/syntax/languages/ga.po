@@ -1,0 +1,327 @@
+# Translation of Syntax in Irish
+# This file is distributed under the same license as the Syntax package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2014-06-02 04:37:01+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Syntax\n"
+
+#. Author URI of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "https://wordpress.com/themes/"
+msgstr ""
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "Syntax is a theme designed with writing--and reading--in mind. With large, easy-to-read type, a fixed navigation menu, and a responsive design that looks beautiful on all screen sizes, it's perfect for writers or bloggers who want a clean, sophisticated look and feel for their site."
+msgstr ""
+
+#: searchform.php:11
+msgctxt "submit button"
+msgid "Search"
+msgstr "Cuartaigh"
+
+#: searchform.php:10
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "Cuartú …"
+
+#: searchform.php:9
+msgctxt "assistive text"
+msgid "Search"
+msgstr "Cuartú"
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "Torthaí ar: %s"
+
+#: inc/template-tags.php:129
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+
+#: inc/template-tags.php:120
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Featured</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">In airde</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+
+#: inc/template-tags.php:124 inc/template-tags.php:135
+msgid "View all posts by %s"
+msgstr "Gach a bhfuil foilsithe ag %s"
+
+#: inc/template-tags.php:95
+msgid "Your comment is awaiting moderation."
+msgstr "Tá do fhreagra fós le ceadú."
+
+#: inc/template-tags.php:88
+msgctxt "1: date, 2: time"
+msgid "%1$s at %2$s"
+msgstr "%1$s ag %2$s"
+
+#: inc/template-tags.php:82
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "<span class=\"says\">Arsa</span> %s:"
+
+#: inc/template-tags.php:72
+msgid "Pingback:"
+msgstr "Ping:"
+
+#: inc/template-tags.php:48
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Chun tosaigh <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/template-tags.php:44
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Chun deiridh"
+
+#: inc/template-tags.php:39
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:38
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:34
+msgid "Post navigation"
+msgstr "Treoraíocht alt"
+
+#: inc/extras.php:66
+msgid "Page %s"
+msgstr "Leathanach %s"
+
+#: image.php:106
+msgid "Both comments and trackbacks are currently closed."
+msgstr ""
+
+#: image.php:104
+msgid "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">post a comment</a>."
+msgstr ""
+
+#: image.php:102
+msgid "Comments are closed, but you can leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "Tá na freagraí dúnta, ach d'fhéadfá blagthásc a dhéanamh: <a class=\"trackback-link\" href=\"%s\" title=\"URL blagtháisc don alt\" rel=\"trackback\">URL blagtháisc</a>."
+
+#: image.php:100
+msgid "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "<a class=\"comment-link\" href=\"#respond\" title=\"Scríobh freagra\">Scríobh freagra</a> nó déan blagthásc: <a class=\"trackback-link\" href=\"%s\" title=\"URL blagtháisc don alt\" rel=\"trackback\">URL blagtháisc</a>."
+
+#: image.php:87
+msgid "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>"
+msgstr "Foilsithe <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> ag <a href=\"%3$s\" title=\"Nasc leis an íomhá iomlán\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Fill ar %7$s\" rel=\"gallery\">%8$s</a>"
+
+#: image.php:21
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Chun tosaigh <span class=\"meta-nav\">&rarr;</span>"
+
+#: image.php:20
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> Chun deiridh"
+
+#: header.php:82
+msgid "Skip to content"
+msgstr "Beir go dtí an t-alt féin mé"
+
+#: header.php:80
+msgid "Menu"
+msgstr "Roghchlár"
+
+#: header.php:72
+msgid "Tumblr"
+msgstr "Tumblr"
+
+#: header.php:67
+msgid "Twitter"
+msgstr "Twitter"
+
+#: header.php:62
+msgid "Path"
+msgstr "Cosán"
+
+#: header.php:57
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: header.php:52
+msgid "Google+"
+msgstr "Google+"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:136
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr "on"
+
+#: header.php:47
+msgid "Facebook"
+msgstr "Facebook"
+
+#: functions.php:86
+msgid "Footer Sidebar 2"
+msgstr "Taobh-Bharra Buntáisc 2"
+
+#: functions.php:94
+msgid "Footer Sidebar 3"
+msgstr "Taobh-Bharra Buntáisc 3"
+
+#: functions.php:78
+msgid "Footer Sidebar 1"
+msgstr "Taobh-Bharra Buntáisc 1"
+
+#: functions.php:53
+msgid "Footer Menu"
+msgstr "Roghchlár Buntáisc"
+
+#: functions.php:52
+msgid "Primary Menu"
+msgstr "Príomhroghchlár"
+
+#: footer.php:22
+msgid "Theme: %1$s by %2$s."
+msgstr "Téama: %1$s le %2$s."
+
+#: footer.php:20
+msgid "Proudly powered by %s"
+msgstr "Le cumhacht %s"
+
+#: footer.php:20
+msgid "A Semantic Personal Publishing Platform"
+msgstr ""
+
+#: content.php:55
+msgid "% Comments"
+msgstr "Freagraí: %"
+
+#: content.php:55
+msgid "1 Comment"
+msgstr ""
+
+#: content.php:55
+msgid "Leave a comment"
+msgstr "Freagra"
+
+#: content.php:30
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Tuilleadh <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:31 content.php:45
+msgid ", "
+msgstr ", "
+
+#: content-single.php:12 content.php:19
+msgid "All %s posts"
+msgstr "Na %s alt uile"
+
+#: content-page.php:23 content-single.php:38 content.php:58 image.php:108
+#: inc/template-tags.php:72 inc/template-tags.php:91
+msgid "Edit"
+msgstr "Eagar"
+
+#: content-page.php:18 content-single.php:21 content.php:33 image.php:77
+msgid "Pages:"
+msgstr "Leathanaigh:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Sén chaoi nár frítheadh an rud a bhí tú a iarraidh. B’fhéidir go gcuartófá é."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Sén chaoi nár frítheadh na téarmaí a chuartaigh tú. D’fhéadfá focla eile a chuartú."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "bhFuil tú réidh le halt a fhoilsiú? <a href=\"%1$s\">Féadfaidh tú tosaí anseo</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "Gan Toradh"
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr "Freagraí dúnta."
+
+#: comments.php:38 comments.php:58
+msgid "Newer Comments &rarr;"
+msgstr "Freagraí Nua &rarr;"
+
+#: comments.php:37 comments.php:57
+msgid "&larr; Older Comments"
+msgstr "&larr; Seanfhreagraí"
+
+#: comments.php:36 comments.php:56
+msgid "Comment navigation"
+msgstr "Treoraíocht freagartha"
+
+#: comments.php:29
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "Smaoineamh amháin ar “%2$s”"
+msgstr[1] "%1$s smaoineamh ar “%2$s”"
+msgstr[2] "%1$s smaoineamh ar “%2$s”"
+msgstr[3] "%1$s smaoineamh ar “%2$s”"
+msgstr[4] "%1$s smaoineamh ar “%2$s”"
+
+#: archive.php:63
+msgid "Archives"
+msgstr "Cartlanna"
+
+#: archive.php:60
+msgid "Links"
+msgstr "Naisc"
+
+#: archive.php:57
+msgid "Quotes"
+msgstr "Athfhriotail"
+
+#: archive.php:54
+msgid "Videos"
+msgstr "Físeáin"
+
+#: archive.php:51
+msgid "Images"
+msgstr "Íomhánna"
+
+#: archive.php:48
+msgid "Asides"
+msgstr "Seachfhocla"
+
+#: archive.php:45
+msgid "Yearly Archives: %s"
+msgstr "Cartlanna Bliana: %s"
+
+#: archive.php:42
+msgid "Monthly Archives: %s"
+msgstr "Cartlanna Míosa: %s"
+
+#: archive.php:39
+msgid "Daily Archives: %s"
+msgstr "Cartlanna Lae: %s"
+
+#: archive.php:31
+msgid "Author Archives: %s"
+msgstr "Cartlanna Údair: %s"
+
+#: archive.php:24
+msgid "Tag Archives: %s"
+msgstr "Cartlanna Clibe: %s"
+
+#: archive.php:21
+msgid "Category Archives: %s"
+msgstr "Cartlanna Ranga: %s"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "Sén chaoi nár fríothadh tada anseo. B’fhéidir go mbreathnófá ar cheann de na naisc seo thíos nó go gcuartófá rud éigin."
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Ab bu búna! Dheamhan fáil ar bith ar an leathanach sin."

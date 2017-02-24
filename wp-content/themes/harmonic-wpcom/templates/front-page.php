@@ -1,11 +1,6 @@
 <?php
 /**
- * The template for displaying all pages.
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site will use a
- * different template.
+ * The template for displaying the Static Front Page.
  *
  * @package harmonic
  *
@@ -23,7 +18,7 @@ get_header( 'para' ); ?>
 	$front_portfolio = get_theme_mod( 'harmonic_front_portfolio' );
 ?>
 
-<?php  
+<?php
 	//If the user has hidden *everything*, display a note linking back to the Customizer
 	if ( 1 == $front_intro &&
 		1 == $front_page &&
@@ -31,7 +26,7 @@ get_header( 'para' ); ?>
 		1 == $front_widgets && is_active_sidebar( 'sidebar-2' ) &&
 		1 == $front_portfolio &&
 		current_user_can( 'publish_posts' ) ) {
-			echo '<span class="hidden-content-warning">' . sprintf( __( 'Hey! Your content is hidden! Go to <a href="%1$s">Customize &rarr; Theme &rarr; Visibility</a> to fix that.', 'harmonic' ), esc_url( admin_url( 'customize.php' ) ) ) . '</span>';
+			echo '<span class="hidden-content-warning">' . sprintf( __( 'Hey! Your content is hidden! Go to <a href="%1$s">Customize &rarr; Theme Options &rarr; Visibility</a> to fix that.', 'harmonic' ), esc_url( admin_url( 'customize.php' ) ) ) . '</span>';
 		}
 ?>
 
@@ -112,6 +107,6 @@ get_header( 'para' ); ?>
 		get_template_part( 'content', 'front-portfolio' );
 	endif;?>
 	</div>
-	
+
 </main><!-- #para-template -->
 <?php get_footer( 'para' ); ?>

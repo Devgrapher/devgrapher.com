@@ -13,13 +13,15 @@ get_header('singleportfolio'); ?>
 	<main id="main" class="site-main" role="main">
 		<?php if ( have_posts() ) : ?>
 
-			<header class="page-header">
-				<h1 class="page-title">
-					<?php _e( 'Portfolio', 'harmonic' ); ?>
-				</h1>
-			</header>
-			<?php /* Start the Loop */ ?>
+			<?php harmonic_portfolio_thumbnail( '<div class="portfolio-featured-image">', '</div>' ); ?>
 
+			<header class="page-header">
+				<?php harmonic_portfolio_title( '<h1 class="page-title">', '</h1>' ); ?>
+
+				<?php harmonic_portfolio_content( '<div class="taxonomy-description">', '</div>' ); ?>
+			</header>
+
+			<?php /* Start the Loop */ ?>
 			<div id="archive-container" class="portfolio-projects clear">
 
 				<?php while ( have_posts() ) : the_post(); ?>

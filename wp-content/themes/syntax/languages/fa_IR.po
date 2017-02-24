@@ -1,0 +1,323 @@
+# Translation of Syntax in Persian
+# This file is distributed under the same license as the Syntax package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-04-03 05:47:33+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Syntax\n"
+
+#. Author URI of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "https://wordpress.com/themes/"
+msgstr "https://wordpress.com/themes/"
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "Syntax is a theme designed with writing--and reading--in mind. With large, easy-to-read type, a fixed navigation menu, and a responsive design that looks beautiful on all screen sizes, it's perfect for writers or bloggers who want a clean, sophisticated look and feel for their site."
+msgstr "Syntax پوسته‌ایست که با هدف خواندن و نوشتن طراحی شده. قلم آن درشت و خوانا است، نوار ناوبری ثابت و طراحی پاسخگو دارد که روی نمایشگرها در هر اندازه‌ای زیبا به نظر می‌رسد. عالی برای نویسندگان یا وب‌نویسانی که یک ظاهر و حس تمیز و متمدن برای وب‌گاهشان می‌خواهند."
+
+#: searchform.php:11
+msgctxt "submit button"
+msgid "Search"
+msgstr "جستجو"
+
+#: searchform.php:10
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "جستجو &hellip;"
+
+#: searchform.php:9
+msgctxt "assistive text"
+msgid "Search"
+msgstr "جست‌وجو"
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "نتایج جست‌وجو برای: %s"
+
+#: inc/template-tags.php:129
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+
+#: inc/template-tags.php:120
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Featured</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">ویژه</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+
+#: inc/template-tags.php:124 inc/template-tags.php:135
+msgid "View all posts by %s"
+msgstr "مشاهدهٔ همهٔ نوشته‌ها بر اساس %s"
+
+#: inc/template-tags.php:95
+msgid "Your comment is awaiting moderation."
+msgstr "دیدگاه شما چشم به راه بررسی است."
+
+#: inc/template-tags.php:88
+msgctxt "1: date, 2: time"
+msgid "%1$s at %2$s"
+msgstr "%1$s در %2$s"
+
+#: inc/template-tags.php:82
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "%s <span class=\"says\">می‌گوید:</span>"
+
+#: inc/template-tags.php:72
+msgid "Pingback:"
+msgstr "بازتاب: "
+
+#: inc/template-tags.php:48
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "نوشته‌های تازه‌تر <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/template-tags.php:44
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> نوشته‌های پیشین"
+
+#: inc/template-tags.php:39
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:38
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:34
+msgid "Post navigation"
+msgstr "ناوبری نوشته"
+
+#: inc/extras.php:66
+msgid "Page %s"
+msgstr "صفحهٔ %s"
+
+#: image.php:106
+msgid "Both comments and trackbacks are currently closed."
+msgstr "دیدگاه‌ها و دنبالكها هردو درحال حاضر بسته هستند."
+
+#: image.php:104
+msgid "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">post a comment</a>."
+msgstr "دنباله‌ها بسته شده‌اند، اما شما می‌توانید <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\"> دیدگاهی بیان کنید</a>."
+
+#: image.php:102
+msgid "Comments are closed, but you can leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "دیدگاه‌ها بسته شده‌اند، اما شما می‌توانید یک دنباله بگذارید: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\"> آدرس اینترنتی دنباله </a>. "
+
+#: image.php:100
+msgid "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">دیدگاهی بفرستید</a> یا یک دنبالک بگذارید: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">آدرس دنبالک</a>."
+
+#: image.php:87
+msgid "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>"
+msgstr "منتشرشده در <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> در <a href=\"%3$s\" title=\"پیوند به تصویر تمام‌اندازه\">%4$s &times; %5$s</a> در <a href=\"%6$s\" title=\"بازگشت به %7$s\" rel=\"gallery\">%8$s</a>"
+
+#: image.php:21
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "پسین <span class=\"meta-nav\">&rarr;</span>"
+
+#: image.php:20
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> پیشین"
+
+#: header.php:82
+msgid "Skip to content"
+msgstr "پرش به محتوا"
+
+#: header.php:80
+msgid "Menu"
+msgstr "گزینگان"
+
+#: header.php:72
+msgid "Tumblr"
+msgstr "تامبلر"
+
+#: header.php:67
+msgid "Twitter"
+msgstr "توئیتر"
+
+#: header.php:62
+msgid "Path"
+msgstr "مسیر"
+
+#: header.php:57
+msgid "LinkedIn"
+msgstr "لینکداین"
+
+#: header.php:52
+msgid "Google+"
+msgstr "گوگل+"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:136
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr "روشن"
+
+#: header.php:47
+msgid "Facebook"
+msgstr "فیسبوک"
+
+#: functions.php:86
+msgid "Footer Sidebar 2"
+msgstr "نوار کناری پسایند ۲"
+
+#: functions.php:94
+msgid "Footer Sidebar 3"
+msgstr "نوار کناری پسایند ۳"
+
+#: functions.php:78
+msgid "Footer Sidebar 1"
+msgstr "نوار کناری پسایند ۱"
+
+#: functions.php:53
+msgid "Footer Menu"
+msgstr "گزینگان پسایند"
+
+#: functions.php:52
+msgid "Primary Menu"
+msgstr "گزینگان اصلی"
+
+#: footer.php:22
+msgid "Theme: %1$s by %2$s."
+msgstr "پوسته: %1$s کاری از %2$s."
+
+#: footer.php:20
+msgid "Proudly powered by %s"
+msgstr "با افتخار، نیرو گرفته از %s"
+
+#: footer.php:20
+msgid "A Semantic Personal Publishing Platform"
+msgstr "بستر نشر شخصی معنایی"
+
+#: content.php:55
+msgid "% Comments"
+msgstr "% دیدگاه"
+
+#: content.php:55
+msgid "1 Comment"
+msgstr "۱ دیدگاه"
+
+#: content.php:55
+msgid "Leave a comment"
+msgstr "بیان دیدگاه"
+
+#: content.php:30
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "به خواندن ادامه دهید <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:31 content.php:45
+msgid ", "
+msgstr "، "
+
+#: content-single.php:12 content.php:19
+msgid "All %s posts"
+msgstr "همهٔ %s نوشته"
+
+#: content-page.php:23 content-single.php:38 content.php:58 image.php:108
+#: inc/template-tags.php:72 inc/template-tags.php:91
+msgid "Edit"
+msgstr "ویرایش"
+
+#: content-page.php:18 content-single.php:21 content.php:33 image.php:77
+msgid "Pages:"
+msgstr "صفحه‌ها:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "به نظر می‌آید ما نمی‌توانیم آنچه به دنبالش هستید بیابیم. احتمالا جست‌وجو می‌تواند کمک کند."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "متأسفیم، موردی مطابق با جستجوی شما پیدا نشد. لطفا برای جستجو از کلیدواژه‌های دیگری استفاده کنید."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "آمادهٔ انتشار نخستین نوشتهٔ خود هستید؟ <a href=\"%1$s\">از اینجا بیآغازید</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "چیزی پیدا نشد"
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr "دیدگاه‌ها بسته شده‌اند."
+
+#: comments.php:38 comments.php:58
+msgid "Newer Comments &rarr;"
+msgstr "دیدگاه‌های تازه‌تر &rarr;"
+
+#: comments.php:37 comments.php:57
+msgid "&larr; Older Comments"
+msgstr "&larr; دیدگاه‌های پیشین"
+
+#: comments.php:36 comments.php:56
+msgid "Comment navigation"
+msgstr "ناوبری دیدگاه"
+
+#: comments.php:29
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "%1$s نظر برای &ldquo;%2$s&rdquo;"
+
+#: archive.php:63
+msgid "Archives"
+msgstr "بایگانی"
+
+#: archive.php:60
+msgid "Links"
+msgstr "پیوندها"
+
+#: archive.php:57
+msgid "Quotes"
+msgstr "گفتاورد"
+
+#: archive.php:54
+msgid "Videos"
+msgstr "ویدئوها"
+
+#: archive.php:51
+msgid "Images"
+msgstr "تصویرها"
+
+#: archive.php:48
+msgid "Asides"
+msgstr "کلمات قصار"
+
+#: archive.php:45
+msgid "Yearly Archives: %s"
+msgstr "بایگانی سالانه :%s"
+
+#: archive.php:42
+msgid "Monthly Archives: %s"
+msgstr "بایگانی ماهانه: %s"
+
+#: archive.php:39
+msgid "Daily Archives: %s"
+msgstr "بایگانی روزانه: %s"
+
+#: archive.php:31
+msgid "Author Archives: %s"
+msgstr "بایگانی نویسنده: %s"
+
+#: archive.php:24
+msgid "Tag Archives: %s"
+msgstr "بایگانی برچسب‌ها: %s"
+
+#: archive.php:21
+msgid "Category Archives: %s"
+msgstr "بایگانی دسته‌ها: %s"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "به نظر می‌رسد چیزی در این مکان نیست. شاید بخواهید یکی از پیوندهای زیر یا جست‌وجو را آزمایش کنید."
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "اوه! امکان یافتن صفحه نیست."

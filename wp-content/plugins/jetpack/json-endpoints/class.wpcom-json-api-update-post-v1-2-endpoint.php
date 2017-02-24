@@ -11,15 +11,19 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			remove_action( 'save_post', array( $GLOBALS['publicize_ui']->publicize, 'async_publicize_post' ), 100, 2 );
 			add_action( 'rest_api_inserted_post', array( $GLOBALS['publicize_ui']->publicize, 'async_publicize_post' ) );
-		}
 
-		// 'future' is an alias for 'publish' for now
-		if ( isset( $input['status'] ) && 'future' === $input['status'] ) {
-			$input['status'] = 'publish';
+			if ( $this->should_load_theme_functions( $post_id ) ) {
+				$this->load_theme_functions();
+			}
 		}
 
 		if ( $new ) {
 			$input = $this->input( true );
+
+			// 'future' is an alias for 'publish' for now
+			if ( isset( $input['status'] ) && 'future' === $input['status'] ) {
+				$input['status'] = 'publish';
+			}
 
 			if ( 'revision' === $input['type'] ) {
 				if ( ! isset( $input['parent'] ) ) {
@@ -69,6 +73,15 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 				return new WP_Error( 'invalid_input', 'Invalid request input', 400 );
 			}
 
+			if ( isset( $input['status'] ) && 'trash' === $input['status'] && ! current_user_can( 'delete_post', $post_id ) ) {
+				return new WP_Error( 'unauthorized', 'User cannot delete post', 403 );
+			}
+
+			// 'future' is an alias for 'publish' for now
+			if ( isset( $input['status'] ) && 'future' === $input['status'] ) {
+				$input['status'] = 'publish';
+			}
+
 			$post = get_post( $post_id );
 			$_post_type = ( ! empty( $input['type'] ) ) ? $input['type'] : $post->post_type;
 			$post_type = get_post_type_object( $_post_type );
@@ -87,11 +100,11 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 					return $author_id;
 			}
 
-			if ( 'publish' === $input['status'] && 'publish' !== $post->post_status && !current_user_can( 'publish_post', $post->ID ) ) {
+			if ( ( isset( $input['status'] ) && 'publish' === $input['status'] ) && 'publish' !== $post->post_status && !current_user_can( 'publish_post', $post->ID ) ) {
 				$input['status'] = 'pending';
 			}
 			$last_status = $post->post_status;
-			$new_status = $input['status'];
+			$new_status = isset( $input['status'] ) ? $input['status'] : $last_status;
 
 			// Make sure that drafts get the current date when transitioning to publish if not supplied in the post.
 			$date_in_past = ( strtotime($post->post_date_gmt) < time() );
@@ -100,9 +113,12 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 			}
 		}
 
-		// Fix for https://iorequests.wordpress.com/2014/08/13/scheduled-posts-made-in-the/
-		// See: https://a8c.slack.com/archives/io/p1408047082000273
-		// If date was set, $this->input will set date_gmt, date still needs to be adjusted for the blog's offset
+		if ( function_exists( 'wpcom_switch_to_locale' ) ) {
+			// fixes calypso-pre-oss #12476: respect blog locale when creating the post slug
+			wpcom_switch_to_locale( get_blog_lang_code( $blog_id ) );
+		}
+
+		 // If date is set, $this->input will set date_gmt, date still needs to be adjusted f
 		if ( isset( $input['date_gmt'] ) ) {
 			$gmt_offset = get_option( 'gmt_offset' );
 			$time_with_offset = strtotime( $input['date_gmt'] ) + $gmt_offset * HOUR_IN_SECONDS;
@@ -121,22 +137,54 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 			unset( $input['parent'] );
 		}
 
-		/* add taxonomies by name */
-		$tax_input = array();
-		foreach ( array( 'categories' => 'category', 'tags' => 'post_tag' ) as $key => $taxonomy ) {
-			if ( ! isset( $input[ $key ] ) ) {
-				continue;
-			}
-
-			$tax_input[ $taxonomy ] = array();
-
-			$is_hierarchical = is_taxonomy_hierarchical( $taxonomy );
-
-			if ( is_array( $input[$key] ) ) {
-				$terms = $input[$key];
+		foreach ( array( '', '_by_id' ) as $term_key_suffix ) {
+			$term_input_key = 'terms' . $term_key_suffix;
+			if ( isset( $input[ $term_input_key ] ) ) {
+				$input[ $term_input_key ] = (array) $input[ $term_input_key ];
 			} else {
-				$terms = explode( ',', $input[$key] );
+				$input[ $term_input_key ] = array();
 			}
+
+			// Convert comma-separated terms to array before attempting to
+			// merge with hardcoded taxonomies
+			foreach ( $input[ $term_input_key ] as $taxonomy => $terms ) {
+				if ( is_string( $terms ) ) {
+					$input[ $term_input_key ][ $taxonomy ] = explode( ',', $terms );
+				} else if ( ! is_array( $terms ) ) {
+					$input[ $term_input_key ][ $taxonomy ] = array();
+				}
+			}
+
+			// For each hard-coded taxonomy, merge into terms object
+			foreach ( array( 'categories' => 'category', 'tags' => 'post_tag' ) as $key_prefix => $taxonomy ) {
+				$taxonomy_key = $key_prefix . $term_key_suffix;
+				if ( ! isset( $input[ $taxonomy_key ] ) ) {
+					continue;
+				}
+
+				if ( ! isset( $input[ $term_input_key ][ $taxonomy ] ) ) {
+					$input[ $term_input_key ][ $taxonomy ] = array();
+				}
+
+				$terms = $input[ $taxonomy_key ];
+				if ( is_string( $terms ) ) {
+					$terms = explode( ',', $terms );
+				} else if ( ! is_array( $terms ) ) {
+					continue;
+				}
+
+				$input[ $term_input_key ][ $taxonomy ] = array_merge(
+					$input[ $term_input_key ][ $taxonomy ],
+					$terms
+				);
+			}
+		}
+
+		/* add terms by name */
+		$tax_input = array();
+		foreach ( $input['terms'] as $taxonomy => $terms ) {
+			$tax_input[ $taxonomy ] = array();
+			$is_hierarchical = is_taxonomy_hierarchical( $taxonomy );
 
 			foreach ( $terms as $term ) {
 				/**
@@ -144,12 +192,20 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 				 * Note: A category named "0" will not work right.
 				 * https://core.trac.wordpress.org/ticket/9059
 				 */
+				if ( ! is_string( $term ) ) {
+					continue;
+				}
+
 				$term_info = get_term_by( 'name', $term, $taxonomy, ARRAY_A );
 
 				if ( ! $term_info ) {
 					// only add a new tag/cat if the user has access to
 					$tax = get_taxonomy( $taxonomy );
-					if ( ! current_user_can( $tax->cap->edit_terms ) ) {
+
+					// see https://core.trac.wordpress.org/ticket/26409
+					if ( $is_hierarchical && ! current_user_can( $tax->cap->edit_terms ) ) {
+						continue;
+					} else if ( ! current_user_can( $tax->cap->assign_terms ) ) {
 						continue;
 					}
 
@@ -158,36 +214,27 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 
 				if ( ! is_wp_error( $term_info ) ) {
 					if ( $is_hierarchical ) {
-						// Categories must be added by ID
+						// Hierarchical terms must be added by ID
 						$tax_input[$taxonomy][] = (int) $term_info['term_id'];
 					} else {
-						// Tags must be added by name
+						// Non-hierarchical terms must be added by name
 						$tax_input[$taxonomy][] = $term;
 					}
 				}
 			}
 		}
 
-		/* add taxonomies by ID */
-		foreach ( array( 'categories_by_id' => 'category', 'tags_by_id' => 'post_tag' ) as $key => $taxonomy ) {
-			if ( ! isset( $input[ $key ] ) ) {
-				continue;
-			}
-
+		/* add terms by ID */
+		foreach ( $input['terms_by_id'] as $taxonomy => $terms ) {
 			// combine with any previous selections
-			if ( ! is_array( $tax_input[ $taxonomy ] ) ) {
+			if ( ! isset( $tax_input[ $taxonomy ] ) || ! is_array( $tax_input[ $taxonomy ] ) ) {
 				$tax_input[ $taxonomy ] = array();
 			}
 
 			$is_hierarchical = is_taxonomy_hierarchical( $taxonomy );
 
-			if ( is_array( $input[$key] ) ) {
-				$terms = $input[$key];
-			} else {
-				$terms = explode( ',', $input[$key] );
-			}
-
 			foreach ( $terms as $term ) {
+				$term = (string) $term; // ctype_digit compat
 				if ( ! ctype_digit( $term ) ) {
 					// skip anything that doesn't look like an ID
 					continue;
@@ -207,12 +254,12 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 			}
 		}
 
-		if ( ( isset( $input['categories'] ) || isset( $input['categories_by_id'] ) )
-			&& empty( $tax_input['category'] ) && 'revision' !== $post_type->name ) {
+		if ( ( isset( $input['terms']['category'] ) || isset( $input['terms_by_id']['category'] ) )
+				&& empty( $tax_input['category'] ) && 'revision' !== $post_type->name ) {
 			$tax_input['category'][] = get_option( 'default_category' );
 		}
 
-		unset( $input['tags'], $input['categories'], $input['tags_by_id'], $input['categories_by_id'] );
+		unset( $input['terms'], $input['tags'], $input['categories'], $input['terms_by_id'], $input['tags_by_id'], $input['categories_by_id'] );
 
 		$insert = array();
 
@@ -415,6 +462,7 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 					&& 'publish' == $new_status
 				)
 			) {
+				/** This action is documented in modules/widgets/social-media-icons.php */
 				do_action( 'jetpack_bump_stats_extras', 'api-insights-posts', $this->api->token_details['client_id'] );
 				update_post_meta( $post_id, '_rest_api_published', 1 );
 				update_post_meta( $post_id, '_rest_api_client_id', $this->api->token_details['client_id'] );
@@ -564,7 +612,7 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 
 						if ( ! empty( $meta->id ) || ! empty( $meta->previous_value ) ) {
 							continue;
-						} elseif ( ! empty( $meta->key ) && ! empty( $meta->value ) && ( current_user_can( 'add_post_meta', $post_id, $unslashed_meta_key ) ) || $this->is_metadata_public( $meta->key ) ) {
+						} elseif ( ! empty( $meta->key ) && ! empty( $meta->value ) && ( current_user_can( 'add_post_meta', $post_id, $unslashed_meta_key ) ) || WPCOM_JSON_API_Metadata::is_public( $meta->key ) ) {
 							add_post_meta( $post_id, $meta->key, $meta->value );
 						}
 
@@ -573,11 +621,11 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 
 						if ( ! isset( $meta->value ) ) {
 							continue;
-						} elseif ( ! empty( $meta->id ) && ! empty( $existing_meta_item->meta_key ) && ( current_user_can( 'edit_post_meta', $post_id, $unslashed_existing_meta_key ) || $this->is_metadata_public( $meta->key ) ) ) {
+						} elseif ( ! empty( $meta->id ) && ! empty( $existing_meta_item->meta_key ) && ( current_user_can( 'edit_post_meta', $post_id, $unslashed_existing_meta_key ) || WPCOM_JSON_API_Metadata::is_public( $meta->key ) ) ) {
 							update_metadata_by_mid( 'post', $meta->id, $meta->value );
-						} elseif ( ! empty( $meta->key ) && ! empty( $meta->previous_value ) && ( current_user_can( 'edit_post_meta', $post_id, $unslashed_meta_key ) || $this->is_metadata_public( $meta->key ) ) ) {
+						} elseif ( ! empty( $meta->key ) && ! empty( $meta->previous_value ) && ( current_user_can( 'edit_post_meta', $post_id, $unslashed_meta_key ) || WPCOM_JSON_API_Metadata::is_public( $meta->key ) ) ) {
 							update_post_meta( $post_id, $meta->key,$meta->value, $meta->previous_value );
-						} elseif ( ! empty( $meta->key ) && ( current_user_can( 'edit_post_meta', $post_id, $unslashed_meta_key ) || $this->is_metadata_public( $meta->key ) ) ) {
+						} elseif ( ! empty( $meta->key ) && ( current_user_can( 'edit_post_meta', $post_id, $unslashed_meta_key ) || WPCOM_JSON_API_Metadata::is_public( $meta->key ) ) ) {
 							update_post_meta( $post_id, $meta->key, $meta->value );
 						}
 
@@ -607,13 +655,25 @@ class WPCOM_JSON_API_Update_Post_v1_2_Endpoint extends WPCOM_JSON_API_Update_Pos
 		if ( ! empty( $media_results['errors'] ) )
 			$return['media_errors'] = $media_results['errors'];
 
-		if ( 'publish' !== $post->post_status ) {
-			$return['other_URLs'] = (object) $this->get_post_permalink_suggestions( $post_id, $input['title'] );
+		if ( 'publish' !== $return['status'] && isset( $input['title'] )) {
+			$sal_site = $this->get_sal_post_by( 'ID', $post_id, $args['context'] );
+			$return['other_URLs'] = (object) $sal_site->get_permalink_suggestions( $input['title'] );
 		}
 
 		/** This action is documented in json-endpoints/class.wpcom-json-api-site-settings-endpoint.php */
 		do_action( 'wpcom_json_api_objects', 'posts' );
 
 		return $return;
+	}
+
+	protected function should_load_theme_functions( $post_id = null ) {
+		if ( empty( $post_id ) ) {
+			$input = $this->input( true );
+			$type = $input['type'];
+		} else {
+			$type = get_post_type( $post_id );
+		}
+
+		return ! empty( $type ) && ! in_array( $type, array( 'post', 'page', 'revision' ) );
 	}
 }

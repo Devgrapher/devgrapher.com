@@ -3,7 +3,7 @@
 Plugin Name: WordPress Popular Posts
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-popular-posts
 Description: WordPress Popular Posts is a highly customizable widget that displays the most popular posts on your blog
-Version: 3.3.3
+Version: 3.3.4
 Author: Hector Cabrera
 Author URI: http://cabrerahector.com
 Author Email: hcabrerab@gmail.com
@@ -61,7 +61,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 * @since	1.3.0
 		 * @var		string
 		 */
-		private $version = '3.3.3';
+		private $version = '3.3.4';
 
 		/**
 		 * Plugin identifier.
@@ -355,6 +355,8 @@ if ( !class_exists('WordpressPopularPosts') ) {
 				$this->thumbnailing = true;				
 				// Get available thumbnail size(s)
 				$this->default_thumbnail_sizes = $this->__get_image_sizes();
+				// Add hook to flush cached thumbnail when image is changed
+				add_action( 'update_postmeta', array( $this, 'flush_post_thumbnail'), 10, 4 );
 			}
 
 			// Set default thumbnail
@@ -367,7 +369,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 				$this->user_settings['tools']['thumbnail']['default'] = $this->default_thumbnail;
 			
 			// Set uploads folder
-			$wp_upload_dir = wp_upload_dir();
+			$wp_upload_dir = ( function_exists('wp_get_upload_dir') ) ? wp_get_upload_dir() : wp_upload_dir(); // wp_get_upload_dir() was introduced in WP 4.5!
 			$this->uploads_dir['basedir'] = $wp_upload_dir['basedir'] . "/" . $this->plugin_slug;
 			$this->uploads_dir['baseurl'] = $wp_upload_dir['baseurl'] . "/" . $this->plugin_slug;
 
@@ -483,8 +485,8 @@ if ( !class_exists('WordpressPopularPosts') ) {
                 <?php
 				} else {
 				?>
-                <script type="text/javascript">//<![CDATA[
-					// jQuery is available, so proceed
+                <script type="text/javascript">
+					/* jQuery is available, so proceed */
 					if ( window.jQuery ) {
 						
 						jQuery(document).ready(function($){
@@ -496,11 +498,13 @@ if ( !class_exists('WordpressPopularPosts') ) {
 							});
 						});
 					
-					} else { // jQuery is not defined
-						if ( window.console && window.console.log )
-							window.console.log('WordPress Popular Posts: jQuery is not defined!');						
+					} /* jQuery is not defined */
+					else {
+						if ( window.console && window.console.log ) {
+							window.console.log('WordPress Popular Posts: jQuery is not defined!');
+						}
 					}
-                //]]></script>
+                </script>
                 <?php
 				}
 			} else {
@@ -978,6 +982,12 @@ if ( !class_exists('WordpressPopularPosts') ) {
 		 */
 		private function __upgrade() {
 
+			// Keep the upgrade process from running too many times
+			if ( get_site_option('wpp_update') )
+				return;
+			
+			add_site_option( 'wpp_update', 1 );
+
 			global $wpdb;
 
 			// set table name
@@ -1011,18 +1021,21 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			// Check storage engine
 			$storage_engine_data = $wpdb->get_var("SELECT `ENGINE` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA`='{$wpdb->dbname}' AND `TABLE_NAME`='{$prefix}data';");
 			
-			if ( 'MyISAM' == $storage_engine_data ) {
+			if ( 'InnoDB' != $storage_engine_data ) {
 				$wpdb->query("ALTER TABLE {$prefix}data ENGINE=INNODB;");
 			}
 			
 			$storage_engine_summary = $wpdb->get_var("SELECT `ENGINE` FROM `information_schema`.`TABLES` WHERE `TABLE_SCHEMA`='{$wpdb->dbname}' AND `TABLE_NAME`='{$prefix}summary';");
 			
-			if ( 'MyISAM' == $storage_engine_summary ) {
+			if ( 'InnoDB' != $storage_engine_summary ) {
 				$wpdb->query("ALTER TABLE {$prefix}summary ENGINE=INNODB;");
 			}
 
 			// Update WPP version
 			update_site_option('wpp_ver', $this->version);
+			
+			// Remove upgrade flag
+			delete_site_option('wpp_update');
 
 		} // end __upgrade
 
@@ -1206,29 +1219,59 @@ if ( !class_exists('WordpressPopularPosts') ) {
 					if ( $wpdb->get_var("SHOW TABLES LIKE '{$prefix}summary'") ) {
 						$wpdb->query("TRUNCATE TABLE {$prefix}summary;");
 						$this->__flush_transients();
-						_e('Success! The cache table has been cleared!', $this->plugin_slug);
+						
+						echo 1;
 					} else {
-						_e('Error: cache table does not exist.', $this->plugin_slug);
+						echo 2;
 					}
 				} else if ($clear == 'all') {
 					if ( $wpdb->get_var("SHOW TABLES LIKE '{$prefix}data'") && $wpdb->get_var("SHOW TABLES LIKE '{$prefix}summary'") ) {
 						$wpdb->query("TRUNCATE TABLE {$prefix}data;");
 						$wpdb->query("TRUNCATE TABLE {$prefix}summary;");
 						$this->__flush_transients();
-						_e('Success! All data have been cleared!', $this->plugin_slug);
+						
+						echo 1;
 					} else {
-						_e('Error: one or both data tables are missing.', $this->plugin_slug);
+						echo 2;
 					}
 				} else {
-					_e('Invalid action.', $this->plugin_slug);
+					echo 3;
 				}
 			} else {
-				_e('Sorry, you do not have enough permissions to do this. Please contact the site administrator for support.', $this->plugin_slug);
+				echo 4;
 			}
 
 			die();
 
 		} // end clear_data
+		
+		/**
+		 * Flushes post's cached thumbnail(s) when the image is changed.
+		 *
+		 * @since	3.3.4
+		 *
+		 * @param	integer		$meta_id     ID of the meta data field
+		 * @param	integer		$object_id   Object ID
+		 * @param	string		$meta_key    Name of meta field
+		 * @param	string		$meta_value  Value of meta field
+		 */
+		public function flush_post_thumbnail( $meta_id, $object_id, $meta_key, $meta_value ) {
+			
+			$files = null;
+			
+			// User changed the featured image
+			if ( '_thumbnail_id' == $meta_key ) {
+				$files = glob( "{$this->uploads_dir['basedir']}/{$object_id}-featured-*.*" ); // get all related images
+			}
+			
+			if ( is_array($files) && !empty($files) ) {					
+				foreach( $files as $file ){ // iterate files
+					if ( is_file($file) )
+						@unlink($file); // delete file
+				}
+			}
+			
+		}
 		
 		/**
 		 * Truncates thumbnails cache on demand.
@@ -1253,15 +1296,15 @@ if ( !class_exists('WordpressPopularPosts') ) {
 								@unlink($file); // delete file
 						}
 						
-						_e('Success! All files have been deleted!', $this->plugin_slug);
+						echo 1;
 					} else {
-						_e('The thumbnail cache is already empty!', $this->plugin_slug);
+						echo 2;
 					}
 				} else {
-					_e('Invalid action.', $this->plugin_slug);
+					echo 3;
 				}
 			} else {
-				_e('Sorry, you do not have enough permissions to do this. Please contact the site administrator for support.', $this->plugin_slug);
+				echo 4;
 			}
 
 			die();
@@ -1308,7 +1351,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			if ( 0 != $this->current_post_id ) {
 				?>
 				<!-- WordPress Popular Posts v<?php echo $this->version; ?> -->
-				<script type="text/javascript">//<![CDATA[
+				<script type="text/javascript">
 
 					var sampling_active = <?php echo ( $this->user_settings['tools']['sampling']['active'] ) ? 1 : 0; ?>;
 					var sampling_rate   = <?php echo intval( $this->user_settings['tools']['sampling']['rate'] ); ?>;
@@ -1323,17 +1366,17 @@ if ( !class_exists('WordpressPopularPosts') ) {
 
 					if ( do_request ) {
 
-						// Create XMLHttpRequest object and set variables
+						/* Create XMLHttpRequest object and set variables */
 						var xhr = ( window.XMLHttpRequest )
 						  ? new XMLHttpRequest()
 						  : new ActiveXObject( "Microsoft.XMLHTTP" ),
 						url = '<?php echo admin_url('admin-ajax.php', is_ssl() ? 'https' : 'http'); ?>',
 						params = 'action=update_views_ajax&token=<?php echo wp_create_nonce('wpp-token') ?>&wpp_id=<?php echo $this->current_post_id; ?>';
-						// Set request method and target URL
+						/* Set request method and target URL */
 						xhr.open( "POST", url, true );
-						// Set request header
+						/* Set request header */
 						xhr.setRequestHeader( "Content-type", "application/x-www-form-urlencoded" );
-						// Hook into onreadystatechange
+						/* Hook into onreadystatechange */
 						xhr.onreadystatechange = function() {
 							if ( 4 === xhr.readyState && 200 === xhr.status ) {
 								if ( window.console && window.console.log ) {
@@ -1341,12 +1384,12 @@ if ( !class_exists('WordpressPopularPosts') ) {
 								}
 							}
 						};
-						// Send request
+						/* Send request */
 						xhr.send( params );
 
 					}
 
-				//]]></script>
+				</script>
 				<!-- End WordPress Popular Posts v<?php echo $this->version; ?> -->
 				<?php
 			}
@@ -2014,12 +2057,12 @@ if ( !class_exists('WordpressPopularPosts') ) {
 					$words = explode(" ", $title_sub, $instance['shorten_title']['length'] + 1);
 					if (count($words) > $instance['shorten_title']['length']) {
 						array_pop($words);
-						$title_sub = implode(" ", $words) . "...";
+						$title_sub = rtrim( implode(" ", $words), ",." ) . " ...";
 					}
 
 				}
 				elseif (strlen($title_sub) > $instance['shorten_title']['length']) {
-					$title_sub = mb_substr($title_sub, 0, $instance['shorten_title']['length'], $this->charset) . "...";
+					$title_sub = rtrim( mb_substr($title_sub, 0, $instance['shorten_title']['length'], $this->charset), " ,." ) . "...";
 				}
 			}
 
@@ -2607,7 +2650,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 			}
 
 			return apply_filters( 'wpp_render_image', $msg .
-			'<img src="' . $src . '" ' . ( false == $this->user_settings['tools']['thumbnail']['responsive'] ? 'width=' . $dimension[0] . ' height=' . $dimension[1] : '' ) . ' title="' . esc_attr($title) . '" alt="' . esc_attr($title) . '" class="' . $class . '" />' );
+			'<img src="' . $src . '" ' . ( false == $this->user_settings['tools']['thumbnail']['responsive'] ? 'width="' . $dimension[0] . '" height="' . $dimension[1] . '"' : '' ) . ' title="' . esc_attr($title) . '" alt="' . esc_attr($title) . '" class="' . $class . '" />' );
 
 		} // _render_image
 
@@ -2756,6 +2799,9 @@ if ( !class_exists('WordpressPopularPosts') ) {
 
 			// remove WP shortcodes
 			$excerpt = strip_shortcodes( $excerpt );
+			
+			// remove style/script tags
+			$excerpt = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $excerpt );
 
 			// remove HTML tags if requested
 			if ( $instance['post-excerpt']['keep_format'] ) {
@@ -2779,13 +2825,13 @@ if ( !class_exists('WordpressPopularPosts') ) {
 
 					if ( count($words) > $instance['post-excerpt']['length'] ) {
 						array_pop($words);
-						$excerpt = implode(" ", $words) . "...";
+						$excerpt = rtrim( implode(" ", $words), ".," ) . " ...";
 					}
 
 				} else { // by characters
 
 					if ( strlen($excerpt) > $instance['post-excerpt']['length'] ) {
-						$excerpt = mb_substr( $excerpt, 0, $instance['post-excerpt']['length'], $this->charset ) . "...";
+						$excerpt = rtrim( mb_substr( $excerpt, 0, $instance['post-excerpt']['length'], $this->charset ), ".," ) . "...";
 					}
 
 				}
@@ -2867,7 +2913,7 @@ if ( !class_exists('WordpressPopularPosts') ) {
 				'header_end' => '</h2>',
 				'post_html' => '',
 				'php' => false
-			),$atts));
+			), $atts, 'wpp'));
 
 			// possible values for "Time Range" and "Order by"
 			$range_values = array("yesterday", "daily", "weekly", "monthly", "all");
@@ -2950,10 +2996,14 @@ if ( !class_exists('WordpressPopularPosts') ) {
 				return false;
 
 			$params = array();
-			$pattern = '/\{(excerpt|summary|stats|title|image|thumb|thumb_img|rating|score|url|text_title|author|category|views|comments|date)\}/i';
+			$pattern = '/\{(pid|excerpt|summary|stats|title|image|thumb|thumb_img|rating|score|url|text_title|author|category|views|comments|date)\}/i';
 			preg_match_all($pattern, $string, $matches);
 
 			array_map('strtolower', $matches[0]);
+
+			if ( in_array("{pid}", $matches[0]) ) {
+				$string = str_replace( "{pid}", $data['id'], $string );
+			}
 
 			if ( in_array("{title}", $matches[0]) ) {
 				$string = str_replace( "{title}", $data['title'], $string );

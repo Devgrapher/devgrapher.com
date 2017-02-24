@@ -1,6 +1,6 @@
 <?php
 
-if ( !class_exists( 'PolldaddyShortcode' ) ) {
+if ( ! class_exists( 'PolldaddyShortcode' ) ) {
 	/**
 * Class wrapper for polldaddy shortcodes
 */
@@ -45,7 +45,7 @@ CONTAINER;
 			'<div class="pd-embed" data-settings="'
 			. esc_attr( json_encode( $settings ) )
 			. '"></div>';
-		if ( $type === 'button' ) {
+		if ( 'button' === $settings['type'] ) {
 			$placeholder =
 				'<a class="pd-embed" href="'
 				. esc_attr( $survey_link )
@@ -61,7 +61,7 @@ CONTAINER;
 		$js_include .= $include . "\n";
 		$js_include .= "//--><!]]></script>\n";
 
-		if ( $type !== 'button' ) {
+		if ( 'button' !== $settings['type'] ) {
 			$js_include .= '<noscript>' . $survey_link . "</noscript>\n";
 		}
 
@@ -82,7 +82,7 @@ CONTAINER;
 	 */
 	function polldaddy_embed_to_shortcode( $content ) {
 
-		if ( false === strpos( $content, 'polldaddy.com/p/' ) ) {
+		if ( ! is_string( $content ) || false === strpos( $content, 'polldaddy.com/p/' ) ) {
 			return $content;
 		}
 
@@ -251,7 +251,7 @@ CONTAINER;
 			$poll      = intval( $poll );
 			$poll_url  = sprintf( 'http://polldaddy.com/poll/%d', $poll );
 			$poll_js   = sprintf( '%s.polldaddy.com/p/%d.js', ( is_ssl() ? 'https://secure' : 'http://static' ), $poll );
-			$poll_link = sprintf( '<a href="%s">Take Our Poll</a>', $poll_url );
+			$poll_link = sprintf( '<a href="%s" target="_blank">Take Our Poll</a>', $poll_url );
 
 			if ( $no_script ) {
 				return $poll_link;
@@ -360,7 +360,7 @@ CONTAINER;
 
 				$survey      = preg_replace( '/[^a-f0-9]/i', '', $survey );
 				$survey_url  = esc_url( "http://polldaddy.com/s/{$survey}" );
-				$survey_link = sprintf( '<a href="%s">%s</a>', $survey_url, esc_html( $title ) );
+				$survey_link = sprintf( '<a href="%s" target="_blank">%s</a>', $survey_url, esc_html( $title ) );
 
 				$settings = array();
 

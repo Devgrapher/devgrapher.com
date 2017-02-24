@@ -1,42 +1,38 @@
-# Translation of Harmonic in Portuguese (Brazil)
-# This file is distributed under the same license as the Harmonic package.
+# Translation of WordPress.com - Themes - Harmonic in Portuguese (Brazil)
+# This file is distributed under the same license as the WordPress.com - Themes - Harmonic package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-10-23 16:52:59+0000\n"
+"PO-Revision-Date: 2016-02-26 20:39:21+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: GlotPress/1.0-alpha-1000\n"
-"Project-Id-Version: Harmonic\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
+"Language: pt_BR\n"
+"Project-Id-Version: WordPress.com - Themes - Harmonic\n"
 
-#: templates/front-page.php:34
-msgid "Hey! Your content is hidden! Go to <a href=\"%1$s\">Customize &rarr; Theme &rarr; Visibility</a> to fix that."
-msgstr ""
+#: inc/customizer.php:23
+msgid "Theme Options"
+msgstr "Opções do tema"
 
 #. Template Name of the plugin/theme
 #: wp-content/themes/pub/harmonic/templates/fullwidth-page.php
 msgid "Full Width"
 msgstr "Largura inteira"
 
-#. Description of the plugin/theme
-#: wp-content/themes/pub/harmonic/style.css
-msgid "Harmonic makes your content sing. No matter if you are a band looking to get a record deal, a travel blogger wanting to document your trip around the world or just someone that wants to make their home on WordPress."
-msgstr "Harmonic faz o seu conteúdo cantar. Não importa se você tem uma banda em busca de uma gravadora, ou é um blogueiro documentando sua jornada ao redor do mundo ou apenas alguém buscando seu espaço no WordPress."
-
 #. Template Name of the plugin/theme
 #: wp-content/themes/pub/harmonic/templates/front-page.php
 msgid "Front Page"
 msgstr "Página inicial"
 
+#. Description of the plugin/theme
+#: wp-content/themes/pub/harmonic/style.css
+msgid "Harmonic makes your content sing. No matter if you are a band looking to get a record deal, a travel blogger wanting to document your trip around the world or just someone that wants to make their home on WordPress."
+msgstr "Harmonic faz o seu conteúdo cantar. Não importa se você tem uma banda em busca de uma gravadora, ou é um blogueiro documentando sua jornada ao redor do mundo ou apenas alguém buscando seu espaço no WordPress."
+
 #: search.php:16
 msgid "Search Results for: %s"
 msgstr "Resultados da pesquisa por: %s"
-
-#: inc/template-tags.php:154
-msgctxt "1: date, 2: time"
-msgid ", %1$s at %2$s"
-msgstr ", %1$s às %2$s"
 
 #: inc/template-tags.php:157
 msgid " (Edit)"
@@ -46,10 +42,15 @@ msgstr "(Editar)"
 msgid "<span class=\"posted-on\">%1$s</span>"
 msgstr "<span class=\"posted-on\">%1$s</span>"
 
-#: page.php:48 single.php:42 templates/fullwidth-page.php:51
+#: page.php:48 single.php:42 templates/fullwidth-page.php:46
 #: templates/portfolio-page.php:44
 msgid "Read more"
 msgstr "Ler mais"
+
+#: inc/template-tags.php:154
+msgctxt "1: date, 2: time"
+msgid ", %1$s at %2$s"
+msgstr ", %1$s às %2$s"
 
 #: inc/template-tags.php:150
 msgid "%s "
@@ -58,6 +59,10 @@ msgstr "%s"
 #: inc/template-tags.php:147
 msgid "Your comment is awaiting moderation."
 msgstr "O seu comentário aguarda moderação."
+
+#: inc/template-tags.php:130
+msgid "Pingback:"
+msgstr "Pingback: "
 
 #: inc/template-tags.php:107
 msgctxt "Previous post link"
@@ -69,9 +74,13 @@ msgctxt "Next post link"
 msgid "Next"
 msgstr "Próximo"
 
-#: inc/template-tags.php:130
-msgid "Pingback:"
-msgstr "Pingback: "
+#: inc/template-tags.php:57
+msgid "More Projects"
+msgstr "Mais projetos"
+
+#: inc/template-tags.php:104
+msgid "Post navigation"
+msgstr "Navegação de Posts"
 
 #: inc/template-tags.php:31
 msgid "<span class=\"meta-nav\">Previous</span>"
@@ -81,38 +90,25 @@ msgstr "<span class=\"meta-nav\">Anterior</span>"
 msgid "<span class=\"meta-nav\">Next</span>"
 msgstr "<span class=\"meta-nav\">Próximo</span>"
 
-#: inc/template-tags.php:57
-msgid "More Projects"
-msgstr "Mais projetos"
-
-#: inc/template-tags.php:104
-msgid "Post navigation"
-msgstr "Navegação de Posts"
-
-#: inc/extras.php:120
-msgid "Read more <span class=\"screen-reader-text\">%1$s</span>"
-msgstr ""
-
 #: inc/template-tags.php:27
 msgid "Posts navigation"
 msgstr "Navegação de Posts"
 
-#: inc/customizer.php:305
-msgid "Portfolio front"
-msgstr "Capa do portfólio"
+#: inc/extras.php:120
+msgid "Read more <span class=\"screen-reader-text\">%1$s</span>"
+msgstr "Leia mais <span class=\"screen-reader-text\">%1$s</span>"
 
 #: inc/extras.php:70
 msgid "Page %s"
 msgstr "Página %s"
 
+#: inc/customizer.php:305
+msgid "Portfolio front"
+msgstr "Capa do portfólio"
+
 #: inc/customizer.php:259
 msgid "Widgets"
 msgstr "Widgets"
-
-#: inc/customizer.php:142 inc/customizer.php:189 inc/customizer.php:236
-#: inc/customizer.php:283 inc/customizer.php:329
-msgid "Add background shade"
-msgstr "Adicionar sombra ao plano de fundo"
 
 #: inc/customizer.php:154
 msgid "Hide Tagline"
@@ -122,14 +118,19 @@ msgstr "Ocultar slogan"
 msgid "News"
 msgstr "Notícias"
 
+#: inc/customizer.php:212
+msgid "Page"
+msgstr "Página"
+
 #: inc/customizer.php:200 inc/customizer.php:247 inc/customizer.php:294
 #: inc/customizer.php:340
 msgid "Footer Link Text"
 msgstr "Texto de Link do Cabeçalho"
 
-#: inc/customizer.php:212
-msgid "Page"
-msgstr "Página"
+#: inc/customizer.php:142 inc/customizer.php:189 inc/customizer.php:236
+#: inc/customizer.php:283 inc/customizer.php:329
+msgid "Add background shade"
+msgstr "Adicionar sombra ao plano de fundo"
 
 #: inc/customizer.php:131 inc/customizer.php:178 inc/customizer.php:225
 #: inc/customizer.php:272 inc/customizer.php:318
@@ -152,6 +153,10 @@ msgstr "Quadrado (1:1)"
 msgid "Visibility"
 msgstr "Visibilidade"
 
+#: inc/customizer.php:118
+msgid "Title"
+msgstr "Título"
+
 #: inc/customizer.php:62
 msgid "Hide Title Section"
 msgstr "Ocultar título da seção"
@@ -172,10 +177,6 @@ msgstr "Ocultar seção de widgets"
 msgid "Hide Front Portfolio Section"
 msgstr "Ocultar seção de capa do portfólio"
 
-#: inc/customizer.php:118
-msgid "Title"
-msgstr "Título"
-
 #: inc/customizer.php:24
 msgid "Harmonic Theme Options"
 msgstr "Opções do tema Harmonic"
@@ -184,9 +185,10 @@ msgstr "Opções do tema Harmonic"
 msgid "Portfolio Thumbnail Aspect Ratio"
 msgstr "Proporção das miniaturas no portfólio"
 
-#: inc/customizer.php:23
-msgid "Theme"
-msgstr "Tema"
+#: header-featureimage.php:28 header-para.php:28 header-portfolio.php:28
+#: header-singleportfolio.php:28 header.php:28
+msgid "Menu"
+msgstr "Menu"
 
 #. translators: If there are characters in your language that are not supported
 #. by Arimo, translate this to 'off'. Do not translate into your own
@@ -196,30 +198,17 @@ msgctxt "Hind sans-serif font: on or off"
 msgid "on"
 msgstr "ativado"
 
-#. translators: To add an additional Armio character subsets,
-#. * translate this to 'devangari'.
-#. * Do not translate these strings into your own langauge.
-#: functions.php:131
-msgctxt "Hind: add new subset (devanagari)"
-msgid "no-subset"
-msgstr ""
-
-#: header-featureimage.php:28 header-para.php:28 header-portfolio.php:28
-#: header-singleportfolio.php:28 header.php:28
-msgid "Menu"
-msgstr "Menu"
-
 #: functions.php:100
 msgid "Front page"
 msgstr "Página inicial"
 
-#: functions.php:66
-msgid "Social Links Menu"
-msgstr "Menu de links sociais"
-
 #: functions.php:92
 msgid "Sidebar"
 msgstr "Lateral"
+
+#: functions.php:66
+msgid "Social Links Menu"
+msgstr "Menu de links sociais"
 
 #: functions.php:65
 msgid "Primary Menu"
@@ -405,7 +394,7 @@ msgstr "Dia: %s"
 msgid "Month: %s"
 msgstr "Mês: %s"
 
-#. #-#-#-#-#  harmonic.pot (Harmonic 1.0.8-wpcom)  #-#-#-#-#
+#. #-#-#-#-#  harmonic.pot (Harmonic 1.0.14-wpcom)  #-#-#-#-#
 #. Template Name of the plugin/theme
 #: archive-jetpack-portfolio.php:18 inc/customizer.php:28
 #: wp-content/themes/pub/harmonic/templates/portfolio-page.php

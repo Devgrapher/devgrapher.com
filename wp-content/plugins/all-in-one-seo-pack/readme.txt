@@ -2,29 +2,31 @@
 Contributors: hallsofmontezuma, wpsmort, dougal, pbaylies, arnaudbroes
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=mrtorbert%40gmail%2ecom&item_name=All%20In%20One%20SEO%20Pack&item_number=Support%20Open%20Source&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: seo, all in one seo, google, twitter, page, image seo, social, search engine optimization, sitemap, WordPress SEO, meta, meta description, xml sitemap, google sitemap, sitemaps, robots meta, yahoo, bing, news sitemaps, multisite, canonical, nofollow, noindex, keywords, description, webmaster tools, google webmaster tools, google analytics
-Requires at least: 3.3
-Tested up to: 4.5
-Stable tag: 2.3.4.2
+Requires at least: 4.0
+Tested up to: 4.6
+Stable tag: 2.3.10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The most downloaded plugin for WordPress (almost 30 million downloads). Use All in One SEO Pack to automatically optimize your site for Search Engines.
+One of the most downloaded plugins for WordPress (over 30 million downloads since 2007). Use All in One SEO Pack to automatically optimize your site for Search Engines.
 
 == Description ==
 
 **All in One SEO Pack** Optimizes your WordPress blog for SEO (**Search Engine Optimization**).
 
-**[Upgrade to Pro Version](http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/)**
+**[Upgrade to Pro Version](http://semperplugins.com/plugins/all-in-one-seo-pack-pro-version/?loc=readme_utpv)**
 
-[Premium Support](http://semperplugins.com/support/)
+[Premium Support](http://semperplugins.com/support/?loc=readme_ps)
 
-First created in 2007, see why AIOSEO is the most downloaded plugin for WordPress.
+First created in 2007, see why AIOSEO is one of the all time most downloaded plugins for WordPress.
 
 * XML Sitemap support - submit your sitemap to Google and Bing and improve your SEO
+* Google AMP support (Accelerated Mobile Pages)
 * Google Analytics support
 * Support for SEO on Custom Post Types
 * Advanced Canonical URLs
-* Fine tune Page Navigational Links 
+* Redirect attachment pages to parent post
+* Automatically notifies search engines like Google and Bing about changes to your site
 * Built-in API so other plugins/themes can access and extend functionality
 * ONLY free plugin to provide SEO Integration for e-Commerce sites, including WooCommerce
 * Nonce Security built into All in One SEO Pack
@@ -37,6 +39,7 @@ First created in 2007, see why AIOSEO is the most downloaded plugin for WordPres
 * You can override any title and set any META description and any META keywords you want.
 * Compatibility with many other plugins
 * Translated into 57 languages
+* PHP 7 100% Compatible
 
 Follow me on Twitter to keep up with the latest updates [Michael
 Torbert](http://twitter.com/michaeltorbert/)
@@ -55,13 +58,13 @@ manually.
 
 1. Visit 'Plugins > Add New'
 2. Search for 'All in One SEO'
-3. Activate All in One SEO Pack from your Plugins page. 
+3. Activate All in One SEO Pack from your Plugins page.
 
 = From WordPress.org =
 
 1. Download All in One SEO Pack.
 2. Upload the 'All in One SEO Pack' directory to your '/wp-content/plugins/' directory, using your favorite method (ftp, sftp, scp, etc...)
-3. Activate All in One SEO Pack from your Plugins page. 
+3. Activate All in One SEO Pack from your Plugins page.
 
 = Once Activated =
 
@@ -146,7 +149,7 @@ enhancements:
 -futureproofing the file editor function for PHP7,8
 -futureproofing the import-export function for PHP7,8
 
-= 2.2.7.4 = 
+= 2.2.7.4 =
 
 -Update for WordPress 4.4
 -CSS fixes

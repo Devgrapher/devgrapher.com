@@ -45,8 +45,17 @@ abstract class WPML_Templates_Factory {
 			$loader = new Twig_Loader_Filesystem( $this->template_paths );
 
 			$environment_args = array();
+
 			if ( WP_DEBUG ) {
 				$environment_args[ 'debug' ] = true;
+			}
+
+			$wpml_cache_directory = new WPML_Cache_Directory( new WPML_WP_API() );
+			$cache_directory      = $wpml_cache_directory->get( 'twig' );
+
+			if ( $cache_directory ) {
+				$environment_args[ 'cache' ]       = $cache_directory;
+				$environment_args[ 'auto_reload' ] = true;
 			}
 
 			$this->twig = new Twig_Environment( $loader, $environment_args );

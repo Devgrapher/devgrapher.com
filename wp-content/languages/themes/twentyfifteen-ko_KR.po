@@ -1,47 +1,15 @@
-# Translation of Twenty Fifteen in Korean
-# This file is distributed under the same license as the Twenty Fifteen package.
+# Translation of Themes - Twenty Fifteen in Korean
+# This file is distributed under the same license as the Themes - Twenty Fifteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-07-19 02:24:04+0000\n"
+"PO-Revision-Date: 2015-08-18 16:52:11+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/2.1.0-alpha\n"
-"Project-Id-Version: Twenty Fifteen\n"
-
-#. translators: %s: post title
-#: inc/template-tags.php:123
-msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
-msgstr "<span class=\"screen-reader-text\">%s</span>에 댓글 남기기"
-
-#. Theme URI of the plugin/theme
-msgid "https://wordpress.org/themes/twentyfifteen/"
-msgstr "https://wordpress.org/themes/twentyfifteen/"
-
-#: single.php:37
-msgid "Previous post:"
-msgstr "이전 글:"
-
-#: single.php:34
-msgid "Next post:"
-msgstr "다음 글:"
-
-#: inc/customizer.php:60 inc/customizer.php:76 inc/customizer.php:81
-msgid "Applied to the header on small screens and the sidebar on wide screens."
-msgstr "작은 화면에서는 헤더에, 큰 화면에서는 사이드바에 적용됩니다."
-
-#: single.php:33
-msgid "Next"
-msgstr "다음"
-
-#: single.php:36
-msgid "Previous"
-msgstr "이전"
-
-#. Author of the plugin/theme
-msgid "the WordPress team"
-msgstr "워드프레스 팀"
+"X-Generator: GlotPress/2.3.0-alpha\n"
+"Language: ko_KR\n"
+"Project-Id-Version: Themes - Twenty Fifteen\n"
 
 #. Description of the plugin/theme
 msgid "Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer."
@@ -51,9 +19,30 @@ msgstr "우리의 2015 기본 테마는 깨끗하고 블로그 중심이며 선�
 msgid "Twenty Fifteen"
 msgstr "Twenty Fifteen"
 
+#. translators: %s: post title
+#: inc/template-tags.php:123
+msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr "<span class=\"screen-reader-text\">%s</span>에 댓글 남기기"
+
+#: single.php:37
+msgid "Previous post:"
+msgstr "이전 글:"
+
+#: single.php:36
+msgid "Previous"
+msgstr "이전"
+
+#: single.php:34
+msgid "Next post:"
+msgstr "다음 글:"
+
+#: single.php:33
+msgid "Next"
+msgstr "다음"
+
 #: search.php:18
 msgid "Search Results for: %s"
-msgstr "검색 결과: %s"
+msgstr "검색 결과 : %s"
 
 #: inc/template-tags.php:113
 msgctxt "Used before full size attachment link."
@@ -90,21 +79,21 @@ msgctxt "Used before post format."
 msgid "Format"
 msgstr "글 형식"
 
-#: inc/template-tags.php:26
-msgid "Older Comments"
-msgstr "이전 댓글"
+#: inc/template-tags.php:49
+msgid "Featured"
+msgstr "추천"
 
 #: inc/template-tags.php:30
 msgid "Newer Comments"
 msgstr "다음 댓글"
 
-#: inc/template-tags.php:49
-msgid "Featured"
-msgstr "특성"
+#: inc/template-tags.php:26
+msgid "Older Comments"
+msgstr "이전 댓글"
 
 #: inc/template-tags.php:23
 msgid "Comment navigation"
-msgstr "댓글 내비게이션"
+msgstr "댓글 네비게이션"
 
 #: inc/customizer.php:205
 msgid "Blue"
@@ -112,19 +101,19 @@ msgstr "파랑"
 
 #: inc/customizer.php:194
 msgid "Purple"
-msgstr "보라"
+msgstr "보라색"
 
 #: inc/customizer.php:183
 msgid "Pink"
-msgstr "분홍"
-
-#: inc/customizer.php:161
-msgid "Dark"
-msgstr "어두움"
+msgstr "분홍색"
 
 #: inc/customizer.php:172
 msgid "Yellow"
-msgstr "노랑"
+msgstr "노란색"
+
+#: inc/customizer.php:161
+msgid "Dark"
+msgstr "검정"
 
 #: inc/customizer.php:150
 msgid "Default"
@@ -134,51 +123,55 @@ msgstr "기본"
 msgid "Header and Sidebar Background Color"
 msgstr "헤더 및 사이드바 배경 색상"
 
-#: inc/customizer.php:44
-msgid "Base Color Scheme"
-msgstr "기본 색상 구조"
+#: inc/customizer.php:60 inc/customizer.php:76 inc/customizer.php:81
+msgid "Applied to the header on small screens and the sidebar on wide screens."
+msgstr "작은 화면에서는 헤더에, 큰 화면에서는 사이드바에 적용됩니다."
 
 #: inc/customizer.php:59
 msgid "Header and Sidebar Text Color"
 msgstr "헤더 및 사이드바 텍스트 색상"
 
+#: inc/customizer.php:44
+msgid "Base Color Scheme"
+msgstr "기본 색상 구조"
+
 #: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
 msgid "Twenty Fifteen requires at least WordPress version 4.1. You are running version %s. Please upgrade and try again."
 msgstr "Twenty Fifteen은 최소한 워드프레스 4.1 버전이 필수입니다. 현재 %s 버전을 사용 중입니다. 업그레이드 하고 다시 해주세요."
-
-#: image.php:24
-msgid "Previous Image"
-msgstr "이전 이미지"
-
-#: image.php:24
-msgid "Next Image"
-msgstr "다음 이미지"
 
 #: image.php:84
 msgctxt "Parent post link"
 msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
 msgstr "<span class=\"meta-nav\">발행됨</span><span class=\"post-title\">%title</span>"
 
+#: image.php:24
+msgid "Next Image"
+msgstr "다음 이미지"
+
+#: image.php:24
+msgid "Previous Image"
+msgstr "이전 이미지"
+
 #: header.php:45
 msgid "Menu and widgets"
 msgstr "메뉴와 위젯"
 
-#: functions.php:269
-msgid "expand child menu"
-msgstr "하위 메뉴 확장"
+#: header.php:26
+msgid "Skip to content"
+msgstr "컨텐츠로 건너뛰기"
 
-#: functions.php:270
+#: functions.php:283
 msgid "collapse child menu"
 msgstr "하위 메뉴 축소"
 
-#: header.php:26
-msgid "Skip to content"
-msgstr "콘텐츠로 바로가기"
+#: functions.php:282
+msgid "expand child menu"
+msgstr "하위 메뉴 확장"
 
 #. Translators: To add an additional character subset specific to your
 #. language, translate this to 'greek', 'cyrillic', 'devanagari' or
 #. 'vietnamese'. Do not translate into your own language.
-#: functions.php:199
+#: functions.php:212
 msgctxt "Add new subset (greek, cyrillic, devanagari, vietnamese)"
 msgid "no-subset"
 msgstr "서브셋 없음"
@@ -186,48 +179,48 @@ msgstr "서브셋 없음"
 #. Translators: If there are characters in your language that are not supported
 #. by Inconsolata, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:191
+#: functions.php:204
 msgctxt "Inconsolata font: on or off"
-msgid "on"
-msgstr "켜기"
-
-#. Translators: If there are characters in your language that are not supported
-#. by Noto Sans, translate this to 'off'. Do not translate into your own
-#. language.
-#: functions.php:175
-msgctxt "Noto Sans font: on or off"
 msgid "on"
 msgstr "켜기"
 
 #. Translators: If there are characters in your language that are not supported
 #. by Noto Serif, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:183
+#: functions.php:196
 msgctxt "Noto Serif font: on or off"
 msgid "on"
 msgstr "켜기"
 
-#: functions.php:149
-msgid "Add widgets here to appear in your sidebar."
-msgstr "사이드바에 나타나도록 하려면 여기에 위젯을 추가하세요."
+#. Translators: If there are characters in your language that are not supported
+#. by Noto Sans, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:188
+msgctxt "Noto Sans font: on or off"
+msgid "on"
+msgstr "켜기"
 
-#: functions.php:147
+#: functions.php:162
+msgid "Add widgets here to appear in your sidebar."
+msgstr "위젯을 사이드바에 나타나도록 하려면 여기서 추가하세요."
+
+#: functions.php:160
 msgid "Widget Area"
 msgstr "위젯 영역"
-
-#: functions.php:85
-msgid "Primary Menu"
-msgstr "주 메뉴"
 
 #: functions.php:86
 msgid "Social Links Menu"
 msgstr "소셜 링크 메뉴"
 
+#: functions.php:85
+msgid "Primary Menu"
+msgstr "주 메뉴"
+
 #: footer.php:25
 msgid "Proudly powered by %s"
 msgstr "Proudly powered by %s"
 
-#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.5)  #-#-#-#-#
+#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.7)  #-#-#-#-#
 #. Author URI of the plugin/theme
 #: footer.php:25
 msgid "https://wordpress.org/"
@@ -235,7 +228,7 @@ msgstr "https://wordpress.org/"
 
 #: content-none.php:31
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
-msgstr "찾고 있는 것을 찾을 수 없는 것 같습니다. 검색이 도움이 될 수도 있습니다."
+msgstr "찾고 있는 것을 찾을 수 없는 것 같습니다. 검색이 도움될 수도 있습니다."
 
 #: content-none.php:26
 msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
@@ -243,11 +236,11 @@ msgstr "죄송하지만 검색어와 일치하는 것이 없습니다. 다른 �
 
 #: content-none.php:22
 msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
-msgstr "첫 번째 글을 발행할 준비가 됐나요? <a href=\"%1$s\">여기서 시작하세요</a>."
+msgstr "첫번째 글을 발행할 준비가 됐나요? <a href=\"%1$s\">여기서 시작하세요</a>."
 
 #: content-none.php:15
 msgid "Nothing Found"
-msgstr "찾을 수 없습니다"
+msgstr "찾지 못함"
 
 #: content-link.php:56 content-page.php:35 content-search.php:28
 #: content-search.php:33 content.php:57 image.php:71
@@ -265,17 +258,17 @@ msgstr "%s 더보기"
 
 #: comments.php:53
 msgid "Comments are closed."
-msgstr "댓글이 마감 됐습니다."
+msgstr "댓글은 닫혔습니다."
 
 #: comments.php:28
 msgctxt "comments title"
 msgid "One thought on &ldquo;%2$s&rdquo;"
 msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
-msgstr[0] "&ldquo;%2$s&rdquo;의 %1$s개의 생각"
+msgstr[0] "&ldquo;%2$s&rdquo;에 대한 %1$s개의 생각"
 
 #: author-bio.php:34
 msgid "View all posts by %s"
-msgstr "%s님의 모든 글 보기"
+msgstr "%s 의 모든 글 보기"
 
 #: author-bio.php:12
 msgid "Published by"
@@ -288,16 +281,24 @@ msgstr "페이지"
 
 #: archive.php:50 index.php:47 search.php:39
 msgid "Next page"
-msgstr "다음 페이지"
+msgstr "다음 쪽"
 
 #: archive.php:49 index.php:46 search.php:38
 msgid "Previous page"
-msgstr "이전 페이지"
+msgstr "이전 쪽"
 
 #: 404.php:21
 msgid "It looks like nothing was found at this location. Maybe try a search?"
-msgstr "해당 위치에서 찾을 수 있는 것이 아무 것도 없는 것 같습니다. 검색을 해보시겠습니까?"
+msgstr "위 위치에서 찾을 수 있는 것이 없는 것 같습니다. 검색을 활용해보세요."
 
 #: 404.php:17
 msgid "Oops! That page can&rsquo;t be found."
-msgstr "이런! 해당 페이지를 찾을 수 없습니다."
+msgstr "아차! 해당 페이지를 찾을 수 없습니다."
+
+#. Author of the plugin/theme
+msgid "the WordPress team"
+msgstr "워드프레스 팀"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.org/themes/twentyfifteen/"
+msgstr "https://wordpress.org/themes/twentyfifteen/"

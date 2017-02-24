@@ -1,6 +1,6 @@
 <?php
 
-require_once 'wpml-wordpress-actions.class.php';
+require_once dirname( __FILE__ ) . '/wpml-wordpress-actions.class.php';
 
 /**
  * Class WPML_Post_Duplication
@@ -32,7 +32,12 @@ class WPML_Post_Duplication extends WPML_WPDB_And_SP_User {
 	function make_duplicate( $master_post_id, $lang ) {
 		global $wpml_post_translations;
 
+		/**
+		 * @deprecated Use 'wpml_before_make_duplicate' instead
+		 * @since      3.4
+		 */
 		do_action( 'icl_before_make_duplicate', $master_post_id, $lang );
+		do_action( 'wpml_before_make_duplicate', $master_post_id, $lang );
 		$master_post = get_post( $master_post_id );
 		$is_duplicated = false;
 		$translations  = $wpml_post_translations->get_element_translations( $master_post_id, false, false );
@@ -81,7 +86,7 @@ class WPML_Post_Duplication extends WPML_WPDB_And_SP_User {
 		global $ICL_Pro_Translation;
 		/** @var WPML_Pro_Translation $ICL_Pro_Translation */
 		if ( $ICL_Pro_Translation ) {
-			$ICL_Pro_Translation->_content_fix_links_to_translated_content( $id, $lang );
+			$ICL_Pro_Translation->fix_links_to_translated_content( $id, $lang );
 		}
 		if ( ! is_wp_error( $id ) ) {
 			$ret = $this->run_wpml_actions( $master_post, $trid, $lang, $id, $post_array );
@@ -159,7 +164,7 @@ class WPML_Post_Duplication extends WPML_WPDB_And_SP_User {
 			$id = wp_update_post( $post_array, true );
 		} else {
 			$create_post_helper = wpml_get_create_post_helper();
-			$id                 = $create_post_helper->icl_insert_post( $post_array, $lang, true );
+			$id                 = $create_post_helper->insert_post( $post_array, $lang, true );
 		}
 
 		return $id;

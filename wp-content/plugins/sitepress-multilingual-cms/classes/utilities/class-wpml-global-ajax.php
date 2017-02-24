@@ -26,6 +26,7 @@ class WPML_Global_AJAX extends WPML_SP_User {
 			$root_html_file_path           = filter_input( INPUT_POST, 'root_html_file_path', FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_NULL_ON_FAILURE );
 			$hide_language_switchers       = filter_input( INPUT_POST, 'hide_language_switchers', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
 			$icl_xdomain_data              = filter_input( INPUT_POST, 'xdomain', FILTER_SANITIZE_NUMBER_INT, FILTER_NULL_ON_FAILURE );
+			$sso_enabled                   = filter_input( INPUT_POST, 'sso_enabled', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
 
 			if ( $icl_language_negotiation_type ) {
 				$this->sitepress->set_setting( 'language_negotiation_type', $icl_language_negotiation_type );
@@ -49,6 +50,7 @@ class WPML_Global_AJAX extends WPML_SP_User {
 				}
 
 				$this->sitepress->set_setting( 'xdomain_data', $icl_xdomain_data );
+				$this->sitepress->set_setting( 'language_per_domain_sso_enabled', $sso_enabled );
 				$this->sitepress->save_settings();
 			}
 

@@ -14,21 +14,15 @@ get_header(); ?>
 
 		<?php if ( have_posts() ) : ?>
 
+			<?php harmonic_portfolio_thumbnail( '<div class="portfolio-featured-image">', '</div>' ); ?>
+
 			<header class="page-header">
-				<h1 class="page-title">
-					<?php single_term_title(); ?>
-				</h1>
-				<?php
-					// Show an optional term description.
-					$term_description = term_description();
-					if ( ! empty( $term_description ) ) :
-						printf( '<div class="taxonomy-description">%s</div>', $term_description );
-					endif;
-				?>
-			</header><!-- .page-header -->
+				<?php harmonic_portfolio_title( '<h1 class="page-title">', '</h1>' ); ?>
+
+				<?php harmonic_portfolio_content( '<div class="taxonomy-description">', '</div>' ); ?>
+			</header>
 
 			<?php /* Start the Loop */ ?>
-
 			<div id="archive-container" class="portfolio-projects clear">
 
 				<?php while ( have_posts() ) : the_post(); ?>

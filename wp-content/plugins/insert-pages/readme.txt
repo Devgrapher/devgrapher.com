@@ -2,12 +2,12 @@
 Contributors: figureone, the_magician
 Tags: insert, pages, shortcode, embed
 Requires at least: 3.0.1
-Tested up to: 4.5.1
+Tested up to: 4.6.2
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Insert Pages lets you embed any WordPress content (e.g., pages, posts, custom post types) into other WordPress content using the Shortcode API. It also includes a widget for inserting pages into any widget area.
+Insert Pages lets you embed any WordPress content (e.g., pages, posts, custom post types) into other WordPress content using the Shortcode API.
 
 == Description ==
 
@@ -85,6 +85,25 @@ Just one! The plugin prevents you from embedding a page in itself, but you can t
 3. Insert Pages shortcode example.
 
 == Changelog ==
+
+= 3.1.8 =
+* Fix for widget being used in the Beaver Builder widget interface.
+
+= 3.1.7 =
+* Plugin is now translatable (internationalization). Props @maxgx for getting the ball rolling and creating a translation.
+
+= 3.1.6 =
+* Fix for TinyMCE toolbar button not appearing for authors and contributors. Props @fernandosalvato for the report.
+* Fix for deprecation warning in PHP 7. Props @christer_f for the report.
+
+= 3.1.5 =
+* Fix for php warning when inserting page outside of The Loop while using Beaver Builder. Props @jeffreytanuwidjaja for the report.
+
+= 3.1.4 =
+* Compatibility for for php versions lower than 5.3. Replace closure with create_function().
+
+= 3.1.3 =
+* Prevent menu items and page attachments from being insertable; this fixes problems with inserting pages via slug when there is a menu item with the same slug as a page/post. Props @k7f7 for tracking this one down!
 
 = 3.1.2 =
 * Fix for custom template dropdown not enabling when configuring the widget on the theme customizer page (customize.php). Props @aassouad for finding this!

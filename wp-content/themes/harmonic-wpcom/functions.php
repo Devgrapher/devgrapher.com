@@ -50,6 +50,14 @@ function harmonic_setup() {
 	add_theme_support( 'automatic-feed-links' );
 
 	/*
+	 * Let WordPress manage the document title.
+	 * By adding theme support, we declare that this theme does not use a
+	 * hard-coded <title> tag in the document head, and expect WordPress to
+	 * provide it for us.
+	 */
+	add_theme_support( 'title-tag' );
+
+	/*
 	 * Enable support for Post Thumbnails on posts and pages.
 	 *
 	 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
@@ -59,6 +67,7 @@ function harmonic_setup() {
 	add_image_size( 'portfolio-landscape', 480, 360, true );
 	add_image_size( 'portfolio-portrait', 480, 640, true );
 	add_image_size( 'portfolio-square', 480, 480, true );
+	add_image_size( 'portfolio-thumbnail', 1216, 9999 );
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
@@ -139,7 +148,7 @@ function harmonic_hind_font_url() {
 			'subset' => urlencode( $subsets ),
 		);
 
-		$harmonic_hind_font_url = add_query_arg( $query_args, '//fonts.googleapis.com/css' );
+		$harmonic_hind_font_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 
 	}
 
@@ -203,8 +212,8 @@ function harmonic_enqueue_backstretch() {
 		$headerimage = $header_image;
 	}
 
-	wp_enqueue_script( 'harmonic-backstretch', get_stylesheet_directory_uri() . '/js/jquery.backstretch.js', array( 'jquery' ), '1.0.0' );
-	wp_enqueue_script( 'harmonic-backstretch-set', get_stylesheet_directory_uri() .'/js/harmonic-backstretch.js' , array( 'jquery', 'harmonic-backstretch' ), '1.0.0' );
+	wp_enqueue_script( 'harmonic-backstretch', get_template_directory_uri() . '/js/jquery.backstretch.js', array( 'jquery' ), '1.0.0' );
+	wp_enqueue_script( 'harmonic-backstretch-set', get_template_directory_uri() .'/js/harmonic-backstretch.js' , array( 'jquery', 'harmonic-backstretch' ), '1.0.0' );
 	wp_localize_script( 'harmonic-backstretch-set', 'BackStretchImg', array(
 			'src' => $headerimage ) );
 }

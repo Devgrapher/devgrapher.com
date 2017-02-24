@@ -15,7 +15,7 @@ if ( isset( $GLOBALS['content_width'] ) )
 			echo get_the_term_list( $post->ID, 'jetpack-portfolio-tag', '<span class="tags-links">', '', '</span>' );
 		?>
 		<?php if ( ! post_password_required() && ( comments_open() || '0' != get_comments_number() ) ) : ?>
-			<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'harmonic' ), __( '1 Comment', 'harmonic' ), __( '% Comments', 'harmonic' ) ); ?></span>
+			<span class="comments-link"><a href="#respond"><?php comments_number( __( 'Leave a comment', 'harmonic' ), __( '1 Comment', 'harmonic' ), __( '% Comments', 'harmonic' ) ); ?></a></span>
 		<?php endif; ?>
 		<?php
 		echo get_the_term_list( get_the_ID(), 'jetpack-portfolio-type', '<span class="portfolio-type-links">', _x( ', ', 'Used between list items, there is a space after the comma.', 'harmonic' ), '</span>' );

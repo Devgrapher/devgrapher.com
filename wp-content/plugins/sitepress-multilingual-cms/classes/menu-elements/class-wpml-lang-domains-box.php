@@ -12,11 +12,13 @@ class WPML_Lang_Domains_Box extends WPML_SP_User {
 		$default_language = $this->sitepress->get_default_language();
 		$language_domains = $this->sitepress->get_setting( 'language_domains', array() );
 		$default_home     = $this->sitepress->convert_url( $this->sitepress->get_wp_api()->get_home_url(), $default_language );
-		$home_schema      = parse_url( $default_home, PHP_URL_SCHEME ) . '://';
-		$home_path        = parse_url( $default_home, PHP_URL_PATH );
+		$home_schema      = wpml_parse_url( $default_home, PHP_URL_SCHEME ) . '://';
+		$home_path        = wpml_parse_url( $default_home, PHP_URL_PATH );
+		$is_per_domain    = WPML_LANGUAGE_NEGOTIATION_TYPE_DOMAIN === (int) $this->sitepress->get_setting( 'language_negotiation_type' );
+		$is_sso_enabled   = (bool) $this->sitepress->get_setting( 'language_per_domain_sso_enabled', ! $is_per_domain );
 		ob_start();
 		?>
-		<table class="language_domains">
+		<table class="language_domains sub-section">
 			<?php foreach ( $active_languages as $code => $lang ) : ?>
 				<?php $textbox_id = esc_attr( 'language_domain_' . $code ); ?>
 				<tr>
@@ -73,7 +75,24 @@ class WPML_Lang_Domains_Box extends WPML_SP_User {
 					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
+			<tr>
+				<td colspan="2">
+					<label for="sso_enabled">
+						<input type="checkbox" id="sso_enabled" name="sso_enabled" value="1" <?php checked( $is_sso_enabled, true, true ); ?>>
+						<?php _e( 'Auto sign-in and sign-out users from all domains', 'sitepress' ); ?>
+					</label>
+					<span id="sso_information"><i class="otgs-ico-help"></i></span>
+					<div id="sso_enabled_notice" style="display: none;">
+						<?php _e( 'Please log-out and login again in order to be able to access the admin features in all language domains.', 'sitepress' ); ?>
+					</div>
+				</td>
+			</tr>
 		</table>
+		<div id="language_per_domain_sso_description" style="display:none;">
+			<p>
+				<?php _e( 'This feature allows the theme and plugins to work correctly when on sites that use languages in domains.<br/>It requires a call to each of the site\'s language domains on both log-in and log-out, so there\'s a small performance penalty to using it.' );?>
+			</p>
+		</div>
 		<?php
 
 		return ob_get_clean();

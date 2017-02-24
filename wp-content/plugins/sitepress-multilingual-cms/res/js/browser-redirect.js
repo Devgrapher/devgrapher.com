@@ -43,22 +43,29 @@ var WPMLBrowserRedirect = function () {
 				var pageLanguage;
                 var browserLanguage;
 
-				pageLanguage = wpml_browser_redirect_params.pageLanguage;
+				pageLanguage = wpml_browser_redirect_params.pageLanguage.toLowerCase();
 
                 var browserLanguagesLength = browserLanguages.length;
                 for (var i = 0; i < browserLanguagesLength; i++) {
                     browserLanguage = browserLanguages[i];
 
-					if (pageLanguage === browserLanguage.substr(0, 2)) {
+					if( pageLanguage === browserLanguage.substr(0, 2) ){
+						self.setCookie(browserLanguage);
 						break;
-					} else if (pageLanguage !== browserLanguage.substr(0, 2)) {
-                        redirectUrl = self.getRedirectUrl(browserLanguage);
-                        if (false !== redirectUrl) {
-                            self.setCookie(browserLanguage);
-                            window.location = redirectUrl;
-                            break;
-                        }
-                    }
+					}else if( pageLanguage === browserLanguage ){
+						self.setCookie(browserLanguage);
+						break;
+					}else if( pageLanguage === browserLanguage.substr(3, browserLanguage.length) ){
+						self.setCookie(browserLanguage);
+						break;
+					}else{
+						redirectUrl = self.getRedirectUrl(browserLanguage);
+						if (false !== redirectUrl) {
+							self.setCookie(browserLanguage);
+							window.location = redirectUrl;
+							break;
+						}
+					}
                 }
 
             });
@@ -116,12 +123,14 @@ var WPMLBrowserRedirect = function () {
                     if (response.success) {
                         browserLanguages = response.data;
                         if (success && "function" === typeof success) {
+							browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
                             success(browserLanguages);
                         }
                     }
                 }
             });
         } else {
+			browserLanguages = browserLanguages.join('|').toLowerCase().split('|');
             success(browserLanguages);
         }
 	};

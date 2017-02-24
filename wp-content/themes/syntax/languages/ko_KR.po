@@ -1,0 +1,323 @@
+# Translation of Syntax in Korean
+# This file is distributed under the same license as the Syntax package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2014-07-03 11:32:56+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Syntax\n"
+
+#. Author URI of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "https://wordpress.com/themes/"
+msgstr ""
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "Syntax is a theme designed with writing--and reading--in mind. With large, easy-to-read type, a fixed navigation menu, and a responsive design that looks beautiful on all screen sizes, it's perfect for writers or bloggers who want a clean, sophisticated look and feel for their site."
+msgstr "Syntax는 쓰기와 읽기를 염두에 두고 만든 테마입니다. 읽기 쉬운 대형 고정 탐색 메뉴와 모든 화면 크기에 어울리는 반응형 디자인으로 자신의 사이트에 깔끔하고 세련된 모양과 느낌을 원하는 작가나 블로거에게 이상적입니다."
+
+#: searchform.php:11
+msgctxt "submit button"
+msgid "Search"
+msgstr "검색"
+
+#: searchform.php:10
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "검색 &hellip;"
+
+#: searchform.php:9
+msgctxt "assistive text"
+msgid "Search"
+msgstr ""
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "검색 결과: %s"
+
+#: inc/template-tags.php:129
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr ""
+
+#: inc/template-tags.php:120
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Featured</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+msgstr ""
+
+#: inc/template-tags.php:124 inc/template-tags.php:135
+msgid "View all posts by %s"
+msgstr "%s의 모든 글 보기"
+
+#: inc/template-tags.php:95
+msgid "Your comment is awaiting moderation."
+msgstr "입력한 댓글이 검토를 기다리고 있습니다."
+
+#: inc/template-tags.php:88
+msgctxt "1: date, 2: time"
+msgid "%1$s at %2$s"
+msgstr "%1$s %2$s"
+
+#: inc/template-tags.php:82
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "%s의 <span class=\"says\">댓글:</span>"
+
+#: inc/template-tags.php:72
+msgid "Pingback:"
+msgstr "핑백:"
+
+#: inc/template-tags.php:48
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "최신 글 <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/template-tags.php:44
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> 예전 글"
+
+#: inc/template-tags.php:39
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:38
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:34
+msgid "Post navigation"
+msgstr "글 네비게이션"
+
+#: inc/extras.php:66
+msgid "Page %s"
+msgstr "페이지 %s"
+
+#: image.php:106
+msgid "Both comments and trackbacks are currently closed."
+msgstr "현재 댓글 및 트랙백이 모두 닫혀있습니다."
+
+#: image.php:104
+msgid "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">post a comment</a>."
+msgstr "트랙백이 닫혀 있습니다. 하지만 <a class=\"comment-link\" href=\"#respond\" title=\"댓글 달기\">댓글을 달 수 있습니다</a>."
+
+#: image.php:102
+msgid "Comments are closed, but you can leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "댓글이 닫혀 있지만 트랙백을 남길 수 있습니다: <a class=\"trackback-link\" href=\"%s\" title=\"글의 트랙백 URL\" rel=\"trackback\">트랙백 URL</a>."
+
+#: image.php:100
+msgid "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "<a class=\"comment-link\" href=\"#respond\" title=\"댓글 달기\">댓글을 달거나</a> 트랙백을 남기세요: <a class=\"trackback-link\" href=\"%s\" title=\"글의 트랙백 URL\" rel=\"trackback\">트랙백 URL</a>."
+
+#: image.php:87
+msgid "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>"
+msgstr ""
+
+#: image.php:21
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "다음 <span class=\"meta-nav\">&rarr;</span>"
+
+#: image.php:20
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> 이전"
+
+#: header.php:82
+msgid "Skip to content"
+msgstr "컨텐츠로 건너뛰기"
+
+#: header.php:80
+msgid "Menu"
+msgstr "메뉴"
+
+#: header.php:72
+msgid "Tumblr"
+msgstr "텀블러"
+
+#: header.php:67
+msgid "Twitter"
+msgstr "트위터"
+
+#: header.php:62
+msgid "Path"
+msgstr "경로"
+
+#: header.php:57
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: header.php:52
+msgid "Google+"
+msgstr "Google+"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:136
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr ""
+
+#: header.php:47
+msgid "Facebook"
+msgstr "Facebook"
+
+#: functions.php:86
+msgid "Footer Sidebar 2"
+msgstr "푸터 사이드바 2"
+
+#: functions.php:94
+msgid "Footer Sidebar 3"
+msgstr "푸터 사이드바 3"
+
+#: functions.php:78
+msgid "Footer Sidebar 1"
+msgstr "푸터 사이드바 1"
+
+#: functions.php:53
+msgid "Footer Menu"
+msgstr "푸터 메뉴"
+
+#: functions.php:52
+msgid "Primary Menu"
+msgstr "기본 메뉴"
+
+#: footer.php:22
+msgid "Theme: %1$s by %2$s."
+msgstr "테마: %1$s(%2$s 제작)."
+
+#: footer.php:20
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#: footer.php:20
+msgid "A Semantic Personal Publishing Platform"
+msgstr "의미론적 개인 출판 플랫폼"
+
+#: content.php:55
+msgid "% Comments"
+msgstr "댓글 %개"
+
+#: content.php:55
+msgid "1 Comment"
+msgstr ""
+
+#: content.php:55
+msgid "Leave a comment"
+msgstr "댓글 남기기"
+
+#: content.php:30
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "계속 읽기 <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:31 content.php:45
+msgid ", "
+msgstr ", "
+
+#: content-single.php:12 content.php:19
+msgid "All %s posts"
+msgstr ""
+
+#: content-page.php:23 content-single.php:38 content.php:58 image.php:108
+#: inc/template-tags.php:72 inc/template-tags.php:91
+msgid "Edit"
+msgstr "편집"
+
+#: content-page.php:18 content-single.php:21 content.php:33 image.php:77
+msgid "Pages:"
+msgstr "페이지:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "찾고 계신 것을 찾을 수 없습니다. 검색이 도움이 될 수 있습니다."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "죄송합니다. 검색어와 일치하는 결과가 없습니다. 다른 키워드로 다시 시도해보세요."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "첫 번째 글을 게시할 준비가 되셨나요? <a href=\"%1$s\">여기서 시작하세요</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "찾지 못함"
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr "댓글은 닫혔습니다."
+
+#: comments.php:38 comments.php:58
+msgid "Newer Comments &rarr;"
+msgstr "새로운 댓글 &rarr;"
+
+#: comments.php:37 comments.php:57
+msgid "&larr; Older Comments"
+msgstr "&larr; 예전 댓글"
+
+#: comments.php:36 comments.php:56
+msgid "Comment navigation"
+msgstr "댓글 네비게이션"
+
+#: comments.php:29
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "&ldquo;%2$s&rdquo;에 대한 %1$s개의 생각"
+
+#: archive.php:63
+msgid "Archives"
+msgstr "글목록"
+
+#: archive.php:60
+msgid "Links"
+msgstr "링크"
+
+#: archive.php:57
+msgid "Quotes"
+msgstr "인용"
+
+#: archive.php:54
+msgid "Videos"
+msgstr "비디오"
+
+#: archive.php:51
+msgid "Images"
+msgstr "이미지"
+
+#: archive.php:48
+msgid "Asides"
+msgstr "추가정보"
+
+#: archive.php:45
+msgid "Yearly Archives: %s"
+msgstr "연간 보관물: %s"
+
+#: archive.php:42
+msgid "Monthly Archives: %s"
+msgstr "월간 보관물: %s"
+
+#: archive.php:39
+msgid "Daily Archives: %s"
+msgstr "일간 보관물: %s"
+
+#: archive.php:31
+msgid "Author Archives: %s"
+msgstr "글쓴이 보관물: %s"
+
+#: archive.php:24
+msgid "Tag Archives: %s"
+msgstr "태그 보관물: %s"
+
+#: archive.php:21
+msgid "Category Archives: %s"
+msgstr "카테고리 보관물: %s"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "이 위치에서 아무 것도 찾을 수 없는 것 같습니다. 아래의 링크 중 하나로 시도하거나 검색을 해보시는 것은 어떠세요?"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "페이지를 찾을 수 없습니다."

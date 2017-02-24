@@ -1,7 +1,7 @@
 <?php
-require ICL_PLUGIN_PATH . '/inc/post-translation/wpml-post-duplication.class.php';
-require 'wpml-post-synchronization.class.php';
-require_once 'wpml-wordpress-actions.class.php';
+require dirname( __FILE__ ) . '/wpml-post-duplication.class.php';
+require dirname( __FILE__ ) . '/wpml-post-synchronization.class.php';
+require_once dirname( __FILE__ ) . '/wpml-wordpress-actions.class.php';
 
 /**
  * Class WPML_Post_Translation
@@ -162,12 +162,18 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 	}
 
 	public function delete_post_translation_entry( $post_id ) {
+
+		$update_args = array( 'context' => 'post', 'element_id' => $post_id );
+		do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'before_delete' ) ) );
+
 		$sql = $this->wpdb->prepare( "DELETE FROM {$this->wpdb->prefix}icl_translations
 								WHERE element_id = %d
 									AND element_type LIKE 'post%%'
 								LIMIT 1",
 		                       $post_id );
 		$res = $this->wpdb->query( $sql );
+
+		do_action( 'wpml_translation_update', array_merge( $update_args, array( 'type' => 'after_delete' ) ) );
 
 		return $res;
 	}
@@ -244,6 +250,21 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 		if ( $post_vars['post_type'] !== 'nav_menu_item' ) {
 			do_action( 'wpml_tm_save_post', $post_vars['ID'], get_post( $post_vars['ID'] ), false );
 		}
+		// Flush object cache.
+		$this->flush_object_cache_for_groups( array( 'ls_languages', 'element_translations' ) );
+	}
+
+	/**
+	 * Create new instance of WPML_WP_Cache for each group and flush cache for group.
+	 * @param array $groups
+	 */
+	private function flush_object_cache_for_groups( $groups = array() ) {
+		if ( ! empty( $groups ) ) {
+			foreach ( $groups as $group ) {
+				$cache            = new WPML_WP_Cache( $group );
+				$cache->flush_group_cache();
+			}
+		}
 	}
 
 	private function get_original_post_attr( $trid, $attribute, $source_lang_code ) {
@@ -299,6 +320,11 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 					ON t.element_id = p.ID
 						AND t.element_type = CONCAT('post_', p.post_type)";
 	}
+
+	protected function get_type_prefix() {
+		return 'post_';
+	}
+
 
 	public function is_translated_type( $post_type ) {
 		global $sitepress;

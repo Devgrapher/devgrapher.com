@@ -1,3 +1,154 @@
+# 3.5.3.1
+
+## Fixes
+* [wpmlcore-3392] Fixed performance issue with SSO when language per domain is configured. 
+
+# 3.5.3
+
+## Fixes
+* [wpmlcore-3366] Update language switcher color picker validation to support rgb and transparent option
+
+# 3.5.2
+
+## Fixes
+* [wpmlcore-3244] Fixed issue with re-initialization of WPML in Network install after resetting settings of main sub-site.
+* [wpmlcore-2663] Fixed issue with browser-redirection when using Languages in Directories.
+* [wpmlcore-2682] Fixed issue with browser redirection and languages with variations.
+* [wpmlcore-3009] Fixed duplicated lang query param when redirection to child page is made.
+* [wpmlcore-3310] Post meta won't return an empty value after automatic post meta synchronization is run.
+* [wpmlcore-3334] Fixed issues with translation from second language are loaded when MO files are used (introduced in WP 4.6)
+* [wpmltm-1532] Ensure the the correct source language is used when sending translation jobs to translation proxy.
+* Other minor bug fixes.
+
+## API
+
+### Filters
+* [wpmlcore-3160] Added `wpml_is_translated_taxonomy`
+
+### Actions
+* [wpmlcore-3316] Added `wpml_user_switch_language`
+
+## Performances
+* [wpmlcore-3227] Reduced the number of queries on the posts listing pages
+* [wpmlcore-2692] Added caching for Twig templates
+
+## Features
+* [wpmlcore-3320] Users can now login across domains when WPML is configured to use language per domain using "window.postMessage"
+* [wpmlcore-1101] Added a spinner and disabled buttons in the WPML installation wizard, to improve usability
+
+## Usability
+* [wpmlcore-3006] Improved usability of the admin notice "Term hierarchy synchronization".
+
+# 3.5.1.1
+
+# Fixes
+* [wpmlcore-3303] Removed updating of ST DB Cache tables: moved to ST plugin, to avoid dependency issues
+
+# 3.5.1
+
+# Fixes
+* [wpmlcore-3280] Fixed `Fatal error: Uncaught exception 'InvalidArgumentException' with message 'Argument ID must be numeric and greater than 0` when filtering permalinks
+* [wpmlcore-3272] Fixed `Fatal error: Declaration of WPML_Post_Element::get_type() must be compatible with that of WPML_Translation_Element::get_type()` for PHP 5.2
+* [wpmlst-881] Removed leading backslash `\` to avoid warnings in PHP <5.3
+* [wpmlcore-3278] Fixed fatal error appearing during upgrade: `WordPress database error: specified key was too long; max key length is 1000`
+* [wpmlcore-3273] Fixed uncaught exception in cases where `domain_name_context_md5` column didn't exist in `icl_strings` table
+* [wpmlcore-3291] Improved query validation used for caching strings
+* [wpmlst-888] Improved caching of strings per page, update of db structure.
+
+# 3.5.0
+
+## Fixes
+* [wpmlcore-2590] Fix conversion to absolute link when link is to a post in another language
+* [wpmlcore-2937] Fixed multisite so that links to posts on sub-sites are correct
+* [wpmlcore-2952] Canonical for non translated post types must always be the "default language" URL
+* [wpmlcore-2631] Fixed XML-RPC API calls to set the language of a newly created post (e.g. `metaWeblog.newPost`, `wp.newPost`, and `wp.newPage`).
+* [wpmlcore-3081] Duplicated content will use the same canonical for all all languages
+* [wpmlsl-28] Fix sticky links so that the correct link is used when the same slug is used in different languages
+* [wpmlsl-32] Fix sticky links so that they convert correctly when the current post has duplicates
+* [wpmlcore-1761] Fix notice when no field is specified in tax_query when getting posts.
+* Other minor bug fixes
+
+## Performances
+* [wpmlcore-3172] Reduce SQL queries when checking if site uses ICanLocalize translation services previous to WPML 3.2
+* [wpmlcore-3197] Removed the WPML Dashboard Widget to avoid unnecessary calls.
+
+# 3.4.1.1
+ 
+## Fixes
+* [wpmltm-1487] Reduced automatic calls to ICanLocalize server to one per hour
+
+## Compatibility
+* [wpmlcore-3143] Add filters for the Events Calendar and Events Pro plugins to use for recurring events 
+
+# 3.4.1
+
+## Fixes
+* [wpmlcore-3030] Class auto loading is not compatible with version of PHP older than 5.3
+* [wpmlcore-3034] Fix missing slash at the end of alternatives links 
+* [wpmlcore-3076] Updating forum user profile when using bbPress, or in general, when a user profile happens from the front-end, won't throw any notice
+
+## Performances
+* [wpmlga-133] Improved class autoloading by using class mapping, instead of file system lookup
+* [wpmlcore-3026] If translation management column is hidden from screen options don't run additional queries.
+* [wpmlcore-3053] Added filter `wpml_hide_management_column` to allow hiding of translation management column.
+
+# 3.4.0
+
+## Fixes
+* [wpmlcore-2720] Avoid language parameter for search when language negotiation is not set to "language as a parameter"
+* [wpmlcore-2727] Setup Wizard - Default language was ignored after changing it
+* [wpmlcore-1269] Strings are now translated in step 2 of the install wizard
+* [wpmlcore-2246] Fixed text orientation for RTL languages in install wizard step 2
+* [wpmlcore-2795] `is_front_page()` did not work with "lang" parameter and another parameter
+* [wpmlcore-2647] Added a new hook `wpml_url_converter_get_abs_home` (for third part plugins compatibility)
+* [wpmlcore-2447] A warning was thrown when saving WPML language switcher options and `ICL_DONT_LOAD_LANGUAGE_SELECTOR_CSS` set to `true`
+* [wpmlst-778] CPT archive slug wrongly translated when `has_archive` starts with the rewrite slug of CPT
+* [wpmlcore-2728] Removed the language directory for media files links attached to root page
+* [wpmltm-1343] Keep translation status when it's updated.
+* [wpmlcore-2840] Fixed issue with missing cron job to publish future posts for translations when "Sync publishing date" is enabled.
+* [wpmlcore-2658] The query is now parsed by WPML on AJAX requests (for 3rd part compatibility)
+* [wpmltm-1351] Fixed `\WPML_Admin_Post_Actions::get_trid_from_referer`function to get trid form refferer only if needed
+* [wpmlcore-2789] Multiple IDs or slugs (from categories or tags) were not always correctly adjusted
+* [wpmlcore-2789] Deep nested taxonomy queries were not adjusted
+* [wpmlcore-2841] `parse_url` was returning inconsistent results depending on PHP version
+* [wpmlcore-2198] When mixing parameter and slug for custom taxonomies, an error was thrown in WP 4.4
+* [wpmlcore-2595] Improved URL conversion when posts or terms translations have different slugs than the original
+* [wpmlcore-2731] Display the hreflang meta even if the post has no translations, as long as it's set to be translatable
+* [wpmlcore-2589] Display the language switcher only if the CPT is set to be translatable
+* [wpmlcore-2878] Queries are not altered when browser redirection is enabled
+* [wpmlcore-2803] Form input labels are properly linked to their inputs in WPML > Languages
+* [wpmlcore-2899] Replaced use of `$HTTP_RAW_POST_DATA` with `php://input`
+* [wpmlcore-2704] Fixed language links position in Appearance -> Menus for RTL admin languages
+* [wpmltm-1395] Fixed creation of slug when "Copy from original language if translation language uses encoded URLs" is selected.
+* [wpmlcore-2916] Fixed notice shown on "Inactive content" section, after changing the default language and removing it from the active languages
+* [wpmltm-1401] Fixed caching issue on WP-Engine when new terms are created.
+* [wpmltm-1400] Fixed issue when translation job wrongly updated when sending batch failed.
+* [wpmlcore-2918] Resolved issue with autoloader class when brackets are used in the website's path
+* [wpmlcore-2948] Fixed issue where unexpected menu items were created on page duplication with "Auto add pages" option enabled.
+* [wpmlcore-2951] Fixed Menus Sync so the links to menu strings are now only displayed for already existing menus
+* [wpmlcore-2967] Display custom posts as disabled on the multilingual content page if they are set as don't translate in wpml-config.xml files.
+* [wpmlcore-2989] Fixed color presets for the footer language switcher.
+* [wpmlcore-2998] Fixed widget language switcher preview to show the current native language correctly
+* [wpmlcore-3002] Escape Preserve url parameters on Languages page.
+* [wpmlcore-3000] Fixed issue with translation of "Uncategorized" term when not using English as default language
+* [wpmlst-817] Fixed XSS issue with unescaped output.
+* [wpmltm-1442] Resolved SQL errors when sending a job to a translation service fails
+
+## Compatibility
+* [wpmlcore-2701] Yoast SEO Premium - stop it from automatically creating a redirect when a duplicated post is updated.
+* [wpmlcore-2929] Fixed compatibility issue with `hyperdb` which prevents from populating `icl_languages` table
+
+## Features
+* [wpmltm-1189] Implemented new design for translation editor.
+* [wpmlcore-2774] Implemented new design for taxonomy translation.
+
+## Performance
+* [wpmlcore-2619] Improved speed of the archive page when many languages are active
+* [wpmlcore-2988] Removed unneeded dependencies checks in admin pages: this now runs only once and later only when activating/deactivating plugins
+
+## Cosmetic
+* [wpmlcore-3015] Raised z-index of language switcher, to solve a compatibility issue with the twenty-six theme.
+
 # 3.3.8
 
 ## Fixes
@@ -21,7 +172,7 @@
 
 ## Fixes
 * [wpmlcore-2206] Fixed edit language issue when option 'Use flag from WPML' for flag file is chosen
-* [wpmlcore-873]  Fixed rtl alignment for language Urdu
+* [wpmlcore-873] Fixed rtl alignment for language Urdu
 * [wpmlcore-1428] Removed Moldavian language, since it's a non existing language (use Romanian instead).
 * [wpmlcore-2602] Fixed post status synchronization if "Copy publishing date" option is used.
 * [wpmlcore-2572] Limit query modification in class Page_Name_Query_Filter
@@ -160,7 +311,7 @@
 	* [wpmlcore-2371] `wpml_language_form_input_field`, which changed the hidden input field rendered by the `wpml_add_language_form_field` action
     * [wpmlcore-1626] `wpml_translation_validation_data`, which is called when validating data submitted by the translation editor (arguments: `$validation_results`, `$data_to_validate`)
 
-# 3.3
+# 3.3.0
 
 ## Fixes
 * [wpmlcore-2278] Resolved dependency on of trid on browser referrer
@@ -329,7 +480,7 @@
 * `do_action( 'wpml_add_language_selector' );` now properly echoes the language switcher
 * Resolved a dependency issue: `Fatal error: Class 'WPML_Post_Translation' not found`
 
-# 3.2
+# 3.2.0
 
 ## New
 * Support for Translation Proxy
@@ -695,7 +846,7 @@
 ## Fixes
 * Fixed an issue that occurs with some configurations, when reading WPML settings
 
-# 3.1
+# 3.1.0
 
 ## Performances
 * Reduced number of queries to one per request when retrieving Admin language

@@ -39,7 +39,7 @@ class WPML_Admin_Scripts_Setup extends WPML_Full_Translation_API {
 			var icl_cat_adder_msg = '<?php echo icl_js_escape(sprintf(__('To add categories that already exist in other languages go to the <a%s>category management page</a>','sitepress'), ' href="'.admin_url('edit-tags.php?taxonomy=category').'"'));?>';
 			// ]]>
 
-			<?php if(!$this->sitepress->get_setting('ajx_health_checked')): ?>
+			<?php if ( ! $this->sitepress->get_setting( 'ajx_health_checked' ) && ! (bool) get_option( '_wpml_inactive' ) ) : ?>
 			addLoadEvent(function () {
 				jQuery.ajax({
 					type: "POST", url: icl_ajx_url, data: "icl_ajx_action=health_check", error: function (msg) {
@@ -408,10 +408,18 @@ class WPML_Admin_Scripts_Setup extends WPML_Full_Translation_API {
 			wp_enqueue_style( 'sitepress-' . $page_basename, ICL_PLUGIN_URL . '/res/css/' . $page_basename . '.css', array(), ICL_SITEPRESS_VERSION );
 		}
 
+		wp_register_style( 'otgs-dialogs', ICL_PLUGIN_URL . '/res/css/otgs-dialogs.css', null, ICL_SITEPRESS_VERSION );
+		wp_register_style( 'wpml-dialog', ICL_PLUGIN_URL . '/res/css/dialog.css', array('wp-jquery-ui-dialog', 'otgs-dialogs'), ICL_SITEPRESS_VERSION );
+		wp_enqueue_style( 'wpml-dialog');
+
+
+		wp_register_style( 'otgs-ico', ICL_PLUGIN_URL . '/res/css/otgs-ico.css', null, ICL_SITEPRESS_VERSION );
+		wp_enqueue_style( 'otgs-ico');
+		
+		
 		wp_enqueue_style( 'thickbox' );
 		wp_enqueue_style( 'translate-taxonomy', ICL_PLUGIN_URL . '/res/css/taxonomy-translation.css', array(), ICL_SITEPRESS_VERSION );
-		wp_enqueue_style( 'onthegosystems-icon', ICL_PLUGIN_URL . '/res/css/otgs-ico.css' );
-
+		
 	}
 
 	private function verify_home_and_blog_pages_translations() {

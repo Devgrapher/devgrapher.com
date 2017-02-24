@@ -2,7 +2,7 @@
 Theme Name: Harmonic
 Theme URI: https://wordpress.com/themes/harmonic/
 Description: Harmonic makes your content sing. No matter if you are a band looking to get a record deal, a travel blogger wanting to document your trip around the world or just someone that wants to make their home on WordPress.
-Version: 1.0.9
+Version: 1.1.1
 Author: Automattic
 Author URI: https://wordpress.com/themes/
 License: GNU General Public License v2 or later
@@ -198,14 +198,12 @@ a img {
 --------------------------------------------------------------*/
 .clear:before,
 .clear:after,
+.hentry:before,
+.hentry:after,
 .entry-content:before,
 .entry-content:after,
 .comment-content:before,
 .comment-content:after,
-.site-header:before,
-.site-header:after,
-.site-content:before,
-.site-content:after,
 .site-footer:before,
 .site-footer:after,
 #masthead,
@@ -216,10 +214,9 @@ a img {
 }
 
 .clear:after,
+.hentry:after,
 .entry-content:after,
 .comment-content:after,
-.site-header:after,
-.site-content:after,
 .site-footer:after,
 article.post:after,
 article.page:after,
@@ -368,12 +365,19 @@ h3#reply-title {
     font-size: 29px;
     font-size: 2.9rem;
     font-weight: 700;
-    line-height: .68966;
+    line-height: 1.5172;
     margin: 20px 0;
 }
 
 .project-info h1 {
     font-size: 21.33333px;
+    font-size: 2.13333rem;
+    font-weight: 700;
+    line-height: .9375;
+}
+
+.jetpack-portfolio-shortcode h2 {
+	font-size: 21.33333px;
     font-size: 2.13333rem;
     font-weight: 700;
     line-height: .9375;
@@ -1066,61 +1070,80 @@ h1 a:hover {
 .social-links ul a[href*='wordpress.com']:before {
     content: '\f205';
 }
-
 .social-links ul a[href*='facebook.com']:before {
-    content: '\f203';
+    content: '\f204';
 }
-
 .social-links ul a[href*='twitter.com']:before {
     content: '\f202';
 }
-
 .social-links ul a[href*='dribbble.com']:before {
     content: '\f201';
 }
-
 .social-links ul a[href*='plus.google.com']:before {
     content: '\f206';
 }
-
 .social-links ul a[href*='pinterest.com']:before {
     content: '\f209';
 }
-
 .social-links ul a[href*='github.com']:before {
     content: '\f200';
 }
-
 .social-links ul a[href*='tumblr.com']:before {
     content: '\f214';
 }
-
 .social-links ul a[href*='youtube.com']:before {
     content: '\f213';
 }
-
 .social-links ul a[href*='flickr.com']:before {
     content: '\f211';
 }
-
 .social-links ul a[href*='vimeo.com']:before {
     content: '\f212';
 }
-
 .social-links ul a[href*='instagram.com']:before {
     content: '\f215';
 }
-
 .social-links ul a[href*='codepen.io']:before {
     content: '\f216';
 }
-
 .social-links ul a[href*='linkedin.com']:before {
     content: '\f207';
 }
-
+.social-links ul a[href*='foursquare.com']:before {
+    content: '\f226';
+}
+.social-links ul a[href*='reddit.com']:before {
+    content: '\f222';
+}
+.social-links ul a[href*='digg.com']:before {
+    content: '\f221';
+}
+.social-links ul a[href*='getpocket.com']:before {
+    content: '\f224';
+}
+.social-links ul a[href*='path.com']:before {
+    content: '\f219';
+}
+.social-links ul a[href*='stumbleupon.com']:before {
+    content: '\f223';
+}
+.social-links ul a[href*='spotify.com']:before {
+    content: '\f515';
+}
+.social-links ul a[href*='twitch.tv']:before {
+    content: '\f516';
+}
+.social-links ul a[href*='dropbox.com']:before {
+    content: '\f225';
+}
 .social-links ul a[href*='/feed']:before {
     content: '\f413';
+}
+.social-links ul a[href*='skype']:before {
+    content: '\f220';
+}
+.social-links ul a[href*='mailto']:before {
+    content: '\f410';
 }
 
 .social-links ul a[href*='soundcloud.com']:before {
@@ -1262,8 +1285,6 @@ h1 a:hover {
     position: absolute !important;
 }
 
-.screen-reader-text:hover,
-.screen-reader-text:active,
 .screen-reader-text:focus {
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -1395,6 +1416,10 @@ body.home #content.site-wrapper,
     text-shadow: 1px 1px 1px rgba(51, 47, 43, .8);
 }
 
+#slide-feature {
+    position: relative;
+}
+
 #single-titles #single-wrap,
 #slide-feature #single-titles {
     padding: 10% 0;
@@ -1430,7 +1455,7 @@ body.home #content.site-wrapper,
 /*--------------------------------------------------------------
 11.0 Content
 --------------------------------------------------------------*/
-.bypostauthor {
+.bypostauthor > .comment-body {
   font-weight: 700;
 }
 
@@ -1917,6 +1942,10 @@ p.form-allowed-tags code {
     border-top-color: #222;
 }
 
+.widget.widget_wpcom_social_media_icons_widget li {
+    padding-top: 0;
+}
+
 /*--------------------------------------------------------------
 12.0 Infinite Scroll
 --------------------------------------------------------------*/
@@ -1924,6 +1953,10 @@ p.form-allowed-tags code {
 .infinite-scroll .paging-navigation,
 .infinite-scroll.neverending .site-footer {
     display: none;
+}
+
+#infinite-footer {
+	z-index: 998;
 }
 
 /* When Infinite Scroll has reached its end we need to re-display elements that were hidden (via .neverending) before */
@@ -2060,9 +2093,7 @@ main#para-template {
 .slide {
     opacity: 0;
 }
-#skrollr-body .slide:last-of-type {
-	padding-bottom: 64px;
-}
+
 #slide-content.slide{
     opacity: 1;
 }
@@ -2190,7 +2221,7 @@ body.single-post #slide-1 .hscontent {
 #news-section .entry-header {
     float: left;
     text-align: left;
-    width: 90%;
+    width: 70%;
 }
 
 #news-section .entry-header,
@@ -2252,6 +2283,16 @@ body.single-post #slide-1 .hscontent {
     transition: all .3s ease;
     -webkit-backface-visibility: hidden;
     width: 100%;
+}
+
+.portfolio-featured-image {
+	margin: 0 auto 20px;
+	max-width: 1216px;
+}
+
+.portfolio-featured-image img {
+	display: block;
+	margin: 0;
 }
 
 .project-info {
@@ -2324,9 +2365,10 @@ body[class*='jetpack-portfolio'].archive .jetpack-portfolio {
 body[class*='jetpack-portfolio'].archive #infinite-handle {
     left: 0;
     padding: 0;
-	position: absolute;
-	bottom: -40px;
-	width: 100%;
+    margin-bottom: 200px;
+    position: absolute;
+    bottom: -160px;
+    width: 100%;
 }
 
 .page-template-templatesportfolio-page-php .portfolio-projects,
@@ -2472,6 +2514,7 @@ body[class*='jetpack-portfolio'].archive .page-content,
         bottom: 0;
         position: fixed;
         width: 100%;
+        z-index: 998;
     }
 
     body.single #colophon a{
@@ -2523,38 +2566,38 @@ body[class*='jetpack-portfolio'].archive .page-content,
     }
 
     h1 {
-		font-size: 44px;/*64px;*/
-		font-size: 4.4rem;
+		font-size: 64px;
+		font-size: 6.4rem;
 		line-height: 1;
 	}
 
 	h2 {
-		font-size: 36px;/*58px;*/
-		font-size: 3.8rem;
+		font-size: 58px;
+		font-size: 5.8rem;
 		line-height: .96552;
 	}
 
 	h3 {
-		font-size: 30px;/*48px;*/
-		font-size: 3.0rem;
+		font-size: 48px;
+		font-size: 4.8rem;
 		line-height: .91667;
 	}
 
 	h4 {
-		font-size: 24px;/*32px;*/
-		font-size: 2.4rem;
+		font-size: 32px;
+		font-size: 3.2rem;
 		line-height: 1.375;
 	}
 
 	h5 {
-		font-size: 18px;/*28px;*/
-		font-size: 1.8rem;
+		font-size: 28px;
+		font-size: 2.8rem;
 		line-height: 1.57143;
 	}
 
 	h6 {
-		font-size: 16px;/*22px;*/
-		font-size: 1.6rem;
+		font-size: 22px;
+		font-size: 2.2rem;
 		line-height: 2;
 	}
 
@@ -2729,7 +2772,9 @@ body[class*='jetpack-portfolio'].archive .page-content,
 
     .page-template-templatesportfolio-page-php .paging-navigation,
     body[class*='jetpack-portfolio'].archive .paging-navigation {
-		bottom: -160px;
+        position: absolute;
+        bottom: -160px;
+        width: 100%;
 	}
 
 	.page-template-templatesportfolio-page-php .portfolio-projects,
@@ -2793,5 +2838,9 @@ body[class*='jetpack-portfolio'].archive .page-content,
 
     .hsContent {
         padding: 0;
+    }
+
+    #skrollr-body .slide:last-of-type {
+        padding-bottom: 64px;
     }
 }

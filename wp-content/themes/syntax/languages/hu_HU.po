@@ -1,0 +1,324 @@
+# Translation of Syntax in Hungarian
+# This file is distributed under the same license as the Syntax package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2014-08-25 14:46:21+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Syntax\n"
+
+#. Author URI of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "https://wordpress.com/themes/"
+msgstr ""
+
+#. Description of the plugin/theme
+#: wp-content/themes/pub/syntax/style.css
+msgid "Syntax is a theme designed with writing--and reading--in mind. With large, easy-to-read type, a fixed navigation menu, and a responsive design that looks beautiful on all screen sizes, it's perfect for writers or bloggers who want a clean, sophisticated look and feel for their site."
+msgstr ""
+
+#: searchform.php:11
+msgctxt "submit button"
+msgid "Search"
+msgstr "Keresés"
+
+#: searchform.php:10
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "Keresés &hellip;"
+
+#: searchform.php:9
+msgctxt "assistive text"
+msgid "Search"
+msgstr "Keresés"
+
+#: search.php:16
+msgid "Search Results for: %s"
+msgstr "%s kifejezésre történő keresés eredménye"
+
+#: inc/template-tags.php:129
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\"><time class=\"entry-date\" datetime=\"%3$s\">%4$s</time></a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%5$s\" title=\"%6$s\" rel=\"author\">%7$s</a></span></span>"
+
+#: inc/template-tags.php:120
+msgid "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Featured</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+msgstr "<span class=\"post-date\"><a href=\"%1$s\" title=\"%2$s\" rel=\"bookmark\">Kiemelt</a></span><span class=\"byline\"><span class=\"author vcard\"><a class=\"url fn n\" href=\"%3$s\" title=\"%4$s\" rel=\"author\">%5$s</a></span></span>"
+
+#: inc/template-tags.php:124 inc/template-tags.php:135
+msgid "View all posts by %s"
+msgstr "%s bejegyzései"
+
+#: inc/template-tags.php:95
+msgid "Your comment is awaiting moderation."
+msgstr "A hozzászólás rendszer-moderációra várakozik."
+
+#: inc/template-tags.php:88
+msgctxt "1: date, 2: time"
+msgid "%1$s at %2$s"
+msgstr "%1$s - %2$s"
+
+#: inc/template-tags.php:82
+msgid "%s <span class=\"says\">says:</span>"
+msgstr "%s <span class=\"says\">szerint:</span>"
+
+#: inc/template-tags.php:72
+msgid "Pingback:"
+msgstr "Visszajelzés:"
+
+#: inc/template-tags.php:48
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Újabb bejegyzés <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/template-tags.php:44
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Korábbi bejegyzés"
+
+#: inc/template-tags.php:39
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: inc/template-tags.php:38
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: inc/template-tags.php:34
+msgid "Post navigation"
+msgstr "Bejegyzések navigációja"
+
+#: inc/extras.php:66
+msgid "Page %s"
+msgstr "%s oldal"
+
+#: image.php:106
+msgid "Both comments and trackbacks are currently closed."
+msgstr "A hozzászólások és visszakövetések lehetősége jelenleg itt kikapcsolva."
+
+#: image.php:104
+msgid "Trackbacks are closed, but you can <a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">post a comment</a>."
+msgstr "A visszakövetés fogadása kikapcsolva, de a bejegyzéshez itt<a class=\"comment-link\" href=\"#respond\" title=\"Hozzászólás\">hozzászólhat</a>."
+
+#: image.php:102
+msgid "Comments are closed, but you can leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "A hozzászólások lehetősége jelenleg nem engedélyezett, de visszakövetésre van lehetőség: <a class=\"trackback-link\" href=\"%s\" title=\"A bejegyzés visszakövetési URL címe\" rel=\"trackback\">Visszakövetés URL</a>."
+
+#: image.php:100
+msgid "<a class=\"comment-link\" href=\"#respond\" title=\"Post a comment\">Post a comment</a> or leave a trackback: <a class=\"trackback-link\" href=\"%s\" title=\"Trackback URL for your post\" rel=\"trackback\">Trackback URL</a>."
+msgstr "<a class=\"comment-link\" href=\"#respond\" title=\"Hozzászólás\">Hozzászólás</a> vagy Visszajelzés: <a class=\"trackback-link\" href=\"%s\" title=\"Visszajelzés küldése saját bejegyzésből\" rel=\"trackback\">Trackback URL</a>."
+
+#: image.php:87
+msgid "Published <span class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</a>"
+msgstr ""
+
+#: image.php:21
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Következő <span class=\"meta-nav\">&rarr;</span>"
+
+#: image.php:20
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> Előző"
+
+#: header.php:82
+msgid "Skip to content"
+msgstr "Tovább a tartalomra"
+
+#: header.php:80
+msgid "Menu"
+msgstr "Menü"
+
+#: header.php:72
+msgid "Tumblr"
+msgstr "Tumblr"
+
+#: header.php:67
+msgid "Twitter"
+msgstr "Twitter"
+
+#: header.php:62
+msgid "Path"
+msgstr "Útvonal"
+
+#: header.php:57
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: header.php:52
+msgid "Google+"
+msgstr "Google+"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:136
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr ""
+
+#: header.php:47
+msgid "Facebook"
+msgstr "Facebook"
+
+#: functions.php:86
+msgid "Footer Sidebar 2"
+msgstr ""
+
+#: functions.php:94
+msgid "Footer Sidebar 3"
+msgstr "Lábléc oldalsáv 3"
+
+#: functions.php:78
+msgid "Footer Sidebar 1"
+msgstr ""
+
+#: functions.php:53
+msgid "Footer Menu"
+msgstr "Lábléc menü"
+
+#: functions.php:52
+msgid "Primary Menu"
+msgstr "Elsődleges menü"
+
+#: footer.php:22
+msgid "Theme: %1$s by %2$s."
+msgstr "Sablon: %1$s Szerző: %2$s."
+
+#: footer.php:20
+msgid "Proudly powered by %s"
+msgstr "Köszönjük %s!"
+
+#: footer.php:20
+msgid "A Semantic Personal Publishing Platform"
+msgstr "Személyes Publikációs Platform"
+
+#: content.php:55
+msgid "% Comments"
+msgstr "% hozzászólás"
+
+#: content.php:55
+msgid "1 Comment"
+msgstr "1 hozzászólás"
+
+#: content.php:55
+msgid "Leave a comment"
+msgstr "Hozzászólás"
+
+#: content.php:30
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Bővebben... <span class=\"meta-nav\">&rarr;</span>"
+
+#. translators: used between list items, there is a space after the comma
+#: content-single.php:31 content.php:45
+msgid ", "
+msgstr ", "
+
+#: content-single.php:12 content.php:19
+msgid "All %s posts"
+msgstr "Minden %s bejegyzés"
+
+#: content-page.php:23 content-single.php:38 content.php:58 image.php:108
+#: inc/template-tags.php:72 inc/template-tags.php:91
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: content-page.php:18 content-single.php:21 content.php:33 image.php:77
+msgid "Pages:"
+msgstr "Oldal:"
+
+#: content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "Úgy tűnik, nem található az, amire gondoltunk. Talán, egy újabb keresés segíthet."
+
+#: content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "Elnézést, nem találunk a keresési feltételeknek megfelelő eredményt. Másik kulcsszóval, kifejezéssel újra kellene kezdeni egy keresést."
+
+#: content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Készen állunk az első bejegyzés közzétételére? <a href=\"%1$s\">Kezdőlépések</a>."
+
+#: content-none.php:13
+msgid "Nothing Found"
+msgstr "Nincs megfelelő találat"
+
+#: comments.php:68
+msgid "Comments are closed."
+msgstr "Hozzászólások lezárva."
+
+#: comments.php:38 comments.php:58
+msgid "Newer Comments &rarr;"
+msgstr "Újabb hozzászólás &rarr;"
+
+#: comments.php:37 comments.php:57
+msgid "&larr; Older Comments"
+msgstr "&larr; Korábbi hozzászólás"
+
+#: comments.php:36 comments.php:56
+msgid "Comment navigation"
+msgstr "Hozzászólás navigáció"
+
+#: comments.php:29
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "&ldquo;%2$s&rdquo; bejegyzéshez egy hozzászólás"
+msgstr[1] "&ldquo;%2$s&rdquo; bejegyzéshez %1$ hozzászólás"
+
+#: archive.php:63
+msgid "Archives"
+msgstr "Archívumok"
+
+#: archive.php:60
+msgid "Links"
+msgstr "Hivatkozások"
+
+#: archive.php:57
+msgid "Quotes"
+msgstr "Idézetek"
+
+#: archive.php:54
+msgid "Videos"
+msgstr "Videók"
+
+#: archive.php:51
+msgid "Images"
+msgstr "Képek"
+
+#: archive.php:48
+msgid "Asides"
+msgstr "Széljegyzetek"
+
+#: archive.php:45
+msgid "Yearly Archives: %s"
+msgstr "%s. év bejegyzései"
+
+#: archive.php:42
+msgid "Monthly Archives: %s"
+msgstr "%s havi bejegyzések"
+
+#: archive.php:39
+msgid "Daily Archives: %s"
+msgstr "%s napi bejegyzések"
+
+#: archive.php:31
+msgid "Author Archives: %s"
+msgstr "%s bejegyzései"
+
+#: archive.php:24
+msgid "Tag Archives: %s"
+msgstr "%s címkéhez tartozó bejegyzések"
+
+#: archive.php:21
+msgid "Category Archives: %s"
+msgstr "%s kategória bejegyzései"
+
+#: 404.php:19
+msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+msgstr "A keresett oldal vagy bejegyzés nem található. Próbálkozzunk meg az alábbi hivatkozásokkal vagy esetleg egy kereséssel."
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "Hoppá! A keresett oldal nem található."
